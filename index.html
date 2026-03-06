@@ -1,227 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Derek Muñoz Solís | Software Developer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root{--bg-deep:#04060b;--bg-primary:#080b14;--bg-secondary:#0c1021;--bg-card:#0f1528;--accent-1:#00f0ff;--accent-2:#7b61ff;--accent-3:#00ff88;--accent-4:#ff3d71;--gradient-main:linear-gradient(135deg,#00f0ff,#7b61ff);--gradient-green:linear-gradient(135deg,#00ff88,#00f0ff);--text-primary:#e6eaf3;--text-secondary:#7d8597;--text-muted:#3d4455;--border:rgba(255,255,255,0.06);--border-hover:rgba(0,240,255,0.25);--glow-cyan:0 0 40px rgba(0,240,255,0.15);--glow-purple:0 0 40px rgba(123,97,255,0.15);--radius:16px;--radius-sm:10px}
-        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
-        body{font-family:'Sora',sans-serif;background:var(--bg-deep);color:var(--text-primary);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-        ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg-deep)}::-webkit-scrollbar-thumb{background:var(--accent-1);border-radius:10px}
-        #particles-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
-        .noise{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");background-repeat:repeat;background-size:256px}
-        .scanlines{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.025) 2px,rgba(0,0,0,.025) 4px)}
-        .blob{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0}.blob-1{width:600px;height:600px;top:-200px;right:-200px;background:radial-gradient(circle,rgba(0,240,255,.18),transparent 70%);animation:blobF 18s ease-in-out infinite}.blob-2{width:500px;height:500px;bottom:-150px;left:-150px;background:radial-gradient(circle,rgba(123,97,255,.12),transparent 70%);animation:blobF 22s ease-in-out infinite reverse}.blob-3{width:400px;height:400px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(0,255,136,.06),transparent 70%);animation:blobF 20s ease-in-out infinite 3s}
-        @keyframes blobF{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-40px) scale(1.05)}66%{transform:translate(-20px,30px) scale(.95)}}
-        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:70px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(30px) saturate(1.5);background:rgba(4,6,11,.75);border-bottom:1px solid var(--border);transition:all .4s}.navbar.scrolled{box-shadow:0 5px 30px rgba(0,0,0,.5)}
-        .nav-brand{font-family:'Outfit',sans-serif;font-weight:800;font-size:1.4rem;text-decoration:none;background:var(--gradient-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.nav-brand span{-webkit-text-fill-color:var(--text-muted);font-weight:400;font-size:.85rem}
-        .nav-menu{display:flex;align-items:center;gap:.4rem;list-style:none}.nav-menu a{color:var(--text-secondary);text-decoration:none;font-size:.85rem;font-weight:500;padding:.5rem 1rem;border-radius:8px;transition:all .3s}.nav-menu a:hover{color:var(--accent-1);background:rgba(0,240,255,.05)}.nav-cta{background:var(--gradient-main)!important;color:var(--bg-deep)!important;font-weight:600!important}.nav-cta:hover{box-shadow:var(--glow-cyan)!important;transform:translateY(-1px)}
-        .mobile-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px}.mobile-toggle span{display:block;width:22px;height:2px;background:var(--text-primary);margin:5px 0;transition:.3s;border-radius:2px}.mobile-toggle.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}.mobile-toggle.active span:nth-child(2){opacity:0}.mobile-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
-        .wrapper{position:relative;z-index:2;max-width:1140px;margin:0 auto;padding:0 2rem}
-        .hero{min-height:100vh;display:flex;align-items:center;padding-top:70px}.hero-inner{width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:4rem;align-items:center}
-        .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.2);padding:6px 16px;border-radius:50px;font-family:'JetBrains Mono',monospace;font-size:.73rem;color:var(--accent-3);margin-bottom:1.8rem;animation:hF 1s ease .1s both}
-        .badge-dot{width:6px;height:6px;background:var(--accent-3);border-radius:50%;animation:dP 2s ease-in-out infinite;box-shadow:0 0 8px var(--accent-3)}@keyframes dP{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
-        .hero-title{font-family:'Outfit',sans-serif;font-size:clamp(2.8rem,5.5vw,4.5rem);font-weight:900;line-height:1.05;letter-spacing:-2px;margin-bottom:1.5rem;animation:hF 1s ease .2s both}.hero-title .g{background:var(--gradient-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.hero-title .sub{color:var(--text-muted);font-weight:600;font-size:.6em}
-        .hero-desc{color:var(--text-secondary);font-size:1.08rem;max-width:480px;margin-bottom:2.5rem;line-height:1.8;animation:hF 1s ease .35s both}.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:hF 1s ease .5s both}
-        @keyframes hF{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
-        .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:var(--radius-sm);font-size:.92rem;font-weight:600;text-decoration:none;cursor:pointer;border:none;font-family:'Sora',sans-serif;transition:all .35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
-        .btn-glow{background:var(--gradient-main);color:var(--bg-deep)}.btn-glow::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .5s}.btn-glow:hover::before{left:100%}.btn-glow:hover{box-shadow:0 0 35px rgba(0,240,255,.3),0 0 80px rgba(123,97,255,.15);transform:translateY(-3px)}
-        .btn-ghost{background:transparent;color:var(--text-primary);border:1px solid var(--border);backdrop-filter:blur(10px)}.btn-ghost:hover{border-color:var(--accent-1);color:var(--accent-1);background:rgba(0,240,255,.04);transform:translateY(-3px)}
-        .hero-terminal{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:hF 1s ease .6s both}
-        .terminal-header{display:flex;align-items:center;gap:8px;padding:14px 18px;background:rgba(255,255,255,.02);border-bottom:1px solid var(--border)}.td{width:10px;height:10px;border-radius:50%}.td.r{background:#ff5f57}.td.y{background:#febc2e}.td.g{background:#28c840}.terminal-title{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-muted);margin-left:8px}
-        .terminal-body{padding:1.5rem;font-family:'JetBrains Mono',monospace;font-size:.78rem;line-height:2}.tl{display:flex;gap:6px;flex-wrap:wrap}.tp{color:var(--accent-3)}.tc{color:var(--accent-1)}.ts{color:#ffd866}.to{color:var(--text-secondary);padding-left:1rem}.tk{color:var(--accent-4)}
-        .cursor-blink{display:inline-block;width:8px;height:16px;background:var(--accent-1);animation:cB 1s step-end infinite;vertical-align:middle;margin-left:4px}@keyframes cB{0%,100%{opacity:1}50%{opacity:0}}
-        section{padding:7rem 0}.section-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:4px;color:var(--accent-1);margin-bottom:1rem;display:flex;align-items:center;gap:10px}.section-eyebrow::before{content:'';width:30px;height:1px;background:var(--accent-1)}
-        .section-heading{font-family:'Outfit',sans-serif;font-size:clamp(2rem,4vw,2.8rem);font-weight:800;letter-spacing:-1px;line-height:1.15}.section-sub{color:var(--text-secondary);margin-top:.8rem;font-size:1.05rem;max-width:550px}.section-header{margin-bottom:3.5rem}
-        .about-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}.about-text p{color:var(--text-secondary);margin-bottom:1.3rem;font-size:1.02rem}.about-text strong{color:var(--text-primary);font-weight:600}.hl{color:var(--accent-1)}
-        .stats-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem;text-align:center;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
-        .stat-box::after{content:'';position:absolute;inset:0;border-radius:var(--radius);padding:1px;background:var(--gradient-main);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s}.stat-box:hover::after{opacity:1}.stat-box:hover{transform:translateY(-5px);box-shadow:var(--glow-cyan)}
-        .stat-value{font-family:'Outfit',sans-serif;font-size:2.4rem;font-weight:900;background:var(--gradient-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.stat-desc{font-size:.8rem;color:var(--text-muted);margin-top:.3rem;font-weight:500}
-        .skills-container{display:grid;grid-template-columns:repeat(2,1fr);gap:1.3rem}.skill-tile{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;cursor:default}
-        .skill-tile::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--gradient-main);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.4,0,.2,1)}.skill-tile:hover::before{transform:scaleX(1)}.skill-tile:hover{border-color:var(--border-hover);transform:translateY(-6px);box-shadow:0 15px 50px rgba(0,0,0,.3),var(--glow-cyan)}
-        .sti{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.2rem}.sti.py{background:rgba(0,240,255,.08);border:1px solid rgba(0,240,255,.12)}.sti.wb{background:rgba(123,97,255,.08);border:1px solid rgba(123,97,255,.12)}.sti.cy{background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.12)}.sti.sf{background:rgba(255,61,113,.08);border:1px solid rgba(255,61,113,.12)}
-        .skill-tile h3{font-family:'Outfit',sans-serif;font-size:1.15rem;font-weight:700;margin-bottom:.5rem}.skill-tile p{color:var(--text-secondary);font-size:.88rem;line-height:1.7}
-        .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:1.2rem}.chip{font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:4px 10px;border-radius:6px;font-weight:500}.cc{background:rgba(0,240,255,.07);color:var(--accent-1);border:1px solid rgba(0,240,255,.12)}.cp{background:rgba(123,97,255,.07);color:var(--accent-2);border:1px solid rgba(123,97,255,.12)}.cg{background:rgba(0,255,136,.07);color:var(--accent-3);border:1px solid rgba(0,255,136,.12)}.cr{background:rgba(255,61,113,.07);color:var(--accent-4);border:1px solid rgba(255,61,113,.12)}
-        .exp-timeline{position:relative;padding-left:2.5rem}.exp-timeline::before{content:'';position:absolute;left:0;top:0;width:2px;height:100%;background:linear-gradient(to bottom,var(--accent-1),var(--accent-2),transparent);border-radius:2px}
-        .exp-item{position:relative;padding-bottom:2.5rem}.exp-item::before{content:'';position:absolute;left:-2.65rem;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bg-deep);border:2px solid var(--accent-1);box-shadow:0 0 12px rgba(0,240,255,.3)}
-        .exp-date{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent-1);margin-bottom:.5rem}.exp-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;transition:all .3s}.exp-card:hover{border-color:var(--border-hover);box-shadow:var(--glow-cyan);transform:translateX(5px)}
-        .exp-card h3{font-family:'Outfit',sans-serif;font-weight:700;font-size:1.15rem;margin-bottom:.3rem}.exp-card .company{color:var(--accent-2);font-size:.9rem;font-weight:500;margin-bottom:.8rem}.exp-card p{color:var(--text-secondary);font-size:.9rem}.exp-skills{display:flex;flex-wrap:wrap;gap:6px;margin-top:1rem}
-        .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:1.5rem}.project-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;display:flex;flex-direction:column}
-        .project-card::after{content:'';position:absolute;inset:0;border-radius:var(--radius);padding:1px;background:var(--gradient-main);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s}.project-card:hover::after{opacity:1}.project-card:hover{transform:translateY(-8px);box-shadow:0 20px 60px rgba(0,0,0,.4),var(--glow-purple)}
-        .project-badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent-3);margin-bottom:1rem}.project-card h3{font-family:'Outfit',sans-serif;font-size:1.25rem;font-weight:700;margin-bottom:.6rem}.project-card>p{color:var(--text-secondary);font-size:.9rem;flex-grow:1}
-        .project-footer{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem}.project-link{display:inline-flex;align-items:center;gap:6px;color:var(--accent-1);text-decoration:none;font-size:.85rem;font-weight:600;transition:all .3s;position:relative;z-index:1}.project-link:hover{gap:10px}.project-link svg{width:16px;height:16px;transition:transform .3s}.project-link:hover svg{transform:translateX(3px)}
-        .contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem}.contact-text p{color:var(--text-secondary);font-size:1.02rem;margin-bottom:2rem}.contact-links{display:flex;flex-direction:column;gap:1rem}
-        .contact-link{display:flex;align-items:center;gap:1.2rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem 1.5rem;text-decoration:none;color:var(--text-primary);transition:all .35s}.contact-link:hover{border-color:var(--border-hover);transform:translateX(8px);box-shadow:var(--glow-cyan)}
-        .cli{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}.cli.em{background:rgba(0,240,255,.08);border:1px solid rgba(0,240,255,.12)}.cli.gh{background:rgba(123,97,255,.08);border:1px solid rgba(123,97,255,.12)}.cli.li{background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.12)}
-        .clt{display:flex;flex-direction:column}.clt small{font-size:.75rem;color:var(--text-muted);margin-bottom:2px}.clt span{font-weight:600;font-size:.95rem}
-        .contact-cta{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:3rem;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}.contact-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-main)}.contact-cta h3{font-family:'Outfit',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:1rem}.contact-cta p{color:var(--text-secondary);font-size:.95rem;margin-bottom:2rem;max-width:350px}
-        .footer{border-top:1px solid var(--border);padding:2.5rem 0;text-align:center}.footer p{color:var(--text-muted);font-size:.82rem}.footer .tcmd{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-muted);margin-top:.6rem}.footer .tcmd span{color:var(--accent-1)}
-        .reveal{opacity:0;transform:translateY(50px);transition:all .9s cubic-bezier(.4,0,.2,1)}.reveal.visible{opacity:1;transform:translateY(0)}.rd1{transition-delay:.1s}.rd2{transition-delay:.2s}.rd3{transition-delay:.3s}.rd4{transition-delay:.4s}
-        @media(max-width:900px){.hero-inner,.about-layout,.contact-layout{grid-template-columns:1fr}.skills-container,.projects-grid{grid-template-columns:1fr}}
-        @media(max-width:768px){.mobile-toggle{display:block}.nav-menu{display:none;position:absolute;top:70px;left:0;right:0;flex-direction:column;background:rgba(4,6,11,.97);backdrop-filter:blur(30px);padding:1.5rem 2rem;gap:.3rem;border-bottom:1px solid var(--border)}.nav-menu.open{display:flex}.nav-menu a{padding:.8rem 1rem;width:100%}.hero-title{font-size:2.5rem;letter-spacing:-1px}section{padding:4rem 0}}
-        @media(max-width:480px){.wrapper{padding:0 1.2rem}.stats-row{grid-template-columns:1fr}}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Derek Muñoz Solís | Software Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg-deep:#04060b;--bg-primary:#080b14;--bg-secondary:#0c1021;--bg-card:#0f1528;--accent-1:#00f0ff;--accent-2:#7b61ff;--accent-3:#00ff88;--accent-4:#ff3d71;--gradient-main:linear-gradient(135deg,#00f0ff,#7b61ff);--gradient-green:linear-gradient(135deg,#00ff88,#00f0ff);--text-primary:#e6eaf3;--text-secondary:#7d8597;--text-muted:#3d4455;--border:rgba(255,255,255,0.06);--border-hover:rgba(0,240,255,0.25);--glow-cyan:0 0 40px rgba(0,240,255,0.15);--glow-purple:0 0 40px rgba(123,97,255,0.15);--radius:16px;--radius-sm:10px;--mono:'JetBrains Mono',monospace}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;background:var(--bg-deep);color:var(--text-primary);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg-deep)}::-webkit-scrollbar-thumb{background:var(--accent-1);border-radius:10px}
+svg.ic{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+#particles-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.noise{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");background-repeat:repeat;background-size:256px}
+.scanlines{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.02) 2px,rgba(0,0,0,.02) 4px)}
+.blob{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0}
+.blob-1{width:600px;height:600px;top:-200px;right:-200px;background:radial-gradient(circle,rgba(0,240,255,.16),transparent 70%);animation:bF 18s ease-in-out infinite}
+.blob-2{width:500px;height:500px;bottom:-150px;left:-150px;background:radial-gradient(circle,rgba(123,97,255,.1),transparent 70%);animation:bF 22s ease-in-out infinite reverse}
+.blob-3{width:400px;height:400px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(0,255,136,.05),transparent 70%);animation:bF 20s ease-in-out infinite 3s}
+@keyframes bF{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-40px) scale(1.05)}66%{transform:translate(-20px,30px) scale(.95)}}
+
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(30px)saturate(1.5);background:rgba(4,6,11,.75);border-bottom:1px solid var(--border);transition:all .4s}
+.navbar.scrolled{box-shadow:0 5px 30px rgba(0,0,0,.5)}
+.nav-brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.2rem;text-decoration:none;display:flex;align-items:center;gap:8px}
+.nav-brand .mark{width:24px;height:24px;border-radius:6px;background:var(--gradient-main);display:flex;align-items:center;justify-content:center}
+.nav-brand .mark svg{width:13px;height:13px;stroke:#000;stroke-width:2.5}
+.nav-brand .name{background:var(--gradient-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-brand .sep{-webkit-text-fill-color:var(--text-muted);font-weight:400;font-size:.8rem;margin-left:2px}
+.nav-menu{display:flex;align-items:center;gap:.4rem;list-style:none}
+.nav-menu a{color:var(--text-secondary);text-decoration:none;font-size:.82rem;font-weight:500;padding:.45rem .9rem;border-radius:8px;transition:all .25s}
+.nav-menu a:hover{color:var(--accent-1);background:rgba(0,240,255,.04)}
+.nav-cta{background:var(--gradient-main)!important;color:var(--bg-deep)!important;font-weight:600!important}
+.nav-cta:hover{box-shadow:var(--glow-cyan)!important;transform:translateY(-1px)}
+.mobile-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px}
+.mobile-toggle span{display:block;width:20px;height:1.5px;background:var(--text-primary);margin:5px 0;transition:.3s;border-radius:1px}
+.mobile-toggle.active span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}
+.mobile-toggle.active span:nth-child(2){opacity:0}
+.mobile-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+.wrapper{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:0 2rem}
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:64px}
+.hero-inner{width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:3.5rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(0,255,136,.06);border:1px solid rgba(0,255,136,.15);padding:5px 14px;border-radius:50px;font-family:var(--mono);font-size:.7rem;color:var(--accent-3);margin-bottom:1.6rem;animation:hF 1s ease .1s both}
+.badge-dot{width:5px;height:5px;background:var(--accent-3);border-radius:50%;animation:dP 2s ease-in-out infinite;box-shadow:0 0 8px var(--accent-3)}
+@keyframes dP{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.6rem,5.5vw,4.2rem);font-weight:700;line-height:1.06;letter-spacing:-1.5px;margin-bottom:1.3rem;animation:hF 1s ease .2s both}
+.hero-title .g{background:var(--gradient-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-title .sub{color:var(--text-muted);font-weight:500;font-size:.55em;letter-spacing:0}
+.hero-desc{color:var(--text-secondary);font-size:1.02rem;max-width:460px;margin-bottom:2.2rem;line-height:1.8;animation:hF 1s ease .35s both}
+.hero-desc strong{color:var(--text-primary);font-weight:600}
+.hero-actions{display:flex;gap:.8rem;flex-wrap:wrap;animation:hF 1s ease .5s both}
+@keyframes hF{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:12px 24px;border-radius:var(--radius-sm);font-size:.88rem;font-weight:600;text-decoration:none;cursor:pointer;border:none;font-family:'Manrope';transition:all .3s;position:relative;overflow:hidden}
+.btn svg.ic{width:15px;height:15px}
+.btn-glow{background:var(--gradient-main);color:var(--bg-deep)}
+.btn-glow::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .5s}
+.btn-glow:hover::before{left:100%}
+.btn-glow:hover{box-shadow:0 0 30px rgba(0,240,255,.25);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--text-primary);border:1px solid var(--border);backdrop-filter:blur(10px)}
+.btn-ghost:hover{border-color:var(--accent-1);color:var(--accent-1);transform:translateY(-2px)}
+.hero-terminal{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:hF 1s ease .6s both}
+.terminal-header{display:flex;align-items:center;gap:7px;padding:12px 16px;background:rgba(255,255,255,.02);border-bottom:1px solid var(--border)}
+.td{width:9px;height:9px;border-radius:50%}.td.r{background:#ff5f57}.td.y{background:#febc2e}.td.g{background:#28c840}
+.terminal-title{font-family:var(--mono);font-size:.66rem;color:var(--text-muted);margin-left:8px}
+.terminal-body{padding:1.3rem;font-family:var(--mono);font-size:.74rem;line-height:2}
+.tp{color:var(--accent-3)}.tc{color:var(--accent-1)}.ts{color:#ffd866}.tw{color:var(--text-secondary)}.tk{color:var(--accent-4)}
+.cursor-blink{display:inline-block;width:7px;height:14px;background:var(--accent-1);animation:cB 1s step-end infinite;vertical-align:middle}
+@keyframes cB{0%,100%{opacity:1}50%{opacity:0}}
+
+section{padding:6rem 0}
+.section-eyebrow{font-family:var(--mono);font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:3px;color:var(--accent-1);margin-bottom:.8rem;display:flex;align-items:center;gap:8px}
+.section-eyebrow::before{content:'';width:24px;height:1px;background:var(--accent-1)}
+.section-heading{font-family:'Space Grotesk';font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700;letter-spacing:-.8px;line-height:1.15}
+.section-sub{color:var(--text-secondary);margin-top:.7rem;font-size:.98rem;max-width:500px}
+.section-header{margin-bottom:3rem}
+
+.about-layout{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start}
+.about-text p{color:var(--text-secondary);margin-bottom:1.2rem;font-size:.96rem;line-height:1.75}
+.about-text strong{color:var(--text-primary);font-weight:600}
+.hl{color:var(--accent-1)}
+.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;text-align:center;transition:all .35s;position:relative;overflow:hidden}
+.stat-box::after{content:'';position:absolute;inset:0;border-radius:var(--radius);padding:1px;background:var(--gradient-main);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s}
+.stat-box:hover::after{opacity:1}
+.stat-box:hover{transform:translateY(-4px);box-shadow:var(--glow-cyan)}
+.stat-value{font-family:'Space Grotesk';font-size:2.2rem;font-weight:700;background:var(--gradient-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-desc{font-size:.76rem;color:var(--text-muted);margin-top:.2rem;font-weight:500}
+
+.skills-container{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.skill-tile{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;transition:all .35s;position:relative;overflow:hidden}
+.skill-tile::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:var(--gradient-main);transform:scaleX(0);transform-origin:left;transition:transform .45s}
+.skill-tile:hover::before{transform:scaleX(1)}
+.skill-tile:hover{border-color:var(--border-hover);transform:translateY(-5px);box-shadow:0 12px 40px rgba(0,0,0,.3),var(--glow-cyan)}
+.sti{width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+.sti svg.ic{width:22px;height:22px}
+.sti.py{background:rgba(0,240,255,.07);border:1px solid rgba(0,240,255,.1);color:var(--accent-1)}
+.sti.wb{background:rgba(123,97,255,.07);border:1px solid rgba(123,97,255,.1);color:var(--accent-2)}
+.sti.cy{background:rgba(0,255,136,.07);border:1px solid rgba(0,255,136,.1);color:var(--accent-3)}
+.sti.sf{background:rgba(255,61,113,.07);border:1px solid rgba(255,61,113,.1);color:var(--accent-4)}
+.skill-tile h3{font-family:'Space Grotesk';font-size:1.08rem;font-weight:700;margin-bottom:.4rem}
+.skill-tile p{color:var(--text-secondary);font-size:.85rem;line-height:1.7}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:1rem}
+.chip{font-family:var(--mono);font-size:.65rem;padding:3px 9px;border-radius:5px;font-weight:500}
+.cc{background:rgba(0,240,255,.06);color:var(--accent-1);border:1px solid rgba(0,240,255,.1)}
+.cp{background:rgba(123,97,255,.06);color:var(--accent-2);border:1px solid rgba(123,97,255,.1)}
+.cg{background:rgba(0,255,136,.06);color:var(--accent-3);border:1px solid rgba(0,255,136,.1)}
+.cr{background:rgba(255,61,113,.06);color:var(--accent-4);border:1px solid rgba(255,61,113,.1)}
+
+.exp-timeline{position:relative;padding-left:2.2rem}
+.exp-timeline::before{content:'';position:absolute;left:0;top:0;width:1.5px;height:100%;background:linear-gradient(to bottom,var(--accent-1),var(--accent-2),transparent)}
+.exp-item{position:relative;padding-bottom:2.2rem}
+.exp-item::before{content:'';position:absolute;left:-2.35rem;top:5px;width:10px;height:10px;border-radius:50%;background:var(--bg-deep);border:2px solid var(--accent-1);box-shadow:0 0 10px rgba(0,240,255,.25)}
+.exp-date{font-family:var(--mono);font-size:.68rem;color:var(--accent-1);margin-bottom:.4rem}
+.exp-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem;transition:all .25s}
+.exp-card:hover{border-color:var(--border-hover);box-shadow:var(--glow-cyan);transform:translateX(4px)}
+.exp-card h3{font-family:'Space Grotesk';font-weight:700;font-size:1.08rem;margin-bottom:.2rem}
+.exp-card .company{color:var(--accent-2);font-size:.85rem;font-weight:500;margin-bottom:.7rem}
+.exp-card p{color:var(--text-secondary);font-size:.85rem}
+
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:1.2rem}
+.project-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;transition:all .35s;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.project-card::after{content:'';position:absolute;inset:0;border-radius:var(--radius);padding:1px;background:var(--gradient-main);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s}
+.project-card:hover::after{opacity:1}
+.project-card:hover{transform:translateY(-6px);box-shadow:0 16px 50px rgba(0,0,0,.35),var(--glow-purple)}
+.project-badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.65rem;color:var(--accent-3);margin-bottom:.8rem}
+.badge-dot{width:4px;height:4px;background:var(--accent-3);border-radius:50%}
+.project-card h3{font-family:'Space Grotesk';font-size:1.15rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:8px}
+.p-ic{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.p-ic svg.ic{width:13px;height:13px}
+.p-ic.i1{background:rgba(0,240,255,.08);color:var(--accent-1)}
+.p-ic.i2{background:rgba(0,255,136,.08);color:var(--accent-3)}
+.p-ic.i3{background:rgba(123,97,255,.08);color:var(--accent-2)}
+.p-ic.i4{background:rgba(255,61,113,.08);color:var(--accent-4)}
+.p-ic.i5{background:rgba(0,240,255,.08);color:var(--accent-1)}
+.project-card>p{color:var(--text-secondary);font-size:.87rem;flex-grow:1;line-height:1.65}
+.project-footer{display:flex;justify-content:space-between;align-items:center;margin-top:1.2rem}
+.project-link{display:inline-flex;align-items:center;gap:5px;color:var(--accent-1);text-decoration:none;font-size:.82rem;font-weight:600;transition:all .25s;position:relative;z-index:1}
+.project-link:hover{gap:8px}
+.project-link svg.ic{width:14px;height:14px;transition:transform .25s}
+.project-link:hover svg.ic{transform:translateX(3px)}
+
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+.contact-text p{color:var(--text-secondary);font-size:.96rem;margin-bottom:1.8rem;line-height:1.75}
+.contact-links{display:flex;flex-direction:column;gap:.8rem}
+.contact-link{display:flex;align-items:center;gap:1rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem 1.3rem;text-decoration:none;color:var(--text-primary);transition:all .3s}
+.contact-link:hover{border-color:var(--border-hover);transform:translateX(6px);box-shadow:var(--glow-cyan)}
+.cli{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cli svg.ic{width:19px;height:19px}
+.cli.em{background:rgba(0,240,255,.07);border:1px solid rgba(0,240,255,.1);color:var(--accent-1)}
+.cli.gh{background:rgba(123,97,255,.07);border:1px solid rgba(123,97,255,.1);color:var(--accent-2)}
+.cli.li{background:rgba(0,255,136,.07);border:1px solid rgba(0,255,136,.1);color:var(--accent-3)}
+.clt{display:flex;flex-direction:column}.clt small{font-size:.7rem;color:var(--text-muted);margin-bottom:1px}.clt span{font-weight:600;font-size:.9rem}
+.contact-cta{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:2.5rem;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.contact-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gradient-main)}
+.contact-cta h3{font-family:'Space Grotesk';font-size:1.6rem;font-weight:700;margin-bottom:.8rem}
+.contact-cta p{color:var(--text-secondary);font-size:.9rem;margin-bottom:1.5rem;max-width:320px}
+
+.footer{border-top:1px solid var(--border);padding:2rem 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.6rem}
+.footer p{color:var(--text-muted);font-size:.76rem}
+.footer a{color:var(--accent-1);text-decoration:none}
+.footer .build{font-family:var(--mono);font-size:.64rem;color:var(--text-muted)}
+
+.reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.4,0,.2,1)}.reveal.visible{opacity:1;transform:translateY(0)}
+.rd1{transition-delay:.08s}.rd2{transition-delay:.16s}.rd3{transition-delay:.24s}.rd4{transition-delay:.32s}.rd5{transition-delay:.4s}
+
+@media(max-width:900px){.hero-inner,.about-layout,.contact-layout{grid-template-columns:1fr}.skills-container,.projects-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.mobile-toggle{display:block}.nav-menu{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:rgba(4,6,11,.97);backdrop-filter:blur(30px);padding:1.2rem 2rem;gap:.2rem;border-bottom:1px solid var(--border)}.nav-menu.open{display:flex}.nav-menu a{padding:.7rem 1rem;width:100%}.hero-title{font-size:2.3rem;letter-spacing:-1px}section{padding:3.5rem 0}}
+@media(max-width:480px){.wrapper{padding:0 1.2rem}.stats-row{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-    <canvas id="particles-canvas"></canvas>
-    <div class="noise"></div>
-    <div class="scanlines"></div>
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
+<canvas id="particles-canvas"></canvas>
+<div class="noise"></div>
+<div class="scanlines"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
 
-    <nav class="navbar" id="navbar">
-        <a href="#" class="nav-brand">DM<span> / developer</span></a>
-        <ul class="nav-menu" id="navMenu">
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact" class="nav-cta">Contact</a></li>
-        </ul>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Menu"><span></span><span></span><span></span></button>
-    </nav>
+<nav class="navbar" id="navbar">
+<a href="#" class="nav-brand"><div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><span class="name">DM</span><span class="sep">/ developer</span></a>
+<ul class="nav-menu" id="navMenu">
+<li><a href="#about">About</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#experience">Experience</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#contact" class="nav-cta">Contact</a></li>
+</ul>
+<button class="mobile-toggle" id="mobileToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
 
-    <div class="wrapper">
-        <section class="hero" id="home">
-            <div class="hero-inner">
-                <div>
-                    <div class="hero-badge"><span class="badge-dot"></span> Open to opportunities</div>
-                    <h1 class="hero-title"><span>Hey, I'm</span><br><span class="g">Derek Muñoz</span><br><span class="sub">Computer Engineering Student</span></h1>
-                    <p class="hero-desc">Computer Engineering Student passionate about <strong style="color:var(--accent-1)">web development</strong> and <strong style="color:var(--accent-3)">cybersecurity</strong>. I love building creative, functional, and fun-to-use software.</p>
-                    <div class="hero-actions">
-                        <a href="#projects" class="btn btn-glow"><span>View projects</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-                        <a href="#contact" class="btn btn-ghost">Get in touch</a>
-                    </div>
-                </div>
-                <div class="hero-terminal">
-                    <div class="terminal-header"><span class="td r"></span><span class="td y"></span><span class="td g"></span><span class="terminal-title">derek@portfolio ~ zsh</span></div>
-                    <div class="terminal-body">
-                        <div class="tl"><span class="tp">❯</span> <span class="tc">whoami</span></div>
-                        <div class="tl"><span class="to">Derek Muñoz Solís</span></div><br>
-                        <div class="tl"><span class="tp">❯</span> <span class="tc">cat</span> <span class="ts">~/skills.json</span></div>
-                        <div class="tl"><span class="to">{</span></div>
-                        <div class="tl"><span class="to">&nbsp;&nbsp;<span class="tk">"languages"</span>: [<span class="ts">"Python"</span>],</span></div>
-                        <div class="tl"><span class="to">&nbsp;&nbsp;<span class="tk">"interests"</span>: [<span class="ts">"Web Dev"</span>, <span class="ts">"Cybersec"</span>],</span></div>
-                        <div class="tl"><span class="to">&nbsp;&nbsp;<span class="tk">"status"</span>: <span class="ts">"Always learning 🚀"</span></span></div>
-                        <div class="tl"><span class="to">}</span></div><br>
-                        <div class="tl"><span class="tp">❯</span> <span class="tc">echo</span> <span class="ts">"Let's build something amazing"</span></div>
-                        <div class="tl"><span class="to">Let's build something amazing</span></div><br>
-                        <div class="tl"><span class="tp">❯</span> <span class="cursor-blink"></span></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<div class="wrapper">
+<section class="hero" id="home"><div class="hero-inner">
+<div>
+<div class="hero-badge"><span class="badge-dot"></span> Open to opportunities</div>
+<h1 class="hero-title"><span>Hey, I'm</span><br><span class="g">Derek Muñoz</span><br><span class="sub">Computer Engineering Student</span></h1>
+<p class="hero-desc">Passionate about <strong style="color:var(--accent-1)">web development</strong> and <strong style="color:var(--accent-3)">cybersecurity</strong>. I build creative, functional software that people actually enjoy using.</p>
+<div class="hero-actions">
+<a href="#projects" class="btn btn-glow"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg> View projects</a>
+<a href="#contact" class="btn btn-ghost">Get in touch</a>
+</div>
+</div>
+<div class="hero-terminal">
+<div class="terminal-header"><span class="td r"></span><span class="td y"></span><span class="td g"></span><span class="terminal-title">derek@dev ~ zsh</span></div>
+<div class="terminal-body">
+<div><span class="tp">~</span> <span class="tc">whoami</span></div>
+<div><span class="tw">Derek Muñoz Solís</span></div><br>
+<div><span class="tp">~</span> <span class="tc">cat</span> <span class="ts">skills.json</span></div>
+<div><span class="tw">{</span></div>
+<div><span class="tw">&nbsp; <span class="tk">"stack"</span>: [<span class="ts">"Python"</span>, <span class="ts">"HTML/CSS/JS"</span>],</span></div>
+<div><span class="tw">&nbsp; <span class="tk">"focus"</span>: [<span class="ts">"Web Dev"</span>, <span class="ts">"Security"</span>],</span></div>
+<div><span class="tw">&nbsp; <span class="tk">"status"</span>: <span class="ts">"always shipping"</span></span></div>
+<div><span class="tw">}</span></div><br>
+<div><span class="tp">~</span> <span class="cursor-blink"></span></div>
+</div>
+</div>
+</div></section>
 
-        <section id="about">
-            <div class="section-header reveal"><div class="section-eyebrow">About</div><h2 class="section-heading">A little about my story</h2></div>
-            <div class="about-layout">
-                <div class="about-text reveal rd1">
-                    <p>I'm <strong>Derek Muñoz Solís</strong>, a first-year Computer Engineering student with a deep curiosity for technology. From the moment I discovered programming, I knew I wanted to build things that make an impact.</p>
-                    <p>I'm passionate about <span class="hl">web development</span> — the idea of creating digital experiences that people actually enjoy using drives me every day. At the same time, <span class="hl">cybersecurity</span> fascinates me: understanding how to protect systems and data is a challenge that keeps me constantly learning.</p>
-                    <p>I have over a year and a half of work experience as a call center agent, which has shaped my skills in <strong>effective communication</strong>, <strong>problem-solving under pressure</strong>, and <strong>teamwork</strong>. Now I'm channeling all that energy into software development.</p>
-                </div>
-                <div class="stats-row reveal rd2">
-                    <div class="stat-box"><div class="stat-value">1+</div><div class="stat-desc">Year in Computer Engineering</div></div>
-                    <div class="stat-box"><div class="stat-value">1.7</div><div class="stat-desc">Years of work experience</div></div>
-                    <div class="stat-box"><div class="stat-value">∞</div><div class="stat-desc">Eagerness to learn</div></div>
-                    <div class="stat-box"><div class="stat-value">24/7</div><div class="stat-desc">Learning mode</div></div>
-                </div>
-            </div>
-        </section>
+<section id="about">
+<div class="section-header reveal"><div class="section-eyebrow">About</div><h2 class="section-heading">A little about my story</h2></div>
+<div class="about-layout">
+<div class="about-text reveal rd1">
+<p>I'm <strong>Derek Muñoz Solís</strong>, a first-year Computer Engineering student with a deep curiosity for technology. From the moment I discovered programming, I knew I wanted to build things that make an impact.</p>
+<p>I'm passionate about <span class="hl">web development</span> — creating digital experiences people actually enjoy using. At the same time, <span class="hl">cybersecurity</span> fascinates me: understanding how to protect systems is a challenge that keeps me constantly learning.</p>
+<p>I have over a year and a half of work experience as a call center agent, which shaped my skills in <strong>communication</strong>, <strong>problem-solving under pressure</strong>, and <strong>teamwork</strong>. Now I'm channeling that into software development.</p>
+</div>
+<div class="stats-row reveal rd2">
+<div class="stat-box"><div class="stat-value">1+</div><div class="stat-desc">Year in Computer Engineering</div></div>
+<div class="stat-box"><div class="stat-value">1.7</div><div class="stat-desc">Years of work experience</div></div>
+<div class="stat-box"><div class="stat-value">5</div><div class="stat-desc">Projects shipped</div></div>
+<div class="stat-box"><div class="stat-value">24/7</div><div class="stat-desc">Learning mode</div></div>
+</div>
+</div>
+</section>
 
-        <section id="skills">
-            <div class="section-header reveal"><div class="section-eyebrow">Skills</div><h2 class="section-heading">My tech stack</h2><p class="section-sub">The tools I work with and the ones I'm actively learning to become a well-rounded developer.</p></div>
-            <div class="skills-container">
-                <div class="skill-tile reveal rd1"><div class="sti py">🐍</div><h3>Python</h3><p>My main language. I use it for scripting, automation, problem-solving, and building logic-driven applications.</p><div class="chips"><span class="chip cc">Scripts</span><span class="chip cc">Automation</span><span class="chip cc">Logic</span><span class="chip cc">POO</span></div></div>
-                <div class="skill-tile reveal rd2"><div class="sti wb">🌐</div><h3>Web Development</h3><p>Learning the core frontend technologies to create modern, interactive, and responsive web experiences.</p><div class="chips"><span class="chip cp">HTML5</span><span class="chip cp">CSS3</span><span class="chip cp">JavaScript</span><span class="chip cp">Responsive</span></div></div>
-                <div class="skill-tile reveal rd3"><div class="sti cy">🔒</div><h3>Cybersecurity</h3><p>Fascinated by information security. Constantly studying system protection, networks, and vulnerability assessment.</p><div class="chips"><span class="chip cg">Networks</span><span class="chip cg">Linux</span><span class="chip cg">Security</span><span class="chip cg">Ethical Hacking</span></div></div>
-                <div class="skill-tile reveal rd4"><div class="sti sf">💬</div><h3>Soft Skills</h3><p>1.7+ years in customer service gave me strong abilities in communication, leadership, and conflict resolution.</p><div class="chips"><span class="chip cr">Communication</span><span class="chip cr">Teamwork</span><span class="chip cr">Pressure</span><span class="chip cr">Leadership</span></div></div>
-            </div>
-        </section>
+<section id="skills">
+<div class="section-header reveal"><div class="section-eyebrow">Skills</div><h2 class="section-heading">My tech stack</h2><p class="section-sub">The tools I work with and the ones I'm actively learning.</p></div>
+<div class="skills-container">
+<div class="skill-tile reveal rd1"><div class="sti py"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12l2 2 4-4"/></svg></div><h3>Python</h3><p>My main language. Scripting, automation, problem-solving, and building logic-driven applications.</p><div class="chips"><span class="chip cc">Scripts</span><span class="chip cc">Automation</span><span class="chip cc">OOP</span></div></div>
+<div class="skill-tile reveal rd2"><div class="sti wb"><svg class="ic" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"/></svg></div><h3>Web Development</h3><p>Modern, interactive, responsive web experiences built from scratch with vanilla technologies.</p><div class="chips"><span class="chip cp">HTML5</span><span class="chip cp">CSS3</span><span class="chip cp">JavaScript</span></div></div>
+<div class="skill-tile reveal rd3"><div class="sti cy"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><h3>Cybersecurity</h3><p>Fascinated by information security. Studying system protection, networks, and vulnerability assessment.</p><div class="chips"><span class="chip cg">Networks</span><span class="chip cg">Linux</span><span class="chip cg">Security</span></div></div>
+<div class="skill-tile reveal rd4"><div class="sti sf"><svg class="ic" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><h3>Communication</h3><p>1.7+ years in customer service built strong skills in teamwork, leadership, and conflict resolution.</p><div class="chips"><span class="chip cr">Teamwork</span><span class="chip cr">Leadership</span><span class="chip cr">Pressure</span></div></div>
+</div>
+</section>
 
-        <section id="experience">
-            <div class="section-header reveal"><div class="section-eyebrow">Experience</div><h2 class="section-heading">My journey so far</h2></div>
-            <div class="exp-timeline reveal rd1">
-                <div class="exp-item"><div class="exp-date">2025 — Present</div><div class="exp-card"><h3>Computer Engineering Student</h3><div class="company">Universidad Hispanoamericana — First year</div><p>Pursuing a degree in Computer Engineering with a focus on software development, data structures, and cybersecurity fundamentals.</p><div class="exp-skills"><span class="chip cc">Python</span><span class="chip cp">Algoritmos</span><span class="chip cg">Networks</span></div></div></div>
-                <div class="exp-item"><div class="exp-date">2023 — 2025</div><div class="exp-card"><h3>Call Center Agent</h3><div class="company">Concentrix — 1 year and 7 months</div><p>Customer service, real-time problem resolution, handling complex situations under pressure, and effective communication.</p><div class="exp-skills"><span class="chip cr">Communication</span><span class="chip cr">Problem solving</span><span class="chip cr">Work under pressure</span></div></div></div>
-            </div>
-        </section>
+<section id="experience">
+<div class="section-header reveal"><div class="section-eyebrow">Experience</div><h2 class="section-heading">My journey so far</h2></div>
+<div class="exp-timeline reveal rd1">
+<div class="exp-item"><div class="exp-date">2025 — Present</div><div class="exp-card"><h3>Computer Engineering Student</h3><div class="company">Universidad Hispanoamericana — First year</div><p>Pursuing a degree focused on software development, data structures, algorithms, and cybersecurity fundamentals.</p><div class="chips"><span class="chip cc">Python</span><span class="chip cp">Algorithms</span><span class="chip cg">Networks</span></div></div></div>
+<div class="exp-item"><div class="exp-date">2023 — 2025</div><div class="exp-card"><h3>Customer Service Agent</h3><div class="company">Concentrix — 1 year 7 months</div><p>Real-time problem resolution, handling complex situations under pressure, and effective communication across channels.</p><div class="chips"><span class="chip cr">Communication</span><span class="chip cr">Problem solving</span></div></div></div>
+</div>
+</section>
 
-        <section id="projects">
-            <div class="section-header reveal"><div class="section-eyebrow">Projects</div><h2 class="section-heading">What I've built</h2><p class="section-sub">Every project is a chance to learn something new. This is just the beginning.</p></div>
-            <div class="projects-grid">
-                <div class="project-card reveal rd1">
-                    <div class="project-badge"><span class="badge-dot"></span> First project</div>
-                    <h3>🚀 Personal Portfolio</h3>
-                    <p>My first creation: this very website. Designed and built from scratch as my introduction to the tech world.</p>
-                    <div class="project-footer">
-                        <div class="chips"><span class="chip cp">HTML</span><span class="chip cp">CSS</span><span class="chip cp">JS</span></div>
-                        <a href="https://github.com/drame31" target="_blank" class="project-link">GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-                    </div>
-                </div>
-                <div class="project-card reveal rd2">
-                    <div class="project-badge"><span class="badge-dot"></span> Cybersecurity</div>
-                    <h3>🔒 CyberLock - Password Analyzer</h3>
-                    <p>Real-time password strength analyzer with a futuristic HUD interface. Features entropy calculation, crack time estimation, composition analysis and security audit.</p>
-                    <div class="project-footer">
-                        <div class="chips"><span class="chip cp">HTML</span><span class="chip cp">CSS</span><span class="chip cp">JS</span><span class="chip cg">Security</span></div>
-                        <a href="password-checker.html" target="_blank" class="project-link">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-                    </div>
-                </div>
-                <div class="project-card reveal rd3">
-                    <div class="project-badge"><span class="badge-dot"></span> Interactive App</div>
-                    <h3>🥁 BeatForge - Drum Machine</h3>
-                    <p>Interactive drum machine with animated characters, 16-step sequencer, live MPC pads, melody creator, party mode, combo system, and 4 visual themes. All sounds synthesized with Web Audio API.</p>
-                    <div class="project-footer">
-                        <div class="chips"><span class="chip cp">HTML</span><span class="chip cp">CSS</span><span class="chip cp">JS</span><span class="chip cc">Web Audio</span></div>
-                        <a href="beatforge.html" target="_blank" class="project-link">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-                    </div>
-                </div>
-                <div class="project-card reveal rd4">
-                    <div class="project-badge"><span class="badge-dot"></span> E-Commerce</div>
-                    <h3>🛒 VOLT Store - Tech E-Commerce</h3>
-                    <p>Full-featured e-commerce store with product catalog, filters, search, shopping cart, wishlist, discount codes, checkout flow, reviews carousel, and premium luxury dark UI.</p>
-                    <div class="project-footer">
-                        <div class="chips"><span class="chip cp">HTML</span><span class="chip cp">CSS</span><span class="chip cp">JS</span><span class="chip cc">E-Commerce</span></div>
-                        <a href="volt-store.html" target="_blank" class="project-link">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-                    </div>
-                </div>
-            </div>
-        </section>
+<section id="projects">
+<div class="section-header reveal"><div class="section-eyebrow">Projects</div><h2 class="section-heading">What I've built</h2><p class="section-sub">Each project taught me something different. This is just the start.</p></div>
+<div class="projects-grid">
+<div class="project-card reveal rd1">
+<div class="project-badge"><span class="badge-dot"></span> Portfolio</div>
+<h3><span class="p-ic i1"><svg class="ic" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span> Personal Portfolio</h3>
+<p>This website. Designed and coded from scratch as my professional entry point into the tech world.</p>
+<div class="project-footer"><div class="chips"><span class="chip cp">HTML</span><span class="chip cp">CSS</span><span class="chip cp">JS</span></div><a href="https://github.com/drame31" target="_blank" class="project-link">Source <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+<div class="project-card reveal rd2">
+<div class="project-badge"><span class="badge-dot"></span> Security</div>
+<h3><span class="p-ic i2"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span> CyberLock</h3>
+<p>Real-time password strength analyzer with entropy calculation, crack time estimation, and full security audit.</p>
+<div class="project-footer"><div class="chips"><span class="chip cp">JS</span><span class="chip cg">Security</span></div><a href="password-checker.html" target="_blank" class="project-link">View <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+<div class="project-card reveal rd3">
+<div class="project-badge"><span class="badge-dot"></span> Interactive</div>
+<h3><span class="p-ic i3"><svg class="ic" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span> BeatForge</h3>
+<p>Drum machine with 16-step sequencer, live MPC pads, melody creator, combo system, and 4 themes. Web Audio API.</p>
+<div class="project-footer"><div class="chips"><span class="chip cp">JS</span><span class="chip cc">Web Audio</span></div><a href="beatforge.html" target="_blank" class="project-link">View <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+<div class="project-card reveal rd4">
+<div class="project-badge"><span class="badge-dot"></span> E-Commerce</div>
+<h3><span class="p-ic i4"><svg class="ic" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></span> VOLT Store</h3>
+<p>Full e-commerce with catalog, filters, cart, wishlist, discount codes, checkout, reviews, and dark luxury UI.</p>
+<div class="project-footer"><div class="chips"><span class="chip cp">HTML</span><span class="chip cp">CSS</span><span class="chip cp">JS</span></div><a href="volt-store.html" target="_blank" class="project-link">View <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+<div class="project-card reveal rd5">
+<div class="project-badge"><span class="badge-dot"></span> Dashboard</div>
+<h3><span class="p-ic i5"><svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span> Nexus Analytics</h3>
+<p>Enterprise analytics dashboard with Chart.js, KPIs, data tables with sort/filter/pagination, dark/light mode, live data.</p>
+<div class="project-footer"><div class="chips"><span class="chip cp">JS</span><span class="chip cc">Chart.js</span></div><a href="nexus-dashboard.html" target="_blank" class="project-link">View <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+</div>
+</section>
 
-        <section id="contact">
-            <div class="section-header reveal"><div class="section-eyebrow">Contact</div><h2 class="section-heading">Let's work together</h2></div>
-            <div class="contact-layout">
-                <div class="contact-text reveal rd1">
-                    <p>Got an interesting project, a job opportunity, or just want to connect? I'd love to hear from you. I'm open to positions in web development, cybersecurity, and any opportunity where I can learn and contribute.</p>
-                    <div class="contact-links">
-                        <a href="mailto:derekmzm@gmail.com" class="contact-link"><div class="cli em">✉️</div><div class="clt"><small>Email</small><span>derekmzm@gmail.com</span></div></a>
-                        <a href="https://github.com/drame31" target="_blank" class="contact-link"><div class="cli gh">⌨️</div><div class="clt"><small>GitHub</small><span>drame31</span></div></a>
-                        <a href="https://www.linkedin.com/in/derek-m-81b055230" target="_blank" class="contact-link"><div class="cli li">💼</div><div class="clt"><small>LinkedIn</small><span>Derek Muñoz</span></div></a>
-                    </div>
-                </div>
-                <div class="contact-cta reveal rd2"><h3>Ready to<br>connect? 🤝</h3><p>I'm always interested in new opportunities and connections in the tech world.</p><a href="mailto:derekmzm@gmail.com" class="btn btn-glow"><span>Send a message</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
-            </div>
-        </section>
-    </div>
+<section id="contact">
+<div class="section-header reveal"><div class="section-eyebrow">Contact</div><h2 class="section-heading">Let's work together</h2></div>
+<div class="contact-layout">
+<div class="contact-text reveal rd1">
+<p>Got an interesting project, a job opportunity, or just want to connect? I'd love to hear from you. I'm open to positions in web development, cybersecurity, and any opportunity where I can learn and contribute.</p>
+<div class="contact-links">
+<a href="mailto:derekmzm@gmail.com" class="contact-link"><div class="cli em"><svg class="ic" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="clt"><small>Email</small><span>derekmzm@gmail.com</span></div></a>
+<a href="https://github.com/drame31" target="_blank" class="contact-link"><div class="cli gh"><svg class="ic" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg></div><div class="clt"><small>GitHub</small><span>drame31</span></div></a>
+<a href="https://www.linkedin.com/in/derek-m-81b055230" target="_blank" class="contact-link"><div class="cli li"><svg class="ic" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div><div class="clt"><small>LinkedIn</small><span>Derek Muñoz</span></div></a>
+</div>
+</div>
+<div class="contact-cta reveal rd2"><h3>Ready to<br>connect?</h3><p>Always interested in new opportunities and connections in the tech world.</p><a href="mailto:derekmzm@gmail.com" class="btn btn-glow"><svg class="ic" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Send a message</a></div>
+</div>
+</section>
+</div>
 
-    <footer class="footer"><div class="wrapper"><p>© 2025 Derek Muñoz Solís — All rights reserved</p><p class="tcmd"><span>~$</span> echo "Built with passion, coffee, and lots of lines of code" ☕</p></div></footer>
+<footer><div class="wrapper"><div class="footer"><p>© 2025 Derek Muñoz Solís</p><p class="build">rev 3.2 · deployed <span id="dep"></span></p></div></div></footer>
 
-    <script>
-        const canvas=document.getElementById('particles-canvas'),ctx=canvas.getContext('2d');let particles=[],mouse={x:null,y:null};
-        function resize(){canvas.width=innerWidth;canvas.height=innerHeight}resize();addEventListener('resize',()=>{resize();initP()});addEventListener('mousemove',e=>{mouse.x=e.x;mouse.y=e.y});
-        class P{constructor(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.s=Math.random()*1.5+.3;this.sx=(Math.random()-.5)*.4;this.sy=(Math.random()-.5)*.4;this.o=Math.random()*.5+.1;this.c=Math.random()>.5?'0,240,255':'123,97,255'}update(){this.x+=this.sx;this.y+=this.sy;if(this.x>canvas.width)this.x=0;if(this.x<0)this.x=canvas.width;if(this.y>canvas.height)this.y=0;if(this.y<0)this.y=canvas.height;if(mouse.x!==null){const dx=mouse.x-this.x,dy=mouse.y-this.y,d=Math.sqrt(dx*dx+dy*dy);if(d<120){this.x-=dx*.01;this.y-=dy*.01}}}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fillStyle=`rgba(${this.c},${this.o})`;ctx.fill()}}
-        function initP(){const n=Math.min(90,Math.floor(innerWidth*.06));particles=[];for(let i=0;i<n;i++)particles.push(new P())}initP();
-        function connect(){for(let a=0;a<particles.length;a++)for(let b=a+1;b<particles.length;b++){const dx=particles[a].x-particles[b].x,dy=particles[a].y-particles[b].y,d=Math.sqrt(dx*dx+dy*dy);if(d<150){const o=(1-d/150)*.12;ctx.beginPath();ctx.strokeStyle=`rgba(0,240,255,${o})`;ctx.lineWidth=.5;ctx.moveTo(particles[a].x,particles[a].y);ctx.lineTo(particles[b].x,particles[b].y);ctx.stroke()}}}
-        function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.update();p.draw()});connect();requestAnimationFrame(animate)}animate();
-        addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',scrollY>50)});
-        const mt=document.getElementById('mobileToggle'),nm=document.getElementById('navMenu');mt.addEventListener('click',()=>{mt.classList.toggle('active');nm.classList.toggle('open')});document.querySelectorAll('.nav-menu a').forEach(a=>{a.addEventListener('click',()=>{mt.classList.remove('active');nm.classList.remove('open')})});
-        const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1,rootMargin:'0px 0px -50px 0px'});document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-        document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
-    </script>
+<script>
+document.getElementById('dep').textContent=new Date().toLocaleDateString('en',{month:'short',day:'numeric'});
+
+// Particles
+const canvas=document.getElementById('particles-canvas'),ctx=canvas.getContext('2d');let particles=[],mouse={x:null,y:null};
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}resize();addEventListener('resize',()=>{resize();initP()});addEventListener('mousemove',e=>{mouse.x=e.x;mouse.y=e.y});
+class Pt{constructor(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.s=Math.random()*1.3+.3;this.sx=(Math.random()-.5)*.35;this.sy=(Math.random()-.5)*.35;this.o=Math.random()*.45+.08;this.c=Math.random()>.5?'0,240,255':'123,97,255'}update(){this.x+=this.sx;this.y+=this.sy;if(this.x>canvas.width)this.x=0;if(this.x<0)this.x=canvas.width;if(this.y>canvas.height)this.y=0;if(this.y<0)this.y=canvas.height;if(mouse.x!==null){const dx=mouse.x-this.x,dy=mouse.y-this.y,d=Math.sqrt(dx*dx+dy*dy);if(d<110){this.x-=dx*.008;this.y-=dy*.008}}}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fillStyle=`rgba(${this.c},${this.o})`;ctx.fill()}}
+function initP(){const n=Math.min(80,Math.floor(innerWidth*.05));particles=[];for(let i=0;i<n;i++)particles.push(new Pt())}initP();
+function connect(){for(let a=0;a<particles.length;a++)for(let b=a+1;b<particles.length;b++){const dx=particles[a].x-particles[b].x,dy=particles[a].y-particles[b].y,d=Math.sqrt(dx*dx+dy*dy);if(d<140){const o=(1-d/140)*.1;ctx.beginPath();ctx.strokeStyle=`rgba(0,240,255,${o})`;ctx.lineWidth=.4;ctx.moveTo(particles[a].x,particles[a].y);ctx.lineTo(particles[b].x,particles[b].y);ctx.stroke()}}}
+function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.update();p.draw()});connect();requestAnimationFrame(animate)}animate();
+
+addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>50));
+const mt=document.getElementById('mobileToggle'),nm=document.getElementById('navMenu');
+mt.addEventListener('click',()=>{mt.classList.toggle('active');nm.classList.toggle('open')});
+document.querySelectorAll('.nav-menu a').forEach(a=>{a.addEventListener('click',()=>{mt.classList.remove('active');nm.classList.remove('open')})});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'})})});
+</script>
 </body>
 </html>
