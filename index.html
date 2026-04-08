@@ -134,8 +134,11 @@ section{padding:6rem 0}
 .pp-portfolio .pp-icon{background:rgba(96,165,250,.15);border:1px solid rgba(96,165,250,.22);color:var(--accent-1)}
 .pp-security{background:linear-gradient(135deg,#0d2820 0%,#0f1d30 100%)}
 .pp-security .pp-icon{background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.22);color:var(--accent-3)}
-.pp-audio{background:linear-gradient(135deg,#1e1240 0%,#0f1d30 100%)}
+.pp-audio{background:linear-gradient(135deg,#1a0e38 0%,#0d1526 100%)}
 .pp-audio .pp-icon{background:rgba(167,139,250,.15);border:1px solid rgba(167,139,250,.22);color:var(--accent-2)}
+.pp-audio-bars{position:absolute;bottom:0;left:0;right:0;display:flex;align-items:flex-end;gap:2px;padding:0 10px;height:60px;pointer-events:none}
+.pp-ab{flex:1;border-radius:2px 2px 0 0;opacity:.35;animation:abP var(--d) ease-in-out infinite var(--dl) alternate}
+@keyframes abP{0%{height:10%}100%{height:var(--h)}}
 .pp-store{background:linear-gradient(135deg,#2a1a08 0%,#0f1d30 100%)}
 .pp-store .pp-icon{background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.22);color:#fbbf24}
 .pp-analytics{background:linear-gradient(135deg,#0a1e32 0%,#0f1d30 100%)}
@@ -281,11 +284,27 @@ section{padding:6rem 0}
 <div class="project-footer"><div class="chips"><span class="chip cp">JS</span><span class="chip cg">Security</span></div><a href="password-checker.html" target="_blank" class="project-link">View <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
 </div>
 <div class="project-card reveal rd3">
-<div class="project-preview pp-audio"><div class="pp-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div></div>
+<div class="project-preview pp-audio">
+<div class="pp-audio-bars">
+<div class="pp-ab" style="--h:45%;--d:1.1s;--dl:0s;background:var(--accent-2)"></div>
+<div class="pp-ab" style="--h:80%;--d:.9s;--dl:.1s;background:var(--accent-1)"></div>
+<div class="pp-ab" style="--h:55%;--d:1.3s;--dl:.2s;background:var(--accent-2)"></div>
+<div class="pp-ab" style="--h:95%;--d:.8s;--dl:.05s;background:#f472b6"></div>
+<div class="pp-ab" style="--h:40%;--d:1.2s;--dl:.3s;background:var(--accent-1)"></div>
+<div class="pp-ab" style="--h:70%;--d:1.0s;--dl:.15s;background:var(--accent-3)"></div>
+<div class="pp-ab" style="--h:30%;--d:1.4s;--dl:.25s;background:var(--accent-2)"></div>
+<div class="pp-ab" style="--h:85%;--d:.85s;--dl:.1s;background:#f472b6"></div>
+<div class="pp-ab" style="--h:60%;--d:1.15s;--dl:.35s;background:var(--accent-1)"></div>
+<div class="pp-ab" style="--h:50%;--d:.95s;--dl:.2s;background:var(--accent-3)"></div>
+<div class="pp-ab" style="--h:90%;--d:1.25s;--dl:.05s;background:var(--accent-2)"></div>
+<div class="pp-ab" style="--h:35%;--d:1.05s;--dl:.4s;background:var(--accent-1)"></div>
+</div>
+<div class="pp-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+</div>
 <div class="project-badge"><span class="badge-dot-sm"></span> Interactive</div>
 <h3>BeatForge</h3>
-<p>Drum machine with 16-step sequencer, live MPC pads, melody creator, combo system, and 4 themes. Web Audio API.</p>
-<div class="project-footer"><div class="chips"><span class="chip cp">JS</span><span class="chip cc">Web Audio</span></div><a href="beatforge.html" target="_blank" class="project-link">View <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+<p>Browser-based drum machine powered by the Web Audio API. 8-track 16-step sequencer, live MPC pads, real-time audio synthesis <strong>from scratch</strong> — no libraries, no frameworks.</p>
+<div class="project-footer"><div class="chips"><span class="chip cp">JavaScript</span><span class="chip cc">Web Audio API</span><span class="chip cc">Audio Synthesis</span><span class="chip cp">LocalStorage</span></div><a href="beatforge.html" target="_blank" class="project-link">Live demo <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
 </div>
 <div class="project-card reveal rd4">
 <div class="project-preview pp-store"><div class="pp-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div></div>

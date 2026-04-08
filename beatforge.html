@@ -155,12 +155,64 @@ body.theme-vapor{--bg:#1a0033;--bg2:#2a004d;--bg3:#330066;--bg4:#440077;--fire:#
 @keyframes fadeIn{to{opacity:1;transform:translateY(0)}}
 
 @media(max-width:768px){.main{padding:8px 6px}.track-i,.melody-i{width:62px}.track-n{font-size:0.5rem}.track-v{display:none}.step,.melody-step{height:20px}.brand-sub{display:none}.char-body{width:36px;height:50px}.stage{min-height:85px}.pads-grid{grid-template-columns:repeat(4,1fr)}.combo-display{top:60px;right:10px}.combo-count{font-size:1.5rem}}
+
+/* ── WELCOME OVERLAY ── */
+.wov{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;background:rgba(8,8,12,0.94);backdrop-filter:blur(16px);transition:opacity .5s}
+.wov.hidden{opacity:0;pointer-events:none}
+.wmod{background:var(--bg2);border:1px solid rgba(255,100,50,.22);border-radius:14px;padding:30px 34px;max-width:500px;width:92%;position:relative;box-shadow:0 0 80px rgba(255,100,50,.06),0 30px 60px rgba(0,0,0,.6)}
+.wmod::before{content:'';position:absolute;top:0;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,var(--fire),var(--gold),var(--fire),transparent)}
+.wt{font-family:'Anybody',sans-serif;font-size:1.9rem;font-weight:900;letter-spacing:4px;background:linear-gradient(135deg,var(--fire),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.ws{font-family:'DM Mono',monospace;font-size:.48rem;color:var(--text-dim);letter-spacing:3px;margin-top:4px;margin-bottom:22px}
+.wg{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px}
+.wg h4{font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:3px;color:var(--fire);opacity:.9;margin-bottom:10px}
+.kr{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.kb{background:var(--bg4);border:1px solid rgba(255,255,255,.08);border-radius:4px;padding:2px 8px;font-family:'DM Mono',monospace;font-size:.58rem;color:var(--text-bright);min-width:48px;text-align:center;box-shadow:0 2px 0 rgba(0,0,0,.4)}
+.kd{font-size:.6rem;color:var(--text-dim)}
+.fl{list-style:none}
+.fl li{font-size:.61rem;color:var(--text);padding:3px 0;display:flex;align-items:flex-start;gap:7px;line-height:1.4}
+.fl li::before{content:'◆';color:var(--fire);font-size:.38rem;flex-shrink:0;margin-top:3px}
+.wbtn{width:100%;padding:13px;background:linear-gradient(135deg,var(--fire),var(--ember));color:#fff;border:none;border-radius:8px;font-family:'Anybody',sans-serif;font-size:.9rem;font-weight:800;letter-spacing:2px;cursor:pointer;transition:all .3s;box-shadow:0 0 25px rgba(255,100,50,.2)}
+.wbtn:hover{box-shadow:0 0 40px rgba(255,100,50,.4);transform:translateY(-2px)}
+.wskip{display:block;text-align:center;margin-top:10px;font-family:'DM Mono',monospace;font-size:.46rem;color:var(--text-dim);cursor:pointer;letter-spacing:2px;transition:color .2s}
+.wskip:hover{color:var(--text)}
+@media(max-width:480px){.wg{grid-template-columns:1fr}.wmod{padding:22px 20px}}
 </style>
 </head>
 <body>
 <div class="bg-grid"></div>
 <div class="bg-glow"></div>
 <div class="party-flash" id="partyFlash"></div>
+
+<!-- WELCOME OVERLAY -->
+<div class="wov" id="wov">
+    <div class="wmod">
+        <div class="wt">BEATFORGE</div>
+        <div class="ws">INTERACTIVE DRUM MACHINE · WEB AUDIO API · VANILLA JS</div>
+        <div class="wg">
+            <div>
+                <h4>KEYBOARD SHORTCUTS</h4>
+                <div class="kr"><span class="kb">SPACE</span><span class="kd">Play / Stop</span></div>
+                <div class="kr"><span class="kb">A S D F</span><span class="kd">Live pads 1–4</span></div>
+                <div class="kr"><span class="kb">G H J K</span><span class="kd">Live pads 5–8</span></div>
+            </div>
+            <div>
+                <h4>FEATURES</h4>
+                <ul class="fl">
+                    <li>8-track, 16-step sequencer</li>
+                    <li>Live MPC pad performance</li>
+                    <li>Melody creator (C4–C5)</li>
+                    <li>Audio synthesis — no libraries</li>
+                    <li>6 genre presets + randomizer</li>
+                    <li>Swing & BPM controls</li>
+                    <li>Combo multiplier system</li>
+                    <li>4 themes · Save/Load slots</li>
+                </ul>
+            </div>
+        </div>
+        <button class="wbtn" id="wstart">▶ &nbsp;START MAKING BEATS</button>
+        <span class="wskip" id="wskip">press anywhere to dismiss</span>
+    </div>
+</div>
 
 <!-- COMBO -->
 <div class="combo-display" id="comboDisplay">
@@ -175,6 +227,7 @@ body.theme-vapor{--bg:#1a0033;--bg2:#2a004d;--bg3:#330066;--bg4:#440077;--fire:#
         <button class="theme-btn" data-theme="retro">RETRO</button>
         <button class="theme-btn" data-theme="matrix">MATRIX</button>
         <button class="theme-btn" data-theme="vapor">VAPOR</button>
+        <button class="theme-btn" id="helpBtn" title="Show keyboard guide">?</button>
         <a href="https://drame31.github.io" class="top-link">← PORTFOLIO</a>
     </div>
 </div>
@@ -238,7 +291,10 @@ body.theme-vapor{--bg:#1a0033;--bg2:#2a004d;--bg3:#330066;--bg4:#440077;--fire:#
         </div>
     </div>
 </div>
-<footer class="footer"><p>Built by <a href="https://drame31.github.io">Derek Muñoz Solís</a> — BeatForge Ultimate</p></footer>
+<footer class="footer">
+    <p>Built by <a href="https://drame31.github.io">Derek Muñoz Solís</a> &mdash; BeatForge Ultimate &nbsp;·&nbsp; Web Audio API &nbsp;·&nbsp; Vanilla JS &nbsp;·&nbsp; Zero dependencies</p>
+    <p><a href="https://github.com/drame31" style="opacity:.5">github.com/drame31</a></p>
+</footer>
 
 <script>
 // ═══════════════════════════════════════════
@@ -587,6 +643,17 @@ document.addEventListener('keydown',e=>{
         const pads=document.querySelectorAll('.pad');pads[i]?.classList.add('hit');setTimeout(()=>pads[i]?.classList.remove('hit'),150);
     }
 });
+
+// ═══════════════════════════════════════════
+// WELCOME OVERLAY
+// ═══════════════════════════════════════════
+const wov=document.getElementById('wov');
+function closeWelcome(){wov.classList.add('hidden');setTimeout(()=>wov.style.display='none',500)}
+function showWelcome(){wov.style.display='flex';setTimeout(()=>wov.classList.remove('hidden'),10)}
+document.getElementById('wstart').addEventListener('click',()=>{closeWelcome();startP()});
+document.getElementById('wskip').addEventListener('click',closeWelcome);
+wov.addEventListener('click',e=>{if(e.target===wov)closeWelcome()});
+document.getElementById('helpBtn').addEventListener('click',showWelcome);
 
 // INIT
 buildStage();buildPads();buildSN();buildSeq();buildMelody();lp('hiphop');
