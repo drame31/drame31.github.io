@@ -154,8 +154,15 @@ section{padding:6rem 0}
 .pp-st:nth-child(4) svg{stroke:rgba(77,166,255,.7)}
 .pp-store-price{position:absolute;bottom:10px;right:10px;font-family:var(--mono);font-size:.6rem;color:rgba(201,168,76,.7);background:rgba(0,0,0,.3);padding:2px 7px;border-radius:4px;border:1px solid rgba(201,168,76,.15);pointer-events:none;animation:priceFloat 3s ease-in-out infinite}
 @keyframes priceFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-.pp-analytics{background:linear-gradient(135deg,#0a1e32 0%,#0f1d30 100%)}
-.pp-analytics .pp-icon{background:rgba(56,189,248,.15);border:1px solid rgba(56,189,248,.22);color:#38bdf8}
+.pp-analytics{background:linear-gradient(135deg,#08100e 0%,#080e18 100%)}
+.pp-analytics .pp-icon{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.22);color:#10b981;z-index:1;position:relative}
+.pp-an-bars{position:absolute;bottom:0;left:0;right:0;height:75px;display:flex;align-items:flex-end;gap:3px;padding:0 10px;pointer-events:none}
+.pp-an-bar{flex:1;border-radius:2px 2px 0 0;animation:anB var(--d) ease-in-out infinite var(--dl) alternate}
+.pp-an-bar:nth-child(odd){background:rgba(16,185,129,.35)}
+.pp-an-bar:nth-child(even){background:rgba(59,130,246,.3)}
+@keyframes anB{0%{height:15%}100%{height:var(--h)}}
+.pp-an-kpi{position:absolute;top:8px;left:8px;font-family:var(--mono);font-size:.56rem;color:rgba(16,185,129,.9);background:rgba(0,0,0,.35);padding:2px 8px;border-radius:4px;border:1px solid rgba(16,185,129,.18);pointer-events:none;letter-spacing:.5px}
+.pp-an-kpi2{position:absolute;top:8px;right:8px;font-family:var(--mono);font-size:.56rem;color:rgba(59,130,246,.9);background:rgba(0,0,0,.35);padding:2px 8px;border-radius:4px;border:1px solid rgba(59,130,246,.18);pointer-events:none;letter-spacing:.5px}
 .project-badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.65rem;color:var(--accent-3);margin-bottom:.8rem}
 .badge-dot-sm{width:4px;height:4px;background:var(--accent-3);border-radius:50%}
 .project-card h3{font-family:'Space Grotesk';font-size:1.15rem;font-weight:700;margin-bottom:.5rem}
@@ -336,11 +343,27 @@ section{padding:6rem 0}
 <div class="project-footer"><div class="chips"><span class="chip cp">JavaScript</span><span class="chip cc">LocalStorage</span><span class="chip cp">UI/UX</span><span class="chip cc">Cart Logic</span></div><a href="volt-store.html" target="_blank" class="project-link">Live demo <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
 </div>
 <div class="project-card reveal rd5">
-<div class="project-preview pp-analytics"><div class="pp-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></div></div>
+<div class="project-preview pp-analytics">
+<div class="pp-an-bars">
+  <div class="pp-an-bar" style="--h:40%;--d:1.1s;--dl:0s"></div>
+  <div class="pp-an-bar" style="--h:75%;--d:.9s;--dl:.1s"></div>
+  <div class="pp-an-bar" style="--h:55%;--d:1.3s;--dl:.05s"></div>
+  <div class="pp-an-bar" style="--h:90%;--d:.85s;--dl:.15s"></div>
+  <div class="pp-an-bar" style="--h:45%;--d:1.2s;--dl:.2s"></div>
+  <div class="pp-an-bar" style="--h:80%;--d:1.0s;--dl:.08s"></div>
+  <div class="pp-an-bar" style="--h:60%;--d:1.15s;--dl:.25s"></div>
+  <div class="pp-an-bar" style="--h:35%;--d:.95s;--dl:.12s"></div>
+  <div class="pp-an-bar" style="--h:70%;--d:1.25s;--dl:.18s"></div>
+  <div class="pp-an-bar" style="--h:50%;--d:1.05s;--dl:.3s"></div>
+</div>
+<div class="pp-an-kpi">$84.6k ↑12.5%</div>
+<div class="pp-an-kpi2">2.8k users</div>
+<div class="pp-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></div>
+</div>
 <div class="project-badge"><span class="badge-dot-sm"></span> Dashboard</div>
 <h3>Nexus Analytics</h3>
-<p>Enterprise analytics dashboard with Chart.js, KPIs, data tables with sort/filter/pagination, dark/light mode, live data.</p>
-<div class="project-footer"><div class="chips"><span class="chip cp">JS</span><span class="chip cc">Chart.js</span></div><a href="nexus-dashboard.html" target="_blank" class="project-link">View <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+<p>Enterprise analytics dashboard. 5 Chart.js visualizations, real-time KPIs, collapsible sidebar, working <strong>CSV export</strong>, table with search/sort/pagination, and dark/light mode.</p>
+<div class="project-footer"><div class="chips"><span class="chip cp">JavaScript</span><span class="chip cc">Chart.js</span><span class="chip cc">LocalStorage</span><span class="chip cp">Data Tables</span></div><a href="nexus-dashboard.html" target="_blank" class="project-link">Live demo <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
 </div>
 </div>
 </section>

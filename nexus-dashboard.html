@@ -265,6 +265,32 @@ tbody td{padding:9px 10px;border-bottom:1px solid var(--border);font-size:.78rem
 .mob-ov.show{display:block}
 .toast-c{position:fixed;bottom:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:5px}
 .toast{background:var(--surface);border:1px solid var(--border-2);border-radius:8px;padding:9px 14px;font-size:.74rem;font-weight:500;box-shadow:var(--shadow);border-left:2px solid var(--accent);animation:fadeIn .25s ease}
+
+/* ═══ KPI ACCENT TOPS ═══ */
+.kpi-row>.kpi:nth-child(1)::before,.kpi-row>.kpi:nth-child(2)::before,.kpi-row>.kpi:nth-child(3)::before,.kpi-row>.kpi:nth-child(4)::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:10px 10px 0 0}
+.kpi-row>.kpi:nth-child(1)::before{background:linear-gradient(90deg,var(--accent),transparent)}
+.kpi-row>.kpi:nth-child(2)::before{background:linear-gradient(90deg,var(--blue),transparent)}
+.kpi-row>.kpi:nth-child(3)::before{background:linear-gradient(90deg,var(--amber),transparent)}
+.kpi-row>.kpi:nth-child(4)::before{background:linear-gradient(90deg,var(--violet),transparent)}
+.kpi canvas{opacity:.45!important}
+
+/* ═══ LIVE BADGE ═══ */
+.live-badge{display:inline-flex;align-items:center;gap:5px;font-family:'IBM Plex Mono';font-size:.55rem;font-weight:500;color:var(--accent);background:var(--accent-bg);border:1px solid rgba(16,185,129,.22);padding:2px 8px;border-radius:4px;vertical-align:middle;margin-left:10px;letter-spacing:.5px}
+.live-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;flex-shrink:0}
+
+/* ═══ CARD POLISH ═══ */
+.card{transition:border-color .2s,box-shadow .2s}
+.card:hover{box-shadow:var(--shadow)}
+.card-hd{padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:14px}
+
+/* ═══ TABLE ROW HIGHLIGHT ═══ */
+tbody tr{cursor:pointer}
+tbody tr:hover td:first-child{color:var(--accent)}
+
+/* ═══ FOOTER ═══ */
+.ft-stack{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.ft-stack span{font-family:'IBM Plex Mono';font-size:.56rem;color:var(--text-3);background:var(--bg-3);border:1px solid var(--border);border-radius:3px;padding:1px 6px}
+.dash-ft{padding:14px 20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 </style>
 </head>
 <body>
@@ -306,7 +332,7 @@ tbody td{padding:9px 10px;border-bottom:1px solid var(--border);font-size:.78rem
 <div class="top-r">
 <div class="top-srch"><svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search..."><kbd>/</kbd></div>
 <div class="top-clock" id="clock"></div>
-<button class="tbtn" id="thBtn" title="Toggle theme"><span class="theme-icon"></span></button>
+<button class="tbtn" id="thBtn" title="Toggle theme (Ctrl+D)"><svg class="ic" id="thIco" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
 <div style="position:relative"><button class="tbtn" id="nBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="dot"></span></button>
 <div class="notif-p" id="nP">
 <div class="np-h"><h3>Notifications</h3><span onclick="document.getElementById('nP').classList.remove('open');toast('Marked as read')">Clear all</span></div>
@@ -321,12 +347,12 @@ tbody td{padding:9px 10px;border-bottom:1px solid var(--border);font-size:.78rem
 <main class="ct">
 <div class="pg-h fi">
 <div class="pg-row">
-<div><div class="pg-t" id="greet">Dashboard</div><div class="pg-s">Here's an overview of your store performance.</div></div>
+<div><div class="pg-t" id="greet">Dashboard<span class="live-badge"><span class="live-dot"></span>LIVE</span></div><div class="pg-s">Real-time overview of store performance &mdash; updates every 8s</div></div>
 <div>
 <div class="pg-acts">
 <button class="btn-s" onclick="location.reload()"><svg class="ic" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg> Refresh</button>
 <div class="dr-sel"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><select id="dr"><option>Last 30 days</option><option>Last 7 days</option><option>Last 90 days</option><option>This year</option></select></div>
-<button class="btn-p" onclick="toast('Report exported')"><svg class="ic" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</button>
+<button class="btn-p" onclick="exportCSV()"><svg class="ic" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export CSV</button>
 </div>
 <div class="last-sync" id="syncTime"></div>
 </div>
@@ -372,7 +398,10 @@ tbody td{padding:9px 10px;border-bottom:1px solid var(--border);font-size:.78rem
 </div>
 
 </main>
-<footer class="dash-ft"><p>© 2025 Nexus Analytics — <a href="https://drame31.github.io" target="_blank">Derek Muñoz Solís</a></p><p style="font-family:'IBM Plex Mono';font-size:.6rem;color:var(--text-3)">build 2.4.1-stable</p></footer>
+<footer class="dash-ft">
+  <div><p>© 2025 Nexus Analytics — <a href="https://drame31.github.io" target="_blank">Derek Muñoz Solís</a></p><div class="ft-stack"><span>Chart.js 4.4</span><span>Vanilla JS</span><span>LocalStorage</span><span>Zero deps</span></div></div>
+  <p style="font-family:'IBM Plex Mono';font-size:.58rem;color:var(--text-3)">build 2.4.1 · <kbd style="background:var(--bg-3);border:1px solid var(--border);padding:1px 5px;border-radius:3px">Ctrl+B</kbd> sidebar &nbsp;<kbd style="background:var(--bg-3);border:1px solid var(--border);padding:1px 5px;border-radius:3px">Ctrl+D</kbd> theme &nbsp;<kbd style="background:var(--bg-3);border:1px solid var(--border);padding:1px 5px;border-radius:3px">/</kbd> search</p>
+</footer>
 </div>
 </div>
 
@@ -381,8 +410,12 @@ tbody td{padding:9px 10px;border-bottom:1px solid var(--border);font-size:.78rem
 <script>
 // Theme
 const isDark=()=>document.documentElement.dataset.theme==='dark';
-document.getElementById('thBtn').onclick=()=>{document.documentElement.dataset.theme=isDark()?'light':'dark';localStorage.setItem('nx_th',document.documentElement.dataset.theme);reCharts()};
+const sunIco=`<svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+const moonIco=`<svg class="ic" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>`;
+function updThIco(){document.getElementById('thIco').outerHTML=(isDark()?sunIco:moonIco).replace('class="ic"','class="ic" id="thIco"')}
+document.getElementById('thBtn').onclick=()=>{document.documentElement.dataset.theme=isDark()?'light':'dark';localStorage.setItem('nx_th',document.documentElement.dataset.theme);reCharts();updThIco()};
 if(localStorage.getItem('nx_th'))document.documentElement.dataset.theme=localStorage.getItem('nx_th');
+updThIco();
 
 // Clock + sync
 function tick(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false})}tick();setInterval(tick,1000);
@@ -480,7 +513,20 @@ document.querySelectorAll('.tf').forEach(b=>{b.onclick=()=>{document.querySelect
 document.querySelectorAll('thead th[data-sort]').forEach(th=>{th.onclick=()=>{const s=th.dataset.sort;if(tSo===s)tDr*=-1;else{tSo=s;tDr=1}document.querySelectorAll('thead th').forEach(t=>t.classList.remove('sorted'));th.classList.add('sorted');rT()}});
 rT();
 
-document.getElementById('dr').onchange=()=>toast('Date range updated');
+document.getElementById('dr').onchange=function(){
+  const v=this.value;
+  const m=v.includes('7')?0.23:v.includes('90')?2.9:v.includes('year')?11.5:1;
+  const rnd=()=>0.82+Math.random()*.36;
+  chRev.data.datasets[0].data=revA.map(x=>Math.floor(x*m*rnd()));
+  chRev.data.datasets[1].data=revB.map(x=>Math.floor(x*m*rnd()));
+  chRev.update('active');
+  const newRev=Math.floor(84623*m*rnd()),newCust=Math.floor(2847*m*rnd()),newOrd=Math.floor(1432*m*rnd());
+  anim(document.getElementById('k1'),newRev,'$');
+  anim(document.getElementById('k2'),newCust);
+  anim(document.getElementById('k3'),newOrd);
+  document.getElementById('syncTime').textContent='Updated: '+new Date().toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit',hour12:false});
+  toast('Showing data for: '+v);
+};
 
 // Keyboard
 document.addEventListener('keydown',e=>{
@@ -492,10 +538,37 @@ if(e.key==='/'){e.preventDefault();document.querySelector('.top-srch input').foc
 // Toast
 function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.getElementById('tC').appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(15px)';t.style.transition='all .25s';setTimeout(()=>t.remove(),250)},2300)}
 
+// CSV Export
+function exportCSV(){
+  const hdrs=['Order ID','Customer','Email','Product','Amount','Status','Date'];
+  const rows=orders.map(o=>[o.id,o.name,o.email,o.product,'$'+o.amount,o.status,o.date]);
+  const csv=[hdrs,...rows].map(r=>r.map(v=>`"${v}"`).join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='nexus-export-'+new Date().toISOString().slice(0,10)+'.csv';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  toast('Exported '+orders.length+' orders → nexus-export.csv');
+}
+
 addEventListener('resize',()=>{if(innerWidth>768){sb.classList.remove('mob');ov.classList.remove('show')}});
 
-// Live update
-setInterval(()=>{const el=document.getElementById('k1');const c=parseInt(el.textContent.replace(/[$,]/g,''));el.textContent='$'+(c+Math.floor(Math.random()*18-4)).toLocaleString()},8000);
+// Live updates
+const liveNames=['Alex T.','Maria S.','Chen W.','Sofia B.','Liam K.'];
+const liveProd=['Quantum Pro Max','Prism VR','Vortex Keyboard','Storm Speaker','Pulse Buds'];
+let liveCount=0;
+setInterval(()=>{
+  const el=document.getElementById('k1');
+  const c=parseInt(el.textContent.replace(/[$,]/g,''));
+  const delta=Math.floor(Math.random()*22+8);
+  el.textContent='$'+(c+delta).toLocaleString();
+  liveCount++;
+  if(liveCount%3===0){
+    const n=liveNames[Math.floor(Math.random()*liveNames.length)];
+    const p=liveProd[Math.floor(Math.random()*liveProd.length)];
+    toast('New order: '+n+' — '+p);
+  }
+},8000);
 </script>
 </body>
 </html>
