@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QueuePilot — Real-time Queue System</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#02040e;--bg2:#060c1a;--bg3:#0b1424;--card:#0f1d30;--b1:#60a5fa;--b2:#a78bfa;--b3:#34d399;--b4:#f472b6;--b5:#f59e0b;--t1:#f0f4fc;--t2:#8898b3;--t3:#3f5070;--border:rgba(255,255,255,0.07);--mono:'JetBrains Mono',monospace;--sans:'Manrope',sans-serif;--head:'Space Grotesk',sans-serif}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--t1);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--b1);border-radius:10px}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;background:rgba(2,4,14,.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.nav-logo .mk{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--b1),var(--b2));display:flex;align-items:center;justify-content:center}
+.nav-logo .mk svg{width:14px;height:14px;stroke:#000;stroke-width:2.5;fill:none;stroke-linecap:round}
+.nav-logo span{font-family:var(--head);font-weight:700;font-size:1rem;background:linear-gradient(135deg,var(--b1),var(--b2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-tabs{display:flex;gap:.3rem}
+.nav-tab{padding:.4rem 1rem;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--t2);transition:all .2s;font-family:var(--sans)}
+.nav-tab:hover{color:var(--b1);background:rgba(96,165,250,.06)}
+.nav-tab.active{color:var(--b1);background:rgba(96,165,250,.1)}
+.back{display:flex;align-items:center;gap:6px;color:var(--t2);font-size:.8rem;font-weight:600;text-decoration:none;transition:color .2s}
+.back:hover{color:var(--b1)}
+.back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* LAYOUT */
+.wrap{max-width:1080px;margin:0 auto;padding:0 2rem}
+.page{display:none;padding-top:80px;min-height:100vh}
+.page.active{display:block}
+
+/* HERO */
+.hero{padding:4rem 0 3rem;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:50px;font-family:var(--mono);font-size:.68rem;color:var(--b3);background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.18);margin-bottom:1.8rem}
+.badge-dot{width:5px;height:5px;background:var(--b3);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.hero h1{font-family:var(--head);font-size:clamp(2.2rem,5vw,3.5rem);font-weight:700;line-height:1.1;letter-spacing:-1.5px;margin-bottom:1.2rem}
+.hero h1 .g{background:linear-gradient(135deg,var(--b1),var(--b2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{color:var(--t2);font-size:1rem;max-width:520px;margin:0 auto 2.5rem;line-height:1.8}
+.hero-sub strong{color:var(--t1)}
+.hero-btns{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border-radius:10px;font-size:.86rem;font-weight:700;cursor:pointer;border:none;font-family:var(--sans);text-decoration:none;transition:all .3s}
+.btn-glow{background:linear-gradient(135deg,var(--b1),var(--b2));color:#000}
+.btn-glow:hover{box-shadow:0 0 28px rgba(96,165,250,.3);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--t1);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--b1);color:var(--b1);transform:translateY(-2px)}
+.btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* FEATURE GRID */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:3rem}
+.feat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.6rem;transition:all .35s;position:relative;overflow:hidden}
+.feat-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(135deg,var(--b1),var(--b2));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.feat-card:hover::before{transform:scaleX(1)}
+.feat-card:hover{border-color:rgba(96,165,250,.3);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.feat-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:.9rem}
+.feat-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.fi-blue{background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.15);color:var(--b1)}
+.fi-purple{background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.15);color:var(--b2)}
+.fi-green{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.15);color:var(--b3)}
+.fi-pink{background:rgba(244,114,182,.08);border:1px solid rgba(244,114,182,.15);color:var(--b4)}
+.fi-amber{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);color:var(--b5)}
+.fi-cyan{background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.15);color:#22d3ee}
+.feat-card h3{font-family:var(--head);font-weight:700;font-size:1rem;margin-bottom:.4rem}
+.feat-card p{color:var(--t2);font-size:.84rem;line-height:1.7}
+
+/* STACK */
+.stack-row{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-bottom:3rem}
+.stag{font-family:var(--mono);font-size:.68rem;padding:4px 11px;border-radius:6px;font-weight:500}
+.st-blue{background:rgba(96,165,250,.07);color:var(--b1);border:1px solid rgba(96,165,250,.15)}
+.st-purple{background:rgba(167,139,250,.07);color:var(--b2);border:1px solid rgba(167,139,250,.15)}
+.st-green{background:rgba(52,211,153,.07);color:var(--b3);border:1px solid rgba(52,211,153,.15)}
+.st-pink{background:rgba(244,114,182,.07);color:var(--b4);border:1px solid rgba(244,114,182,.15)}
+.st-amber{background:rgba(245,158,11,.07);color:var(--b5);border:1px solid rgba(245,158,11,.15)}
+
+/* SECTION HEADERS */
+.sec-label{font-family:var(--mono);font-size:.65rem;font-weight:500;text-transform:uppercase;letter-spacing:3px;color:var(--b1);margin-bottom:.6rem;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';width:20px;height:1px;background:var(--b1)}
+.sec-title{font-family:var(--head);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;letter-spacing:-.5px;margin-bottom:.6rem}
+.sec-sub{color:var(--t2);font-size:.94rem;max-width:480px;line-height:1.75}
+.sec-head{margin-bottom:2.5rem}
+
+/* DEMO PAGE */
+.demo-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:1.2rem;margin-bottom:1.2rem}
+@media(max-width:820px){.demo-grid{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;overflow:hidden}
+.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem}
+.panel-title{font-family:var(--head);font-weight:700;font-size:.95rem}
+.ws-pill{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.62rem;color:var(--b3);background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.18);padding:3px 9px;border-radius:20px}
+.ws-dot{width:5px;height:5px;background:var(--b3);border-radius:50%;animation:pulse 1.5s ease-in-out infinite}
+.q-stats{display:flex;gap:.7rem;margin-bottom:1rem}
+.q-stat{flex:1;text-align:center;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.7rem .5rem}
+.q-stat .val{font-family:var(--head);font-size:1.4rem;font-weight:700}
+.q-stat .lbl{font-size:.65rem;color:var(--t2);margin-top:2px}
+.queue-list{display:flex;flex-direction:column;gap:.6rem;max-height:420px;overflow-y:auto}
+.q-item{display:flex;align-items:center;gap:.8rem;padding:.85rem 1rem;border-radius:12px;border:1px solid rgba(255,255,255,.05);background:rgba(255,255,255,.025);transition:all .3s;animation:slideIn .4s ease}
+@keyframes slideIn{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
+.q-num{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.72rem;font-weight:600;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.2);color:var(--b1);flex-shrink:0}
+.q-info{flex:1;min-width:0}
+.q-name{font-size:.88rem;font-weight:600;color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.q-meta{font-size:.72rem;color:var(--t2);margin-top:2px}
+.status-pill{font-family:var(--mono);font-size:.6rem;padding:3px 8px;border-radius:5px;font-weight:600;flex-shrink:0}
+.sp-wait{background:rgba(96,165,250,.12);color:var(--b1)}
+.sp-call{background:rgba(245,158,11,.12);color:var(--b5)}
+.sp-serve{background:rgba(52,211,153,.12);color:var(--b3)}
+.sp-done{background:rgba(107,114,128,.1);color:#6b7280}
+.q-actions{display:flex;gap:.4rem;flex-shrink:0}
+.act-btn{padding:4px 9px;border-radius:7px;font-size:.65rem;font-weight:700;cursor:pointer;border:none;font-family:var(--sans);transition:all .2s}
+.ab-call{background:rgba(245,158,11,.15);color:var(--b5);border:1px solid rgba(245,158,11,.25)}
+.ab-call:hover{background:rgba(245,158,11,.25)}
+.ab-done{background:rgba(52,211,153,.15);color:var(--b3);border:1px solid rgba(52,211,153,.25)}
+.ab-done:hover{background:rgba(52,211,153,.25)}
+.ab-no{background:rgba(248,113,113,.12);color:#f87171;border:1px solid rgba(248,113,113,.22)}
+.ab-no:hover{background:rgba(248,113,113,.22)}
+.ab-serve{background:rgba(96,165,250,.15);color:var(--b1);border:1px solid rgba(96,165,250,.25)}
+.ab-serve:hover{background:rgba(96,165,250,.25)}
+
+/* JOIN FORM */
+.join-form{display:flex;flex-direction:column;gap:.9rem}
+.fld label{display:block;font-size:.75rem;font-weight:600;color:var(--t2);margin-bottom:.4rem}
+.fld input,.fld select{width:100%;background:var(--bg2);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.65rem 1rem;color:var(--t1);font-size:.86rem;font-family:var(--sans);outline:none;transition:border-color .25s}
+.fld input:focus,.fld select:focus{border-color:var(--b1)}
+.fld select option{background:var(--bg2)}
+.submit-btn{width:100%;padding:.75rem;border-radius:10px;background:linear-gradient(135deg,var(--b1),var(--b2));color:#000;font-weight:700;font-size:.88rem;cursor:pointer;border:none;font-family:var(--sans);transition:all .3s}
+.submit-btn:hover{box-shadow:0 0 24px rgba(96,165,250,.3);transform:translateY(-1px)}
+
+/* TICKET */
+.ticket{display:none;flex-direction:column;align-items:center;text-align:center;padding:1.5rem 0}
+.ticket-num{width:72px;height:72px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-family:var(--head);font-size:1.6rem;font-weight:700;background:rgba(96,165,250,.12);border:2px solid rgba(96,165,250,.3);color:var(--b1);margin:0 auto 1rem}
+.ticket-status{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;font-size:.78rem;font-weight:600;margin-bottom:1rem}
+.ticket-info{color:var(--t2);font-size:.85rem;line-height:1.7}
+
+/* ANALYTICS */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.9rem;margin-bottom:1.5rem}
+.kpi-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.2rem;display:flex;align-items:flex-start;gap:.9rem;transition:all .3s}
+.kpi-card:hover{border-color:rgba(96,165,250,.25);transform:translateY(-3px)}
+.kpi-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.kpi-icon svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.kpi-lbl{font-size:.72rem;color:var(--t2);margin-bottom:.2rem}
+.kpi-val{font-family:var(--head);font-size:1.5rem;font-weight:700}
+.kpi-sub{font-size:.67rem;color:var(--t3);margin-top:.1rem}
+.chart-panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.2rem}
+.chart-title{font-family:var(--head);font-weight:700;font-size:.95rem;margin-bottom:1.2rem;color:var(--t1)}
+.bar-chart{display:flex;align-items:flex-end;gap:.5rem;height:140px;padding-bottom:.3rem;border-bottom:1px solid var(--border)}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:.3rem;height:100%;justify-content:flex-end}
+.bar{width:100%;border-radius:4px 4px 0 0;transition:height .8s cubic-bezier(.4,0,.2,1);min-height:4px}
+.bar-lbl{font-family:var(--mono);font-size:.6rem;color:var(--t3);margin-top:.3rem}
+.bar-val{font-family:var(--mono);font-size:.62rem;color:var(--t2)}
+.heatmap{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.hm-cell{height:22px;border-radius:3px;transition:opacity .3s}
+.hm-label{font-family:var(--mono);font-size:.58rem;color:var(--t3);text-align:center}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+@media(max-width:640px){.two-col{grid-template-columns:1fr}}
+
+/* NOTIFICATION */
+.notif{position:fixed;top:72px;right:1.5rem;z-index:200;display:flex;flex-direction:column;gap:.5rem;pointer-events:none}
+.notif-item{background:var(--card);border:1px solid rgba(52,211,153,.25);border-radius:12px;padding:.7rem 1rem;font-size:.8rem;color:var(--t1);box-shadow:0 8px 24px rgba(0,0,0,.4);animation:notifIn .4s ease;pointer-events:auto;display:flex;align-items:center;gap:.5rem}
+@keyframes notifIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+.notif-item.out{animation:notifOut .3s ease forwards}
+@keyframes notifOut{to{opacity:0;transform:translateX(24px)}}
+
+/* EMPTY */
+.empty{text-align:center;padding:2rem;color:var(--t3);font-size:.85rem}
+
+/* FOOTER */
+.footer-bar{border-top:1px solid var(--border);padding:1.5rem 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-top:3rem}
+.footer-bar p{color:var(--t3);font-size:.75rem}
+.footer-bar a{color:var(--b1);text-decoration:none}
+.build{font-family:var(--mono);font-size:.63rem;color:var(--t3)}
+
+@media(max-width:600px){.nav-tabs{display:none}.wrap{padding:0 1rem}}
+</style>
+</head>
+<body>
+
+<div class="notif" id="notifArea"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="mk"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+    <span>QueuePilot</span>
+  </a>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('overview')">Overview</button>
+    <button class="nav-tab" onclick="showPage('demo')">Live Demo</button>
+    <button class="nav-tab" onclick="showPage('analytics')">Analytics</button>
+  </div>
+  <a href="index.html" class="back"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Portfolio</a>
+</nav>
+
+<!-- ═══════════════════════════════════════ OVERVIEW ═══════════════ -->
+<div class="page active" id="page-overview">
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-badge"><span class="badge-dot"></span> Real-time · WebSockets · Full-Stack</div>
+    <h1>Virtual queue system for<br><span class="g">small businesses</span></h1>
+    <p class="hero-sub">QueuePilot eliminates physical lines for barbershops, clinics, and local businesses. <strong>Real-time queue</strong>, QR check-in, appointment booking, and analytics — all in one place.</p>
+    <div class="hero-btns">
+      <button class="btn btn-glow" onclick="showPage('demo')">
+        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Try Live Demo
+      </button>
+      <a href="https://github.com/drame31/queuepilot" target="_blank" class="btn btn-ghost">
+        <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+        Source Code
+      </a>
+    </div>
+
+    <div class="stack-row">
+      <span class="stag st-blue">React 18</span>
+      <span class="stag st-blue">TypeScript</span>
+      <span class="stag st-purple">Tailwind CSS</span>
+      <span class="stag st-green">FastAPI</span>
+      <span class="stag st-green">Python 3.13</span>
+      <span class="stag st-green">WebSockets</span>
+      <span class="stag st-pink">SQLAlchemy</span>
+      <span class="stag st-pink">SQLite / PostgreSQL</span>
+      <span class="stag st-amber">JWT Auth</span>
+      <span class="stag st-amber">Recharts</span>
+      <span class="stag st-blue">Zustand</span>
+      <span class="stag st-purple">Docker</span>
+    </div>
+  </div>
+
+  <div class="sec-head">
+    <div class="sec-label">Features</div>
+    <h2 class="sec-title">Everything a business needs</h2>
+    <p class="sec-sub">Not a tutorial CRUD app — each feature solves a real operational problem.</p>
+  </div>
+
+  <div class="feat-grid">
+    <div class="feat-card">
+      <div class="feat-icon fi-green"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+      <h3>Real-time WebSockets</h3>
+      <p>Queue updates broadcast instantly to every connected client. No polling — pure WebSocket push from FastAPI's async engine.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon fi-blue"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+      <h3>3-Role Auth System</h3>
+      <p>Owner, staff, and customer roles with separate views and permissions. JWT access + refresh token rotation with bcrypt hashing.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon fi-purple"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h.01M15 9h.01M9 15h.01M15 15h.01"/></svg></div>
+      <h3>QR Code Check-in</h3>
+      <p>Walk-in customers scan the business QR code to join the queue instantly — no account needed. Generated server-side with python-qrcode.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon fi-amber"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></div>
+      <h3>Analytics Dashboard</h3>
+      <p>Hourly heatmap, weekly trend charts, no-show rate tracking, busiest hours, and top service — all computed server-side.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon fi-pink"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <h3>Smart Wait Estimation</h3>
+      <p>Automatically calculates estimated wait time per customer based on average service duration, updated live as the queue moves.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon fi-cyan"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div>
+      <h3>Service Management</h3>
+      <p>Owners configure services with custom duration and pricing. Staff marks entries through waiting → called → in_service → completed.</p>
+    </div>
+  </div>
+
+  <div class="sec-head" style="margin-top:2.5rem">
+    <div class="sec-label">Architecture</div>
+    <h2 class="sec-title">How it's built</h2>
+  </div>
+  <div class="two-col" style="margin-bottom:3rem">
+    <div class="panel">
+      <div class="panel-head"><span class="panel-title">Backend — FastAPI</span><span class="stag st-green" style="font-size:.6rem">Python</span></div>
+      <div style="display:flex;flex-direction:column;gap:.6rem">
+        <div style="background:var(--bg2);border-radius:10px;padding:.8rem 1rem;border:1px solid var(--border)">
+          <p style="font-family:var(--mono);font-size:.7rem;color:var(--b1);margin-bottom:.3rem">app/routers/</p>
+          <p style="font-size:.78rem;color:var(--t2)">auth · businesses · queue · appointments · analytics</p>
+        </div>
+        <div style="background:var(--bg2);border-radius:10px;padding:.8rem 1rem;border:1px solid var(--border)">
+          <p style="font-family:var(--mono);font-size:.7rem;color:var(--b3);margin-bottom:.3rem">WebSocket Manager</p>
+          <p style="font-size:.78rem;color:var(--t2)">ConnectionManager groups sockets by business slug, broadcasts JSON events on any queue change</p>
+        </div>
+        <div style="background:var(--bg2);border-radius:10px;padding:.8rem 1rem;border:1px solid var(--border)">
+          <p style="font-family:var(--mono);font-size:.7rem;color:var(--b2);margin-bottom:.3rem">Security</p>
+          <p style="font-size:.78rem;color:var(--t2)">JWT access (30 min) + refresh (7 days) rotation · bcrypt · role-based guards</p>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><span class="panel-title">Frontend — React + TS</span><span class="stag st-blue" style="font-size:.6rem">Vite</span></div>
+      <div style="display:flex;flex-direction:column;gap:.6rem">
+        <div style="background:var(--bg2);border-radius:10px;padding:.8rem 1rem;border:1px solid var(--border)">
+          <p style="font-family:var(--mono);font-size:.7rem;color:var(--b1);margin-bottom:.3rem">src/hooks/useWebSocket.ts</p>
+          <p style="font-size:.78rem;color:var(--t2)">Custom hook with auto-reconnect + 25s keep-alive ping</p>
+        </div>
+        <div style="background:var(--bg2);border-radius:10px;padding:.8rem 1rem;border:1px solid var(--border)">
+          <p style="font-family:var(--mono);font-size:.7rem;color:var(--b3);margin-bottom:.3rem">src/api/client.ts</p>
+          <p style="font-size:.78rem;color:var(--t2)">Axios interceptor that silently refreshes the JWT on 401 and retries the original request</p>
+        </div>
+        <div style="background:var(--bg2);border-radius:10px;padding:.8rem 1rem;border:1px solid var(--border)">
+          <p style="font-family:var(--mono);font-size:.7rem;color:var(--b2);margin-bottom:.3rem">src/store/authStore.ts</p>
+          <p style="font-size:.78rem;color:var(--t2)">Zustand global store — user state, role-based routing, token persistence</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <p>Built by <a href="index.html">Derek Muñoz</a> — QueuePilot</p>
+    <a href="https://github.com/drame31/queuepilot" target="_blank" class="build">github.com/drame31/queuepilot</a>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════ DEMO ═══════════════════ -->
+<div class="page" id="page-demo">
+<div class="wrap">
+  <div class="sec-head" style="padding-top:1rem">
+    <div class="sec-label">Interactive Demo</div>
+    <h2 class="sec-title">Barbería Atlas — Live Queue</h2>
+    <p class="sec-sub">Add customers, call them, mark them done. The queue updates in real time across both panels simultaneously.</p>
+  </div>
+
+  <div class="demo-grid">
+    <!-- Staff panel -->
+    <div class="panel">
+      <div class="panel-head">
+        <span class="panel-title">Staff Panel</span>
+        <span class="ws-pill"><span class="ws-dot"></span>live</span>
+      </div>
+      <div class="q-stats">
+        <div class="q-stat"><div class="val" id="statWaiting" style="color:var(--b1)">0</div><div class="lbl">Waiting</div></div>
+        <div class="q-stat"><div class="val" id="statCalled" style="color:var(--b5)">0</div><div class="lbl">Called</div></div>
+        <div class="q-stat"><div class="val" id="statDone" style="color:var(--b3)">0</div><div class="lbl">Served today</div></div>
+      </div>
+      <div class="queue-list" id="queueList">
+        <div class="empty">Queue is empty — add a customer →</div>
+      </div>
+    </div>
+
+    <!-- Right: join form + ticket tracker -->
+    <div style="display:flex;flex-direction:column;gap:1.2rem">
+      <div class="panel" id="joinPanel">
+        <div class="panel-head"><span class="panel-title">Customer Check-in</span></div>
+        <div class="join-form">
+          <div class="fld">
+            <label>Your name</label>
+            <input id="custName" type="text" placeholder="María García" maxlength="40">
+          </div>
+          <div class="fld">
+            <label>Service</label>
+            <select id="custService">
+              <option value="">No preference</option>
+              <option value="Haircut">Haircut (30 min)</option>
+              <option value="Beard trim">Beard trim (20 min)</option>
+              <option value="Full style">Full style (50 min)</option>
+              <option value="Kids cut">Kids cut (25 min)</option>
+            </select>
+          </div>
+          <button class="submit-btn" onclick="joinQueue()">Join the queue</button>
+        </div>
+      </div>
+
+      <div class="panel" id="ticketPanel" style="display:none">
+        <div class="panel-head"><span class="panel-title">Your Ticket</span><button onclick="resetTicket()" style="background:none;border:none;color:var(--t3);font-size:.75rem;cursor:pointer;font-family:var(--sans)">New customer</button></div>
+        <div class="ticket" id="ticketView" style="display:flex">
+          <div class="ticket-num" id="ticketNum">#1</div>
+          <div class="ticket-status" id="ticketStatus" style="background:rgba(96,165,250,.1);color:var(--b1)">
+            <span class="ws-dot" style="background:var(--b1)"></span> Waiting
+          </div>
+          <p class="ticket-info" id="ticketInfo">You are <strong id="ticketPos">#1</strong> in line.<br>Estimated wait: <strong id="ticketWait">~0 min</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p style="color:var(--t3);font-size:.75rem;text-align:center;margin-top:.5rem;font-family:var(--mono)">
+    ↑ In production both panels connect via WebSocket — changes are instant across all clients
+  </p>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════ ANALYTICS ══════════════ -->
+<div class="page" id="page-analytics">
+<div class="wrap">
+  <div class="sec-head" style="padding-top:1rem">
+    <div class="sec-label">Analytics Dashboard</div>
+    <h2 class="sec-title">Business insights</h2>
+    <p class="sec-sub">All metrics are computed server-side by the FastAPI analytics router using SQLAlchemy aggregation queries.</p>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.15);color:var(--b1)"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+      <div><div class="kpi-lbl">Served today</div><div class="kpi-val" style="color:var(--b1)" id="kpi1">24</div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.15);color:var(--b2)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <div><div class="kpi-lbl">Avg wait time</div><div class="kpi-val" style="color:var(--b2)">18 min</div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);color:var(--b5)"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+      <div><div class="kpi-lbl">No-show rate</div><div class="kpi-val" style="color:var(--b5)">8.2%</div><div class="kpi-sub">last 30 days</div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.15);color:var(--b3)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div><div class="kpi-lbl">Busiest hour</div><div class="kpi-val" style="color:var(--b3)">11:00</div><div class="kpi-sub">historically</div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(244,114,182,.08);border:1px solid rgba(244,114,182,.15);color:var(--b4)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+      <div><div class="kpi-lbl">Top service</div><div class="kpi-val" style="color:var(--b4);font-size:1rem;margin-top:.3rem">Haircut</div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.15);color:#22d3ee"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+      <div><div class="kpi-lbl">Waiting now</div><div class="kpi-val" style="color:#22d3ee" id="kpi-waiting">0</div></div>
+    </div>
+  </div>
+
+  <div class="chart-panel">
+    <div class="chart-title">Weekly trend — customers served</div>
+    <div class="bar-chart" id="weekChart"></div>
+    <div style="display:flex;gap:1rem;margin-top:.8rem">
+      <div style="display:flex;align-items:center;gap:.4rem"><div style="width:10px;height:10px;border-radius:2px;background:var(--b1)"></div><span style="font-size:.72rem;color:var(--t2)">Total</span></div>
+      <div style="display:flex;align-items:center;gap:.4rem"><div style="width:10px;height:10px;border-radius:2px;background:var(--b3)"></div><span style="font-size:.72rem;color:var(--t2)">Completed</span></div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="chart-panel" style="margin-bottom:0">
+      <div class="chart-title">Hourly heatmap — peak times</div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:.4rem">
+        <div class="hm-label">Mon</div><div class="hm-label">Tue</div><div class="hm-label">Wed</div>
+        <div class="hm-label">Thu</div><div class="hm-label">Fri</div><div class="hm-label">Sat</div><div class="hm-label">Sun</div>
+      </div>
+      <div class="heatmap" id="heatmap"></div>
+      <div style="display:flex;justify-content:space-between;margin-top:.5rem">
+        <span style="font-size:.62rem;color:var(--t3)">Low</span>
+        <div style="display:flex;gap:2px;align-items:center">
+          <div style="width:10px;height:10px;border-radius:2px;background:rgba(96,165,250,.1)"></div>
+          <div style="width:10px;height:10px;border-radius:2px;background:rgba(96,165,250,.3)"></div>
+          <div style="width:10px;height:10px;border-radius:2px;background:rgba(96,165,250,.6)"></div>
+          <div style="width:10px;height:10px;border-radius:2px;background:rgba(96,165,250,.9)"></div>
+        </div>
+        <span style="font-size:.62rem;color:var(--t3)">High</span>
+      </div>
+    </div>
+    <div class="chart-panel" style="margin-bottom:0">
+      <div class="chart-title">No-shows per day</div>
+      <div class="bar-chart" id="noShowChart" style="height:110px"></div>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <p>Built by <a href="index.html">Derek Muñoz</a></p>
+    <a href="https://github.com/drame31/queuepilot" target="_blank" class="build">github.com/drame31/queuepilot</a>
+  </div>
+</div>
+</div>
+
+<script>
+// ═══ STATE ═══════════════════════════════════════════════════════════
+let queue = [];
+let ticketCounter = 0;
+let doneCount = 0;
+let myEntry = null;
+
+const SERVICES = {
+  '': { name: 'General', wait: 20 },
+  'Haircut': { name: 'Haircut', wait: 30 },
+  'Beard trim': { name: 'Beard trim', wait: 20 },
+  'Full style': { name: 'Full style', wait: 50 },
+  'Kids cut': { name: "Kids cut", wait: 25 },
+};
+
+// ═══ NAVIGATION ══════════════════════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const tabs = document.querySelectorAll('.nav-tab');
+  const map = { overview: 0, demo: 1, analytics: 2 };
+  if (tabs[map[id]]) tabs[map[id]].classList.add('active');
+  if (id === 'analytics') renderAnalytics();
+}
+
+// ═══ QUEUE LOGIC ══════════════════════════════════════════════════════
+function joinQueue() {
+  const name = document.getElementById('custName').value.trim();
+  const svc = document.getElementById('custService').value;
+  if (!name) { notify('Enter your name first', '⚠️'); return; }
+
+  ticketCounter++;
+  const waitPerPerson = SERVICES[svc]?.wait || 20;
+  const waitingCount = queue.filter(e => e.status === 'waiting').length;
+  const entry = {
+    id: ticketCounter,
+    ticket: ticketCounter,
+    name,
+    service: svc || 'General',
+    status: 'waiting',
+    wait: waitingCount * waitPerPerson,
+    position: waitingCount + 1,
+  };
+  queue.push(entry);
+  myEntry = entry;
+
+  document.getElementById('joinPanel').style.display = 'none';
+  document.getElementById('ticketPanel').style.display = 'block';
+  updateTicketView();
+  renderQueue();
+  notify(`${name} joined the queue — Ticket #${entry.ticket}`, '🔔');
+}
+
+function resetTicket() {
+  myEntry = null;
+  document.getElementById('joinPanel').style.display = 'block';
+  document.getElementById('ticketPanel').style.display = 'none';
+  document.getElementById('custName').value = '';
+  document.getElementById('custService').value = '';
+}
+
+function updateStatus(id, newStatus) {
+  const entry = queue.find(e => e.id === id);
+  if (!entry) return;
+  entry.status = newStatus;
+  if (newStatus === 'completed' || newStatus === 'no_show') {
+    doneCount++;
+    setTimeout(() => {
+      queue = queue.filter(e => e.id !== id);
+      recalcPositions();
+      renderQueue();
+      updateAnalyticsKPI();
+    }, 800);
+  }
+  recalcPositions();
+  renderQueue();
+  updateTicketView();
+
+  const labels = { called: 'called to counter', in_service: 'now in service', completed: 'marked complete', no_show: 'marked no-show' };
+  if (labels[newStatus]) notify(`${entry.name} — ${labels[newStatus]}`, newStatus === 'completed' ? '✓' : newStatus === 'no_show' ? '✗' : '▶');
+}
+
+function recalcPositions() {
+  let pos = 1;
+  queue.filter(e => e.status === 'waiting').forEach(e => { e.position = pos++; });
+}
+
+// ═══ RENDER QUEUE ══════════════════════════════════════════════════════
+function renderQueue() {
+  const list = document.getElementById('queueList');
+  const active = queue.filter(e => e.status !== 'completed' && e.status !== 'no_show');
+
+  if (active.length === 0) {
+    list.innerHTML = '<div class="empty">Queue is empty — add a customer →</div>';
+  } else {
+    list.innerHTML = active.map(e => {
+      const sp = { waiting: 'sp-wait', called: 'sp-call', in_service: 'sp-serve' }[e.status] || 'sp-done';
+      const sl = { waiting: 'Waiting', called: 'Called', in_service: 'In service' }[e.status] || e.status;
+      const actions = [];
+      if (e.status === 'waiting') {
+        actions.push(`<button class="act-btn ab-call" onclick="updateStatus(${e.id},'called')">Call</button>`);
+      }
+      if (e.status === 'called') {
+        actions.push(`<button class="act-btn ab-serve" onclick="updateStatus(${e.id},'in_service')">Serving</button>`);
+      }
+      if (e.status === 'in_service') {
+        actions.push(`<button class="act-btn ab-done" onclick="updateStatus(${e.id},'completed')">Done ✓</button>`);
+      }
+      if (e.status !== 'completed') {
+        actions.push(`<button class="act-btn ab-no" onclick="updateStatus(${e.id},'no_show')">No-show</button>`);
+      }
+      return `
+        <div class="q-item" id="qitem-${e.id}">
+          <div class="q-num">#${e.ticket}</div>
+          <div class="q-info">
+            <div class="q-name">${e.name}</div>
+            <div class="q-meta">${e.service}${e.status === 'waiting' ? ` · ~${e.wait} min wait` : ''}</div>
+          </div>
+          <span class="status-pill ${sp}">${sl}</span>
+          <div class="q-actions">${actions.join('')}</div>
+        </div>`;
+    }).join('');
+  }
+
+  const waiting = queue.filter(e => e.status === 'waiting').length;
+  const called = queue.filter(e => e.status === 'called' || e.status === 'in_service').length;
+  document.getElementById('statWaiting').textContent = waiting;
+  document.getElementById('statCalled').textContent = called;
+  document.getElementById('statDone').textContent = doneCount;
+}
+
+// ═══ TICKET VIEW ══════════════════════════════════════════════════════
+function updateTicketView() {
+  if (!myEntry) return;
+  const current = queue.find(e => e.id === myEntry.id);
+  if (!current) {
+    document.getElementById('ticketStatus').innerHTML = '<span>✓</span> Done';
+    document.getElementById('ticketStatus').style.cssText = 'background:rgba(52,211,153,.1);color:var(--b3);display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;font-size:.78rem;font-weight:600;margin-bottom:1rem';
+    document.getElementById('ticketInfo').innerHTML = 'Your service is complete. Thank you!';
+    document.getElementById('ticketNum').style.background = 'rgba(52,211,153,.12)';
+    document.getElementById('ticketNum').style.borderColor = 'rgba(52,211,153,.3)';
+    document.getElementById('ticketNum').style.color = 'var(--b3)';
+    return;
+  }
+  document.getElementById('ticketNum').textContent = '#' + current.ticket;
+  document.getElementById('ticketPos').textContent = '#' + current.position;
+  document.getElementById('ticketWait').textContent = '~' + current.wait + ' min';
+
+  const configs = {
+    waiting: { text: 'Waiting', color: 'var(--b1)', bg: 'rgba(96,165,250,.1)', dot: 'var(--b1)' },
+    called: { text: '🔔 You\'ve been called!', color: 'var(--b5)', bg: 'rgba(245,158,11,.1)', dot: 'var(--b5)' },
+    in_service: { text: '▶ In service', color: 'var(--b3)', bg: 'rgba(52,211,153,.1)', dot: 'var(--b3)' },
+  };
+  const cfg = configs[current.status] || configs.waiting;
+  const st = document.getElementById('ticketStatus');
+  st.innerHTML = `<span class="ws-dot" style="background:${cfg.dot}"></span> ${cfg.text}`;
+  st.style.cssText = `background:${cfg.bg};color:${cfg.color};display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;font-size:.78rem;font-weight:600;margin-bottom:1rem`;
+  if (current.status === 'called') {
+    document.getElementById('ticketInfo').innerHTML = '<strong>Please come to the counter!</strong>';
+  }
+}
+
+// ═══ NOTIFICATIONS ════════════════════════════════════════════════════
+function notify(msg, icon = '✓') {
+  const area = document.getElementById('notifArea');
+  const el = document.createElement('div');
+  el.className = 'notif-item';
+  el.innerHTML = `<span>${icon}</span> ${msg}`;
+  area.appendChild(el);
+  setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 350); }, 3200);
+}
+
+// ═══ ANALYTICS ════════════════════════════════════════════════════════
+const WEEK_DATA = [
+  { d: 'Mon', total: 18, done: 15, ns: 2 },
+  { d: 'Tue', total: 22, done: 20, ns: 1 },
+  { d: 'Wed', total: 31, done: 27, ns: 3 },
+  { d: 'Thu', total: 28, done: 24, ns: 2 },
+  { d: 'Fri', total: 35, done: 30, ns: 4 },
+  { d: 'Sat', total: 42, done: 36, ns: 5 },
+  { d: 'Sun', today: true, total: 24 + doneCount, done: 24 + doneCount, ns: 0 },
+];
+
+const HEATMAP_DATA = [
+  [1,2,3,5,8,7,6],[2,3,5,8,9,8,5],[3,4,7,9,10,9,7],
+  [2,3,6,8,9,8,6],[1,2,4,6,7,6,4],[2,3,5,7,8,7,5],
+  [3,5,8,10,10,9,7],[2,4,6,8,9,8,6],[1,2,4,6,7,6,4],
+  [1,1,2,4,5,4,3],[1,1,2,3,4,3,2]
+];
+
+function renderAnalytics() {
+  updateAnalyticsKPI();
+
+  // week chart
+  const maxVal = Math.max(...WEEK_DATA.map(d => d.total));
+  document.getElementById('weekChart').innerHTML = WEEK_DATA.map(d => {
+    const t = Math.round((d.total / maxVal) * 100);
+    const c = Math.round((d.done / maxVal) * 100);
+    return `<div class="bar-col">
+      <div class="bar-val">${d.today ? d.total + doneCount : d.total}</div>
+      <div style="position:relative;flex:1;width:100%;display:flex;flex-direction:column;justify-content:flex-end">
+        <div class="bar" style="height:${t}%;background:rgba(96,165,250,.3);position:absolute;bottom:0;width:100%;border-radius:4px 4px 0 0"></div>
+        <div class="bar" style="height:${c}%;background:var(--b3);position:relative;z-index:1"></div>
+      </div>
+      <div class="bar-lbl">${d.d}</div>
+    </div>`;
+  }).join('');
+
+  // heatmap
+  document.getElementById('heatmap').innerHTML = HEATMAP_DATA.map(row =>
+    row.map(v => `<div class="hm-cell" style="background:rgba(96,165,250,${v / 10})"></div>`).join('')
+  ).join('');
+
+  // no-show chart
+  const nsMax = Math.max(...WEEK_DATA.map(d => d.ns), 1);
+  document.getElementById('noShowChart').innerHTML = WEEK_DATA.map(d => {
+    const h = Math.round((d.ns / nsMax) * 100);
+    return `<div class="bar-col">
+      <div class="bar-val" style="color:var(--b4)">${d.ns}</div>
+      <div style="flex:1;width:100%;display:flex;align-items:flex-end">
+        <div class="bar" style="height:${h}%;background:rgba(248,113,113,.5);width:100%"></div>
+      </div>
+      <div class="bar-lbl">${d.d}</div>
+    </div>`;
+  }).join('');
+}
+
+function updateAnalyticsKPI() {
+  const w = queue.filter(e => e.status === 'waiting' || e.status === 'called' || e.status === 'in_service').length;
+  const el = document.getElementById('kpi-waiting');
+  if (el) el.textContent = w;
+  const k1 = document.getElementById('kpi1');
+  if (k1) k1.textContent = 24 + doneCount;
+}
+
+// ═══ INIT ════════════════════════════════════════════════════════════
+renderQueue();
+renderAnalytics();
+</script>
+</body>
+</html>
