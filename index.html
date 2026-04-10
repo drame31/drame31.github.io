@@ -231,6 +231,8 @@ section{padding:6rem 0}
 @media(max-width:900px){.hero-inner,.about-layout,.contact-layout{grid-template-columns:1fr}.skills-container,.projects-grid{grid-template-columns:1fr}}
 @media(max-width:768px){.mobile-toggle{display:block}.nav-menu{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:rgba(2,4,14,.97);backdrop-filter:blur(30px);padding:1.2rem 2rem;gap:.2rem;border-bottom:1px solid var(--border)}.nav-menu.open{display:flex}.nav-menu a{padding:.7rem 1rem;width:100%}.hero-title{font-size:2.3rem;letter-spacing:-1px}section{padding:3.5rem 0}}
 @media(max-width:480px){.wrapper{padding:0 1.2rem}.stats-row{grid-template-columns:1fr}}
+.feat-label{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.63rem;color:var(--accent-2);margin-bottom:.5rem;background:rgba(167,139,250,.07);padding:2px 10px;border-radius:4px;border:1px solid rgba(167,139,250,.14)}
+@media(min-width:640px){.project-card.featured{grid-column:span 2}.project-card.featured .project-preview{height:160px}}
 </style>
 </head>
 <body>
@@ -255,9 +257,9 @@ section{padding:6rem 0}
 <div class="wrapper">
 <section class="hero" id="home"><div class="hero-inner">
 <div>
-<div class="hero-badge"><span class="badge-dot"></span> Open to opportunities</div>
-<h1 class="hero-title"><span>Hey, I'm</span><br><span class="g">Derek Muñoz</span><br><span class="sub">Computer Engineering Student</span></h1>
-<p class="hero-desc">I build <strong>web applications</strong> from scratch and study <strong>cybersecurity</strong> on the side. Based in Costa Rica, open to remote work.</p>
+<div class="hero-badge"><span class="badge-dot"></span> Available · Internships · Remote · 🇨🇷 CR</div>
+<h1 class="hero-title"><span class="g">Derek Muñoz</span><br><span>builds for the web.</span><br><span class="sub">CS Student · Costa Rica</span></h1>
+<p class="hero-desc">Computer Engineering student who builds <strong>full-stack applications</strong> — Python backends, React frontends, WebSocket systems. Also spending too much time reading about <strong>network security</strong>.</p>
 <div class="hero-actions">
 <a href="#projects" class="btn btn-glow"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg> View projects</a>
 <a href="#contact" class="btn btn-ghost">Get in touch</a>
@@ -268,14 +270,15 @@ section{padding:6rem 0}
 <div class="terminal-body">
 <div><span class="tp">~</span> <span class="tc">git</span> <span class="ts">log</span> <span class="tw">--oneline -5</span></div>
 <br>
-<div class="t-commit"><span class="t-check">✓</span> <span class="t-hash">b2f9a41</span> <span class="t-msg">queuepilot — ws + fastapi live</span></div>
-<div class="t-commit"><span class="t-check">✓</span> <span class="t-hash">d9e1f47</span> <span class="t-msg">hireflow tracker live</span></div>
-<div class="t-commit"><span class="t-check">✓</span> <span class="t-hash">a3f2b14</span> <span class="t-msg">ship beatforge v2.0</span></div>
-<div class="t-commit"><span class="t-check">✓</span> <span class="t-hash">c8d4e06</span> <span class="t-msg">nexus dashboard live</span></div>
-<div class="t-commit"><span class="t-check">✓</span> <span class="t-hash">f1a9b23</span> <span class="t-msg">cyberlock entropy calc</span></div>
+<div class="t-commit"><span class="t-check">✓</span> <span class="t-hash">a4e7f3d</span> <span class="t-msg">queuepilot: fastapi + react + websockets</span></div>
+<div class="t-commit"><span class="t-check">✓</span> <span class="t-hash">b8c2d91</span> <span class="t-msg">hireflow: flask api + kanban board</span></div>
+<div class="t-commit"><span class="t-check">✓</span> <span class="t-hash">f3a1e08</span> <span class="t-msg">nexus: chart.js analytics dashboard</span></div>
+<div class="t-commit"><span class="t-check">✓</span> <span class="t-hash">d9b4c72</span> <span class="t-msg">beatforge: web audio api drum machine</span></div>
+<div class="t-commit"><span class="t-check">✓</span> <span class="t-hash">c1f8a35</span> <span class="t-msg">cyberlock: entropy password analyzer</span></div>
 <br>
+<div><span class="tp">~</span> <span class="tc">export</span> <span class="ts">STACK</span><span class="tw">="Python · React · TypeScript · FastAPI"</span></div>
 <div><span class="tp">~</span> <span class="tc">echo</span> <span class="ts">$AVAILABILITY</span></div>
-<div><span class="tw">open &middot; remote ok &middot; <span style="color:var(--accent-3)">CR</span></span></div>
+<div><span class="tw">open · remote · <span style="color:var(--accent-3)">🇨🇷 Costa Rica</span></span></div>
 <br>
 <div><span class="tp">~</span> <span class="cursor-blink"></span></div>
 </div>
@@ -291,10 +294,10 @@ section{padding:6rem 0}
 <p>Before CS, I worked <strong>1 year 7 months</strong> as a customer service agent at Concentrix. That job taught me things no textbook does: how to communicate clearly under pressure, handle ambiguity fast, and why user experience actually matters.</p>
 </div>
 <div class="stats-row reveal rd2">
-<div class="stat-box"><div class="stat-value">1+</div><div class="stat-desc">Year in Engineering</div></div>
-<div class="stat-box"><div class="stat-value">1.7</div><div class="stat-desc">Years work experience</div></div>
 <div class="stat-box"><div class="stat-value">7</div><div class="stat-desc">Projects shipped</div></div>
-<div class="stat-box"><div class="stat-value">100%</div><div class="stat-desc">Self-taught design</div></div>
+<div class="stat-box"><div class="stat-value">3</div><div class="stat-desc">Full-stack apps built</div></div>
+<div class="stat-box"><div class="stat-value">1.7</div><div class="stat-desc">Years professional experience</div></div>
+<div class="stat-box"><div class="stat-value">B2–C1</div><div class="stat-desc">English proficiency</div></div>
 </div>
 </div>
 </section>
@@ -305,50 +308,77 @@ section{padding:6rem 0}
 <div class="skill-tile reveal rd1"><div class="sti py"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12l2 2 4-4"/></svg></div><h3>Python & Backend</h3><p>REST APIs with FastAPI and Flask, async programming, SQLAlchemy ORM, WebSockets, and JWT authentication.</p><div class="chips"><span class="chip cc">FastAPI</span><span class="chip cc">Flask</span><span class="chip cc">SQLAlchemy</span><span class="chip cg">WebSockets</span></div></div>
 <div class="skill-tile reveal rd2"><div class="sti wb"><svg class="ic" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"/></svg></div><h3>Frontend</h3><p>Building modern, interactive UIs with React and TypeScript. From vanilla JS fundamentals to component-driven architecture.</p><div class="chips"><span class="chip cp">React</span><span class="chip cp">TypeScript</span><span class="chip cp">Tailwind</span><span class="chip cp">JavaScript</span></div></div>
 <div class="skill-tile reveal rd3"><div class="sti cy"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><h3>Cybersecurity</h3><p>Studying system protection, network protocols, ethical hacking fundamentals, and Linux administration.</p><div class="chips"><span class="chip cg">Networks</span><span class="chip cg">Linux</span><span class="chip cg">Ethical Hacking</span></div></div>
-<div class="skill-tile reveal rd4"><div class="sti sf"><svg class="ic" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><h3>Communication</h3><p>1.7+ years in high-pressure customer service built strong skills in teamwork, problem-solving under pressure, and clear communication.</p><div class="chips"><span class="chip cr">Teamwork</span><span class="chip cr">Leadership</span><span class="chip cr">Pressure</span></div></div>
+<div class="skill-tile reveal rd4"><div class="sti sf"><svg class="ic" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div><h3>Tools & DevOps</h3><p>Version control, containerization, and working entirely in the terminal. Comfortable setting up environments and automating workflows with Bash scripts.</p><div class="chips"><span class="chip cr">Git</span><span class="chip cr">Docker</span><span class="chip cr">Linux</span><span class="chip cr">Bash</span></div></div>
 </div>
 </section>
 
 <section id="experience">
 <div class="section-header reveal"><div class="section-eyebrow">Experience</div><h2 class="section-heading">My journey so far</h2></div>
 <div class="exp-timeline reveal rd1">
-<div class="exp-item"><div class="exp-date">2025 — Present</div><div class="exp-card"><h3>Computer Engineering Student</h3><div class="company">Universidad Hispanoamericana — First year</div><p>Pursuing a degree focused on software development, data structures, algorithms, and cybersecurity fundamentals.</p><div class="chips"><span class="chip cc">Python</span><span class="chip cp">Algorithms</span><span class="chip cg">Networks</span></div></div></div>
-<div class="exp-item"><div class="exp-date">2023 — 2025</div><div class="exp-card"><h3>Customer Service Agent</h3><div class="company">Concentrix — 1 year 7 months</div><p>Real-time problem resolution, handling complex situations under pressure, and effective communication across multiple channels.</p><div class="chips"><span class="chip cr">Communication</span><span class="chip cr">Problem solving</span></div></div></div>
+<div class="exp-item"><div class="exp-date">2025 — Present</div><div class="exp-card"><h3>Computer Engineering Student</h3><div class="company">Universidad Hispanoamericana · Costa Rica</div><p>First year focused on software development, data structures, algorithms, and computer networks. Everything I learn in class I immediately try to apply to a real project — that's how most of my portfolio was built.</p><div class="chips"><span class="chip cc">Python</span><span class="chip cp">Algorithms</span><span class="chip cg">Networks</span><span class="chip cp">Data Structures</span></div></div></div>
+<div class="exp-item"><div class="exp-date">2023 — 2025</div><div class="exp-card"><h3>Customer Service Agent</h3><div class="company">Concentrix · 1 year 7 months</div><p>Handled high-pressure situations under strict SLAs, resolved escalated issues in real time, and communicated across multiple channels simultaneously. Taught me things no CS textbook does: how to stay clear-headed under pressure and why UX actually matters.</p><div class="chips"><span class="chip cr">Communication</span><span class="chip cr">Problem solving</span><span class="chip cr">High-pressure SLAs</span></div></div></div>
 </div>
 </section>
 
 <section id="projects">
 <div class="section-header reveal"><div class="section-eyebrow">Projects</div><h2 class="section-heading">What I've built</h2><p class="section-sub">Each project taught me something different. This is just the start.</p></div>
 <div class="projects-grid">
-<div class="project-card reveal rd1">
-<div class="project-preview pp-portfolio"><div class="pp-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div></div>
-<div class="project-badge"><span class="badge-dot-sm"></span> Portfolio</div>
-<h3>Personal Portfolio</h3>
-<p>This website. Designed and coded from scratch as my professional entry point into the tech world.</p>
-<div class="project-footer"><div class="chips"><span class="chip cp">HTML</span><span class="chip cp">CSS</span><span class="chip cp">JS</span></div><a href="https://github.com/drame31" target="_blank" class="project-link">Source <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+
+<div class="project-card featured reveal rd1">
+<div class="feat-label">★ Featured Project</div>
+<div class="project-preview pp-queue">
+<div class="pp-queue-rows">
+  <div class="pp-q-row" style="--d:1.4s;--dl:0s"><span class="pp-q-num">#3</span><div class="pp-q-bar" style="background:rgba(96,165,250,.5);width:55%"></div><span class="pp-q-badge called">called</span></div>
+  <div class="pp-q-row" style="--d:1.1s;--dl:.12s"><span class="pp-q-num">#4</span><div class="pp-q-bar" style="background:rgba(96,165,250,.35);width:70%"></div><span class="pp-q-badge wait">wait</span></div>
+  <div class="pp-q-row" style="--d:1.3s;--dl:.24s"><span class="pp-q-num">#5</span><div class="pp-q-bar" style="background:rgba(96,165,250,.25);width:45%"></div><span class="pp-q-badge wait">wait</span></div>
 </div>
+<div class="pp-q-ws"><span class="pp-q-wsdot"></span>live</div>
+<div class="pp-q-total">7 waiting</div>
+<div class="pp-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+</div>
+<div class="project-badge"><span class="badge-dot-sm" style="background:var(--accent-1)"></span> <span style="color:var(--accent-1)">Full-Stack</span></div>
+<h3>QueuePilot</h3>
+<p>Real-time virtual queue system for small businesses. <strong>WebSocket</strong>-driven live updates, QR check-in, role-based auth (owner / staff / customer), analytics dashboard, and automated wait time estimation — built with <strong>FastAPI + React + TypeScript</strong>.</p>
+<div class="project-footer"><div class="chips"><span class="chip cr">React</span><span class="chip cr">TypeScript</span><span class="chip cg">FastAPI</span><span class="chip cc">WebSockets</span><span class="chip cp">SQLAlchemy</span></div><a href="queuepilot.html" target="_blank" class="project-link">Live demo <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
 <div class="project-card reveal rd2">
-<div class="project-preview pp-security"><div class="pp-icon"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div></div>
-<div class="project-badge"><span class="badge-dot-sm"></span> Security</div>
-<h3>CyberLock</h3>
-<p>Real-time password strength analyzer with entropy calculation, crack time estimation, and full security audit.</p>
-<div class="project-footer"><div class="chips"><span class="chip cp">JS</span><span class="chip cg">Security</span></div><a href="password-checker.html" target="_blank" class="project-link">View <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+<div class="project-preview pp-kanban">
+<div class="pp-kb-cols">
+  <div class="pp-kb-col"><div class="pp-kb-hd"></div><div class="pp-kb-card" style="--d:1.1s;--dl:0s"></div><div class="pp-kb-card" style="--d:.9s;--dl:.18s"></div><div class="pp-kb-card" style="--d:1.3s;--dl:.06s"></div></div>
+  <div class="pp-kb-col"><div class="pp-kb-hd"></div><div class="pp-kb-card" style="--d:1.2s;--dl:.1s"></div><div class="pp-kb-card" style="--d:.85s;--dl:.22s"></div></div>
+  <div class="pp-kb-col"><div class="pp-kb-hd"></div><div class="pp-kb-card" style="--d:1.0s;--dl:.08s"></div></div>
+  <div class="pp-kb-col"><div class="pp-kb-hd"></div><div class="pp-kb-card" style="--d:1.15s;--dl:.28s"></div><div class="pp-kb-card" style="--d:.95s;--dl:.14s"></div></div>
 </div>
+<div class="pp-kb-stat">1 offer</div>
+<div class="pp-kb-stat2">8 active</div>
+<div class="pp-icon"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
+</div>
+<div class="project-badge"><span class="badge-dot-sm" style="background:var(--accent-4)"></span> <span style="color:var(--accent-4)">Full-Stack</span></div>
+<h3>HireFlow</h3>
+<p>Job application tracker with a <strong>Python Flask REST API</strong> and SQLite backend. Kanban board with HTML5 drag & drop, list view, full CRUD modals, and an auto-detecting <strong>localStorage fallback</strong> for seamless demo mode.</p>
+<div class="project-footer"><div class="chips"><span class="chip cr">Python</span><span class="chip cg">Flask</span><span class="chip cc">SQLite</span><span class="chip cp">JavaScript</span></div><a href="hireflow.html" target="_blank" class="project-link">Live demo <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
 <div class="project-card reveal rd3">
+<div class="project-preview pp-analytics">
+<div class="pp-an-bars">
+  <div class="pp-an-bar" style="--h:40%;--d:1.1s;--dl:0s"></div><div class="pp-an-bar" style="--h:75%;--d:.9s;--dl:.1s"></div><div class="pp-an-bar" style="--h:55%;--d:1.3s;--dl:.05s"></div><div class="pp-an-bar" style="--h:90%;--d:.85s;--dl:.15s"></div><div class="pp-an-bar" style="--h:45%;--d:1.2s;--dl:.2s"></div><div class="pp-an-bar" style="--h:80%;--d:1.0s;--dl:.08s"></div><div class="pp-an-bar" style="--h:60%;--d:1.15s;--dl:.25s"></div><div class="pp-an-bar" style="--h:35%;--d:.95s;--dl:.12s"></div><div class="pp-an-bar" style="--h:70%;--d:1.25s;--dl:.18s"></div><div class="pp-an-bar" style="--h:50%;--d:1.05s;--dl:.3s"></div>
+</div>
+<div class="pp-an-kpi">$84.6k ↑12.5%</div>
+<div class="pp-an-kpi2">2.8k users</div>
+<div class="pp-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></div>
+</div>
+<div class="project-badge"><span class="badge-dot-sm"></span> Dashboard</div>
+<h3>Nexus Analytics</h3>
+<p>Enterprise analytics dashboard. 5 Chart.js visualizations, real-time KPIs, collapsible sidebar, working <strong>CSV export</strong>, table with search/sort/pagination, and dark/light mode.</p>
+<div class="project-footer"><div class="chips"><span class="chip cp">JavaScript</span><span class="chip cc">Chart.js</span><span class="chip cc">LocalStorage</span><span class="chip cp">Data Tables</span></div><a href="nexus-dashboard.html" target="_blank" class="project-link">Live demo <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
+<div class="project-card reveal rd4">
 <div class="project-preview pp-audio">
 <div class="pp-audio-bars">
-<div class="pp-ab" style="--h:45%;--d:1.1s;--dl:0s;background:var(--accent-2)"></div>
-<div class="pp-ab" style="--h:80%;--d:.9s;--dl:.1s;background:var(--accent-1)"></div>
-<div class="pp-ab" style="--h:55%;--d:1.3s;--dl:.2s;background:var(--accent-2)"></div>
-<div class="pp-ab" style="--h:95%;--d:.8s;--dl:.05s;background:#f472b6"></div>
-<div class="pp-ab" style="--h:40%;--d:1.2s;--dl:.3s;background:var(--accent-1)"></div>
-<div class="pp-ab" style="--h:70%;--d:1.0s;--dl:.15s;background:var(--accent-3)"></div>
-<div class="pp-ab" style="--h:30%;--d:1.4s;--dl:.25s;background:var(--accent-2)"></div>
-<div class="pp-ab" style="--h:85%;--d:.85s;--dl:.1s;background:#f472b6"></div>
-<div class="pp-ab" style="--h:60%;--d:1.15s;--dl:.35s;background:var(--accent-1)"></div>
-<div class="pp-ab" style="--h:50%;--d:.95s;--dl:.2s;background:var(--accent-3)"></div>
-<div class="pp-ab" style="--h:90%;--d:1.25s;--dl:.05s;background:var(--accent-2)"></div>
-<div class="pp-ab" style="--h:35%;--d:1.05s;--dl:.4s;background:var(--accent-1)"></div>
+<div class="pp-ab" style="--h:45%;--d:1.1s;--dl:0s;background:var(--accent-2)"></div><div class="pp-ab" style="--h:80%;--d:.9s;--dl:.1s;background:var(--accent-1)"></div><div class="pp-ab" style="--h:55%;--d:1.3s;--dl:.2s;background:var(--accent-2)"></div><div class="pp-ab" style="--h:95%;--d:.8s;--dl:.05s;background:#f472b6"></div><div class="pp-ab" style="--h:40%;--d:1.2s;--dl:.3s;background:var(--accent-1)"></div><div class="pp-ab" style="--h:70%;--d:1.0s;--dl:.15s;background:var(--accent-3)"></div><div class="pp-ab" style="--h:30%;--d:1.4s;--dl:.25s;background:var(--accent-2)"></div><div class="pp-ab" style="--h:85%;--d:.85s;--dl:.1s;background:#f472b6"></div><div class="pp-ab" style="--h:60%;--d:1.15s;--dl:.35s;background:var(--accent-1)"></div><div class="pp-ab" style="--h:50%;--d:.95s;--dl:.2s;background:var(--accent-3)"></div><div class="pp-ab" style="--h:90%;--d:1.25s;--dl:.05s;background:var(--accent-2)"></div><div class="pp-ab" style="--h:35%;--d:1.05s;--dl:.4s;background:var(--accent-1)"></div>
 </div>
 <div class="pp-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
 </div>
@@ -357,7 +387,8 @@ section{padding:6rem 0}
 <p>Browser-based drum machine powered by the Web Audio API. 8-track 16-step sequencer, live MPC pads, real-time audio synthesis <strong>from scratch</strong> — no libraries, no frameworks.</p>
 <div class="project-footer"><div class="chips"><span class="chip cp">JavaScript</span><span class="chip cc">Web Audio API</span><span class="chip cc">Audio Synthesis</span><span class="chip cp">LocalStorage</span></div><a href="beatforge.html" target="_blank" class="project-link">Live demo <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
 </div>
-<div class="project-card reveal rd4">
+
+<div class="project-card reveal rd5">
 <div class="project-preview pp-store">
 <div class="pp-store-tiles">
   <div class="pp-st"><svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5z"/><path d="M3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg></div>
@@ -373,90 +404,15 @@ section{padding:6rem 0}
 <p>Dark luxury e-commerce UI with live cart, wishlist, discount codes, product filters + search + sort, modals with specs, and persistent state via <strong>localStorage</strong>.</p>
 <div class="project-footer"><div class="chips"><span class="chip cp">JavaScript</span><span class="chip cc">LocalStorage</span><span class="chip cp">UI/UX</span><span class="chip cc">Cart Logic</span></div><a href="volt-store.html" target="_blank" class="project-link">Live demo <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
 </div>
-<div class="project-card reveal rd5">
-<div class="project-preview pp-analytics">
-<div class="pp-an-bars">
-  <div class="pp-an-bar" style="--h:40%;--d:1.1s;--dl:0s"></div>
-  <div class="pp-an-bar" style="--h:75%;--d:.9s;--dl:.1s"></div>
-  <div class="pp-an-bar" style="--h:55%;--d:1.3s;--dl:.05s"></div>
-  <div class="pp-an-bar" style="--h:90%;--d:.85s;--dl:.15s"></div>
-  <div class="pp-an-bar" style="--h:45%;--d:1.2s;--dl:.2s"></div>
-  <div class="pp-an-bar" style="--h:80%;--d:1.0s;--dl:.08s"></div>
-  <div class="pp-an-bar" style="--h:60%;--d:1.15s;--dl:.25s"></div>
-  <div class="pp-an-bar" style="--h:35%;--d:.95s;--dl:.12s"></div>
-  <div class="pp-an-bar" style="--h:70%;--d:1.25s;--dl:.18s"></div>
-  <div class="pp-an-bar" style="--h:50%;--d:1.05s;--dl:.3s"></div>
-</div>
-<div class="pp-an-kpi">$84.6k ↑12.5%</div>
-<div class="pp-an-kpi2">2.8k users</div>
-<div class="pp-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></div>
-</div>
-<div class="project-badge"><span class="badge-dot-sm"></span> Dashboard</div>
-<h3>Nexus Analytics</h3>
-<p>Enterprise analytics dashboard. 5 Chart.js visualizations, real-time KPIs, collapsible sidebar, working <strong>CSV export</strong>, table with search/sort/pagination, and dark/light mode.</p>
-<div class="project-footer"><div class="chips"><span class="chip cp">JavaScript</span><span class="chip cc">Chart.js</span><span class="chip cc">LocalStorage</span><span class="chip cp">Data Tables</span></div><a href="nexus-dashboard.html" target="_blank" class="project-link">Live demo <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
-</div>
+
 <div class="project-card reveal rd6">
-<div class="project-preview pp-kanban">
-<div class="pp-kb-cols">
-  <div class="pp-kb-col">
-    <div class="pp-kb-hd"></div>
-    <div class="pp-kb-card" style="--d:1.1s;--dl:0s"></div>
-    <div class="pp-kb-card" style="--d:.9s;--dl:.18s"></div>
-    <div class="pp-kb-card" style="--d:1.3s;--dl:.06s"></div>
-  </div>
-  <div class="pp-kb-col">
-    <div class="pp-kb-hd"></div>
-    <div class="pp-kb-card" style="--d:1.2s;--dl:.1s"></div>
-    <div class="pp-kb-card" style="--d:.85s;--dl:.22s"></div>
-  </div>
-  <div class="pp-kb-col">
-    <div class="pp-kb-hd"></div>
-    <div class="pp-kb-card" style="--d:1.0s;--dl:.08s"></div>
-  </div>
-  <div class="pp-kb-col">
-    <div class="pp-kb-hd"></div>
-    <div class="pp-kb-card" style="--d:1.15s;--dl:.28s"></div>
-    <div class="pp-kb-card" style="--d:.95s;--dl:.14s"></div>
-  </div>
+<div class="project-preview pp-security"><div class="pp-icon"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div></div>
+<div class="project-badge"><span class="badge-dot-sm"></span> Security</div>
+<h3>CyberLock</h3>
+<p>Real-time password strength analyzer with entropy calculation, crack time estimation, and a full security audit. Where web dev meets my interest in security.</p>
+<div class="project-footer"><div class="chips"><span class="chip cp">JavaScript</span><span class="chip cg">Security</span><span class="chip cc">Entropy</span></div><a href="password-checker.html" target="_blank" class="project-link">View <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
 </div>
-<div class="pp-kb-stat">1 offer</div>
-<div class="pp-kb-stat2">8 active</div>
-<div class="pp-icon"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
-</div>
-<div class="project-badge"><span class="badge-dot-sm" style="background:var(--accent-4)"></span> <span style="color:var(--accent-4)">Full-Stack</span></div>
-<h3>HireFlow</h3>
-<p>Job application tracker with a <strong>Python Flask REST API</strong> and SQLite backend. Kanban board with HTML5 drag & drop, list view, full CRUD modals, and an auto-detecting <strong>localStorage fallback</strong> for seamless demo mode.</p>
-<div class="project-footer"><div class="chips"><span class="chip cr">Python</span><span class="chip cg">Flask</span><span class="chip cc">SQLite</span><span class="chip cp">JavaScript</span></div><a href="hireflow.html" target="_blank" class="project-link">Live demo <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
-</div>
-<div class="project-card reveal rd1">
-<div class="project-preview pp-queue">
-<div class="pp-queue-rows">
-  <div class="pp-q-row" style="--d:1.4s;--dl:0s">
-    <span class="pp-q-num">#3</span>
-    <div class="pp-q-bar" style="background:rgba(96,165,250,.5);width:55%"></div>
-    <span class="pp-q-badge called">called</span>
-  </div>
-  <div class="pp-q-row" style="--d:1.1s;--dl:.12s">
-    <span class="pp-q-num">#4</span>
-    <div class="pp-q-bar" style="background:rgba(96,165,250,.35);width:70%"></div>
-    <span class="pp-q-badge wait">wait</span>
-  </div>
-  <div class="pp-q-row" style="--d:1.3s;--dl:.24s">
-    <span class="pp-q-num">#5</span>
-    <div class="pp-q-bar" style="background:rgba(96,165,250,.25);width:45%"></div>
-    <span class="pp-q-badge wait">wait</span>
-  </div>
-</div>
-<div class="pp-q-ws"><span class="pp-q-wsdot"></span>live</div>
-<div class="pp-q-total">7 waiting</div>
-<div class="pp-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-</div>
-<div class="project-badge"><span class="badge-dot-sm" style="background:var(--accent-1)"></span> <span style="color:var(--accent-1)">Full-Stack</span></div>
-<h3>QueuePilot</h3>
-<p>Real-time virtual queue system for small businesses. <strong>WebSocket</strong>-driven live updates, QR check-in, role-based auth (owner / staff / customer), analytics dashboard, and automated wait time estimation — built with <strong>FastAPI + React + TypeScript</strong>.</p>
-<div class="project-footer"><div class="chips"><span class="chip cr">React</span><span class="chip cr">TypeScript</span><span class="chip cg">FastAPI</span><span class="chip cc">WebSockets</span><span class="chip cp">SQLAlchemy</span></div><a href="queuepilot.html" target="_blank" class="project-link">Live demo <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
-</div>
+
 </div>
 </section>
 
@@ -471,12 +427,12 @@ section{padding:6rem 0}
 <a href="https://www.linkedin.com/in/derek-m-81b055230" target="_blank" class="contact-link"><div class="cli li"><svg class="ic" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div><div class="clt"><small>LinkedIn</small><span>Derek Muñoz</span></div></a>
 </div>
 </div>
-<div class="contact-cta reveal rd2"><h3>Ready to<br>connect?</h3><p>Always interested in new opportunities and connections in the tech world.</p><a href="mailto:derekmzm@gmail.com" class="btn btn-glow"><svg class="ic" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Send a message</a></div>
+<div class="contact-cta reveal rd2"><h3>Open<br>for work.</h3><p>Internships, junior roles, freelance — based in Costa Rica, available remote. Let's build something.</p><a href="mailto:derekmzm@gmail.com" class="btn btn-glow"><svg class="ic" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Send a message</a></div>
 </div>
 </section>
 </div>
 
-<footer><div class="wrapper"><div class="footer"><p>© 2025 Derek Muñoz Solís</p><p class="build">rev 3.3 · deployed <span id="dep"></span></p></div></div></footer>
+<footer><div class="wrapper"><div class="footer"><p>© 2025 Derek Muñoz Solís</p><p class="build">rev 4.0 · deployed <span id="dep"></span></p></div></div></footer>
 
 <script>
 document.getElementById('dep').textContent=new Date().toLocaleDateString('en',{month:'short',day:'numeric'});
