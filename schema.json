@@ -1,0 +1,16 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Derek Muñoz Solís",
+  "url": "https://drame31.github.io/",
+  "jobTitle": "Full-Stack Developer",
+  "description": "Full-stack developer based in Costa Rica. Python backends (FastAPI, Flask), React 18 + TypeScript frontends, real-time WebSocket systems.",
+  "email": "derekmzm@gmail.com",
+  "sameAs": [
+    "https://github.com/drame31",
+    "https://www.linkedin.com/in/derek-m-81b055230"
+  ],
+  "knowsAbout": ["FastAPI", "React", "TypeScript", "Python", "WebSockets", "SQLAlchemy"],
+  "addressLocality": "San José",
+  "addressCountry": "CR"
+}

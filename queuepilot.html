@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QueuePilot — Real-time Queue Management</title>
+<title>QueuePilot — Real-time Queue Management · Derek Muñoz</title>
 <meta name="description" content="Real-time virtual queue manager for barbershops, clinics, and local businesses. WebSocket-driven, QR check-in, 3-role auth. Built with FastAPI and React 18.">
+<meta name="theme-color" content="#0c0a08">
 
-<!-- TODO: añadir og-cover.png (1200x630, fondo #0c0a08, nombre en Fraunces) al root -->
-<!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://drame31.github.io/queuepilot.html">
 <meta property="og:title" content="QueuePilot — Real-time Queue Management">
@@ -16,277 +15,1248 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="en_US">
-<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://drame31.github.io/queuepilot.html">
 <meta name="twitter:title" content="QueuePilot — Real-time Queue Management">
 <meta name="twitter:description" content="Real-time virtual queue manager for barbershops, clinics, and local businesses. WebSocket-driven, QR check-in, 3-role auth. Built with FastAPI and React 18.">
 <meta name="twitter:image" content="https://drame31.github.io/og-cover.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,400;1,9..144,500;1,9..144,600;1,9..144,700&family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',system-ui,sans-serif;background:#020810;color:#e8edf6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-a{text-decoration:none;color:inherit}
+/* =============================================================
+   QUEUEPILOT CASE STUDY — v6.0 design system
+   Brutalist-editorial · terminal tints
+   Tokens mirror index.html / style.css exactly
+   ============================================================= */
 
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:#020810}
-::-webkit-scrollbar-thumb{background:rgba(59,130,246,.4);border-radius:4px}
+:root {
+  --bg:           #0c0a08;
+  --bg-1:         #1a1815;
+  --bg-2:         #2a2620;
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
-@keyframes dot{0%,100%{opacity:1}50%{opacity:.3}}
-@keyframes slideIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  --text:         #f5f0e6;
+  --text-muted:   #9e9890;
+  --text-subtle:  #5c5650;
 
-.au{animation:fadeUp .5s ease both}
-.au1{animation:fadeUp .5s .1s ease both}
-.au2{animation:fadeUp .5s .22s ease both}
+  --accent:       #d4ff3a;
+  --accent-dim:   rgba(212,255,58,.15);
+  --accent-glow:  rgba(212,255,58,.08);
+
+  --hair:         rgba(245,240,230,.08);
+  --hair-mid:     rgba(245,240,230,.14);
+  --hair-strong:  rgba(245,240,230,.22);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'Geist', -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+  --max:          1160px;
+  --pad-x:        clamp(1.25rem, 5vw, 4rem);
+  --ease:         cubic-bezier(.22, 1, .36, 1);
+
+  /* Status colours for demo — intentionally muted against dark bg */
+  --status-wait:  #d4ff3a;          /* accent = lime */
+  --status-serv:  #f5c842;          /* warm amber */
+  --status-done:  #7de8a0;          /* soft green */
+  --status-call:  #f5c842;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+ul, ol { list-style: none; }
+::selection { background: var(--accent); color: var(--bg); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--bg-2); }
+::-webkit-scrollbar-thumb:hover { background: var(--hair-strong); }
+
+/* Focus */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+:focus:not(:focus-visible) { outline: none; }
+
+/* ── GRAIN ────────────────────────────────────────────────── */
+.grain {
+  position: fixed; inset: 0; z-index: 1;
+  pointer-events: none; opacity: .028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* ── ANIMATIONS ───────────────────────────────────────────── */
+@keyframes fadeUp   { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn   { from{opacity:0}                            to{opacity:1} }
+@keyframes float    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
+@keyframes blink    { 0%,48%{opacity:1} 52%,100%{opacity:0} }
+@keyframes pulse    { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(.7)} }
+@keyframes slideIn  { from{opacity:0;transform:translateX(-8px)} to{opacity:1;transform:translateX(0)} }
 
 /* ── NAV ──────────────────────────────────────────────────── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:rgba(2,8,16,.9);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.05)}
-.logo{display:flex;align-items:center;gap:8px}
-.logo-mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#3b82f6,#6366f1);display:flex;align-items:center;justify-content:center}
-.logo-mark svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.logo-name{font-size:14px;font-weight:700;color:#e8edf6;letter-spacing:-.01em}
-.nav-actions{display:flex;align-items:center;gap:8px}
-.nav-link{padding:5px 12px;border-radius:7px;font-size:13px;font-weight:500;color:#6b7f99;border:1px solid rgba(255,255,255,.07);transition:all .15s}
-.nav-link:hover{color:#e8edf6;border-color:rgba(255,255,255,.14)}
-.nav-btn{padding:5px 14px;border-radius:7px;font-size:13px;font-weight:600;background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;transition:opacity .15s;box-shadow:0 2px 8px rgba(59,130,246,.25)}
-.nav-btn:hover{opacity:.88}
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 var(--pad-x);
+  background: rgba(12,10,8,.9);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border-bottom: 1px solid var(--hair);
+}
+
+.nav__brand {
+  display: flex; align-items: center; gap: .65rem;
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text);
+  font-weight: 500;
+}
+.nav__live {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  animation: pulse 2.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.nav__actions {
+  display: flex; align-items: center; gap: .5rem;
+}
+.nav__back {
+  font-family: var(--font-mono);
+  font-size: .65rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: .35rem .75rem;
+  border: 1px solid var(--hair-mid);
+  transition: color .15s, border-color .15s;
+  display: flex; align-items: center; gap: .4rem;
+}
+.nav__back:hover { color: var(--accent); border-color: rgba(212,255,58,.35); }
+
+.nav__gh {
+  font-family: var(--font-mono);
+  font-size: .65rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--accent);
+  padding: .35rem .75rem;
+  font-weight: 600;
+  transition: background .15s, color .15s;
+}
+.nav__gh:hover { background: var(--text); }
 
 /* ── HERO ─────────────────────────────────────────────────── */
-.hero{max-width:1060px;margin:0 auto;padding:5.5rem 1.5rem 4rem;margin-top:58px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4rem}
-.badge{display:inline-flex;align-items:center;gap:7px;padding:4px 11px;border-radius:99px;font-size:11px;font-weight:600;background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.18);color:#10b981;margin-bottom:22px;letter-spacing:.01em}
-.badge-dot{width:5px;height:5px;border-radius:50%;background:#10b981;animation:dot 2s infinite}
-h1{font-size:clamp(2rem,3.8vw,3.2rem);font-weight:800;line-height:1.08;letter-spacing:-.035em;color:#edf1fb;margin-bottom:1.2rem}
-h1 span{background:linear-gradient(130deg,#3b82f6,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero-sub{font-size:1rem;color:#6b7f99;line-height:1.8;max-width:430px;margin-bottom:1.8rem}
-.hero-btns{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:1.8rem}
-.btn-main{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:10px;font-size:13.5px;font-weight:600;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;border:none;cursor:pointer;box-shadow:0 3px 16px rgba(59,130,246,.3);transition:transform .15s,box-shadow .15s}
-.btn-main:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(59,130,246,.4)}
-.btn-main svg,.btn-sec svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.btn-sec{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:10px;font-size:13.5px;font-weight:600;font-family:inherit;background:transparent;color:#9aadca;border:1px solid rgba(255,255,255,.09);cursor:pointer;transition:all .15s}
-.btn-sec:hover{border-color:rgba(255,255,255,.18);color:#e8edf6}
-.hero-facts{display:flex;flex-direction:column;gap:7px}
-.hero-fact{display:flex;align-items:center;gap:7px;font-size:12.5px;color:#5d7090}
-.hero-fact svg{width:12px;height:12px;stroke:#10b981;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.hero {
+  position: relative; z-index: 2;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 7rem var(--pad-x) 5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+}
 
-/* ── MOCKUP ───────────────────────────────────────────────── */
-.mockup-col{display:flex;justify-content:center;position:relative}
-.float-wrap{animation:float 5s ease-in-out infinite}
-.mockup{width:310px;background:#060f1c;border:1px solid rgba(59,130,246,.16);border-radius:14px;overflow:hidden;transform:perspective(900px) rotateY(-6deg) rotateX(3deg);box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.03),inset 0 1px 0 rgba(255,255,255,.05)}
-.mk-bar{display:flex;align-items:center;gap:5px;padding:9px 12px;background:#030b16;border-bottom:1px solid rgba(255,255,255,.04)}
-.mk-bar span{width:9px;height:9px;border-radius:50%}
-.mk-bar-url{flex:1;font-size:9.5px;color:#243345;font-family:monospace;text-align:center;padding-right:25px}
-.mk-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px 6px}
-.mk-biz{font-size:12px;font-weight:600;color:#e8edf6}
-.mk-biz-sub{font-size:10px;color:#3d5470;margin-top:1px}
-.mk-live{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:500;background:rgba(16,185,129,.09);color:#10b981;border:1px solid rgba(16,185,129,.18)}
-.mk-live-dot{width:5px;height:5px;border-radius:50%;background:#10b981;animation:dot 2s infinite}
-.mk-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.035);margin:0 10px 8px;border-radius:9px;overflow:hidden}
-.mk-sc{text-align:center;padding:7px 0;background:#060f1c}
-.mk-sv{font-size:14px;font-weight:700;line-height:1}
-.mk-sl{font-size:9px;color:#2d4460;margin-top:1px}
-.mk-list{padding:0 8px 8px;display:flex;flex-direction:column;gap:5px}
-.mk-row{display:flex;align-items:center;justify-content:space-between;padding:7px 9px;border-radius:8px;transition:all .5s}
-.mk-row-l{display:flex;align-items:center;gap:7px}
-.mk-tkt{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;flex-shrink:0}
-.mk-rname{font-size:11.5px;font-weight:500;color:#c8d8f0;line-height:1.2}
-.mk-rsvc{font-size:9.5px;color:#2d4460;margin-top:1px}
-.mk-rwait{font-size:10px;color:#2d4460}
-.mk-rbadge{font-size:9px;font-weight:600;padding:2px 6px;border-radius:99px}
-.mk-notif{text-align:center;padding:5px 8px;border-radius:7px;font-size:10px;font-weight:500;animation:slideIn .3s ease both}
-.mk-glow{position:absolute;inset:-24px;z-index:-1;border-radius:50%;background:radial-gradient(ellipse,rgba(59,130,246,.12) 0%,rgba(99,102,241,.08) 40%,transparent 65%);filter:blur(30px);pointer-events:none}
+/* meta topbar */
+.hero__meta {
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp .7s var(--ease) .15s forwards;
+  flex-wrap: wrap;
+}
+.hero__meta-accent { color: var(--accent); }
+.hero__meta-sep    { color: var(--hair-strong); }
 
-/* ── DEMO ─────────────────────────────────────────────────── */
-.demo-section{max-width:1000px;margin:0 auto;padding:0 1.5rem 5rem}
-.demo-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3b82f6;margin-bottom:8px}
-.demo-title{font-size:1.9rem;font-weight:700;letter-spacing:-.025em;color:#edf1fb;margin-bottom:.5rem}
-.demo-desc{font-size:14px;color:#6b7f99;margin-bottom:2rem;line-height:1.65;max-width:600px}
-.demo-tabs{display:flex;gap:3px;background:#060f1c;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:4px;width:fit-content;margin-bottom:1.5rem}
-.dtab{padding:7px 16px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;color:#5d7090;font-family:inherit;transition:all .2s}
-.dtab.on{background:#0f1e33;color:#e8edf6;box-shadow:0 1px 4px rgba(0,0,0,.3)}
-.demo-pane{display:none}
-.demo-pane.on{display:block;animation:fadeIn .2s ease}
+/* badge */
+.hero__badge {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(212,255,58,.3);
+  padding: .28rem .65rem;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp .7s var(--ease) .25s forwards;
+}
+.hero__badge-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
 
-/* staff pane */
-.staff-wrap{display:grid;grid-template-columns:1fr 280px;gap:14px;align-items:start}
-.staff-queue{background:#060f1c;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden}
-.pane-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.05)}
-.pane-title{font-size:14px;font-weight:600;color:#e8edf6}
-.ws-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:500;background:rgba(16,185,129,.08);color:#10b981;border:1px solid rgba(16,185,129,.2)}
-.ws-dot{width:5px;height:5px;border-radius:50%;background:#10b981;animation:dot 1.5s infinite}
-.stats-bar{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid rgba(255,255,255,.05)}
-.stat-cell{text-align:center;padding:10px 0;border-right:1px solid rgba(255,255,255,.05)}
-.stat-cell:last-child{border-right:none}
-.stat-n{font-size:20px;font-weight:700;line-height:1}
-.stat-l{font-size:11px;color:#4a6180;margin-top:2px}
-.q-list{padding:8px;display:flex;flex-direction:column;gap:6px;min-height:160px}
-.q-empty{text-align:center;padding:32px;font-size:13px;color:#2d4460}
-.q-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);animation:slideIn .3s ease both}
-.q-item-l{display:flex;align-items:center;gap:10px}
-.q-tkt{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
-.q-name{font-size:13.5px;font-weight:600;color:#d0def5}
-.q-meta{font-size:11.5px;color:#4a6180;margin-top:2px}
-.q-actions{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
-.qa{padding:5px 10px;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:opacity .15s,transform .1s}
-.qa:hover{opacity:.8;transform:translateY(-1px)}
-.qa-call{background:rgba(245,158,11,.14);color:#f59e0b;border:1px solid rgba(245,158,11,.25)}
-.qa-serve{background:rgba(16,185,129,.12);color:#10b981;border:1px solid rgba(16,185,129,.22)}
-.qa-done{background:rgba(16,185,129,.12);color:#10b981;border:1px solid rgba(16,185,129,.22)}
-.qa-no{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.2)}
-.q-badge{padding:3px 9px;border-radius:99px;font-size:11px;font-weight:500}
+/* headline */
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: .97;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+  margin-bottom: 1.25rem;
+  opacity: 0;
+  animation: fadeUp .8s var(--ease) .35s forwards;
+}
+.hero__title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+/* lede */
+.hero__lede {
+  font-size: clamp(.88rem, 1.2vw, 1rem);
+  color: var(--text-muted);
+  line-height: 1.75;
+  max-width: 480px;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp .8s var(--ease) .45s forwards;
+}
+
+/* CTA row */
+.hero__cta {
+  display: flex; gap: .65rem; flex-wrap: wrap;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp .7s var(--ease) .55s forwards;
+}
+
+/* fact list */
+.hero__facts {
+  display: flex; flex-direction: column; gap: .55rem;
+  opacity: 0;
+  animation: fadeUp .7s var(--ease) .65s forwards;
+}
+.hero__fact {
+  display: flex; align-items: flex-start; gap: .6rem;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  letter-spacing: .04em;
+  color: var(--text-subtle);
+  line-height: 1.5;
+}
+.hero__fact::before {
+  content: '→';
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: .05em;
+}
+
+/* ── BUTTONS ──────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: .7rem 1.2rem;
+  border: 1px solid transparent;
+  transition: all .2s var(--ease);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.btn--primary {
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+  border-color: var(--accent);
+}
+.btn--primary:hover { background: var(--text); border-color: var(--text); }
+.btn--ghost {
+  border-color: var(--hair-strong);
+  color: var(--text-muted);
+}
+.btn--ghost:hover {
+  border-color: var(--text);
+  color: var(--text);
+  background: rgba(245,240,230,.04);
+}
+
+/* ── HERO MOCKUP ──────────────────────────────────────────── */
+.mockup-col {
+  display: flex; justify-content: center;
+  position: relative;
+  opacity: 0;
+  animation: fadeIn .9s var(--ease) .5s forwards;
+}
+.float-wrap { animation: float 5s ease-in-out infinite; }
+
+.mockup {
+  width: 305px;
+  background: var(--bg-1);
+  border: 1px solid var(--hair-mid);
+  border-radius: 10px;
+  overflow: hidden;
+  transform: perspective(900px) rotateY(-6deg) rotateX(3deg);
+  box-shadow:
+    0 40px 80px rgba(0,0,0,.55),
+    0 0 0 1px rgba(245,240,230,.03),
+    inset 0 1px 0 rgba(245,240,230,.05);
+}
+
+/* browser chrome */
+.mk-bar {
+  display: flex; align-items: center; gap: 5px;
+  padding: 8px 12px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--hair);
+}
+.mk-bar-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--hair-mid);
+  flex-shrink: 0;
+}
+.mk-bar-url {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-subtle);
+  text-align: center;
+  padding-right: 28px;
+  letter-spacing: .04em;
+}
+
+/* mockup header */
+.mk-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px 6px;
+  border-bottom: 1px solid var(--hair);
+}
+.mk-biz {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  font-variation-settings: 'opsz' 48;
+}
+.mk-biz-sub {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-subtle);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+.mk-live {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(212,255,58,.25);
+  padding: 2px 7px;
+}
+.mk-live-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* stats strip */
+.mk-stats-row {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1px; background: var(--hair);
+  margin: 8px 10px; border: 1px solid var(--hair);
+}
+.mk-sc {
+  text-align: center; padding: 7px 0;
+  background: var(--bg-1);
+}
+.mk-sv {
+  font-family: var(--font-mono);
+  font-size: 14px; font-weight: 700; line-height: 1;
+}
+.mk-sl {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--text-subtle);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* queue rows */
+.mk-list {
+  padding: 0 8px 8px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.mk-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 8px;
+  border: 1px solid var(--hair);
+  background: var(--bg);
+  transition: all .5s;
+}
+.mk-row-l { display: flex; align-items: center; gap: 7px; }
+.mk-tkt {
+  width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 700;
+  flex-shrink: 0;
+  border: 1px solid var(--hair-mid);
+}
+.mk-rname {
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 500;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+.mk-rsvc {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  color: var(--text-subtle);
+  margin-top: 1px;
+  letter-spacing: .02em;
+}
+.mk-rwait {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-subtle);
+}
+.mk-rbadge {
+  font-family: var(--font-mono);
+  font-size: 8px; font-weight: 700;
+  padding: 2px 5px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.mk-notif {
+  text-align: center;
+  padding: 4px 8px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--accent);
+  border: 1px solid rgba(212,255,58,.2);
+  background: rgba(212,255,58,.06);
+  animation: slideIn .3s ease both;
+}
+
+/* glow behind mockup */
+.mk-glow {
+  position: absolute; inset: -24px; z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(212,255,58,.07) 0%, rgba(212,255,58,.03) 40%, transparent 65%);
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+/* ── ASCII DIVIDER ────────────────────────────────────────── */
+.ascii-div {
+  position: relative; z-index: 2;
+  max-width: var(--max); margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+.ascii-div__inner {
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  letter-spacing: .08em;
+  color: var(--hair-strong);
+  padding: .6rem 0;
+  border-top: 1px solid var(--hair);
+  display: flex; align-items: center; gap: 1.25rem;
+  white-space: nowrap; overflow: hidden;
+}
+.ascii-div__label {
+  color: var(--accent);
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+.ascii-div__line { flex: 1; overflow: hidden; }
+
+/* ── SECTION BASE ─────────────────────────────────────────── */
+.section {
+  position: relative; z-index: 2;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(3.5rem, 7vw, 6rem) var(--pad-x);
+}
+
+.sec-head {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+.sec-num {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5.5vw, 4.5rem);
+  font-weight: 400;
+  color: var(--text-subtle);
+  line-height: 1;
+  font-variation-settings: 'opsz' 144, 'SOFT' 0;
+  padding-top: .1rem;
+}
+.sec-label {
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  color: var(--accent);
+  margin-bottom: .75rem;
+  display: block;
+}
+.sec-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 4.5vw, 3.8rem);
+  line-height: .97;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+}
+.sec-title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+.sec-lede {
+  margin-top: 1rem;
+  font-size: clamp(.88rem, 1.2vw, 1rem);
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+/* ── DEMO SECTION ─────────────────────────────────────────── */
+
+/* tab strip */
+.demo-tabs {
+  display: flex; gap: 0;
+  border: 1px solid var(--hair-mid);
+  width: fit-content;
+  margin-bottom: 1.75rem;
+}
+.dtab {
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: .55rem 1.1rem;
+  color: var(--text-subtle);
+  border-right: 1px solid var(--hair-mid);
+  transition: color .15s, background .15s;
+  cursor: pointer;
+}
+.dtab:last-child { border-right: 0; }
+.dtab.on {
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+}
+.dtab:not(.on):hover { color: var(--text-muted); background: rgba(245,240,230,.04); }
+
+.demo-pane { display: none; }
+.demo-pane.on { display: block; animation: fadeIn .2s ease; }
+
+/* ── STAFF PANEL ──────────────────────────────────────────── */
+.staff-wrap {
+  display: grid;
+  grid-template-columns: 1fr 270px;
+  gap: 14px;
+  align-items: start;
+}
+
+.staff-queue {
+  background: var(--bg-1);
+  border: 1px solid var(--hair-mid);
+}
+
+.pane-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--hair);
+}
+.pane-title {
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text);
+  font-weight: 500;
+}
+.ws-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(212,255,58,.25);
+  padding: .2rem .55rem;
+}
+.ws-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 1.5s infinite;
+}
+
+.stats-bar {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border-bottom: 1px solid var(--hair);
+}
+.stat-cell {
+  text-align: center;
+  padding: 10px 0;
+  border-right: 1px solid var(--hair);
+}
+.stat-cell:last-child { border-right: none; }
+.stat-n {
+  font-family: var(--font-display);
+  font-size: 1.6rem; font-weight: 400; line-height: 1;
+  letter-spacing: -0.02em;
+  font-variation-settings: 'opsz' 48;
+}
+.stat-l {
+  font-family: var(--font-mono);
+  font-size: .58rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-top: 3px;
+}
+
+.q-list {
+  padding: 8px;
+  display: flex; flex-direction: column; gap: 5px;
+  min-height: 160px;
+}
+.q-empty {
+  text-align: center;
+  padding: 32px;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.q-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px;
+  border: 1px solid var(--hair);
+  background: var(--bg);
+  animation: slideIn .3s ease both;
+}
+.q-item-l { display: flex; align-items: center; gap: 10px; }
+
+.q-tkt {
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 700;
+  flex-shrink: 0;
+  border: 1px solid var(--hair-mid);
+}
+.q-name {
+  font-family: var(--font-mono);
+  font-size: .75rem; font-weight: 500;
+  color: var(--text);
+  letter-spacing: .02em;
+}
+.q-meta {
+  font-family: var(--font-mono);
+  font-size: .65rem;
+  color: var(--text-subtle);
+  margin-top: 2px;
+  letter-spacing: .02em;
+}
+
+.q-actions {
+  display: flex; gap: 5px; align-items: center; flex-wrap: wrap;
+}
+.qa {
+  padding: 4px 9px;
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid;
+  transition: opacity .15s, transform .1s;
+}
+.qa:hover { opacity: .75; transform: translateY(-1px); }
+.qa-call  { color: var(--status-call); border-color: rgba(245,200,66,.3); background: rgba(245,200,66,.08); }
+.qa-serve { color: var(--status-done); border-color: rgba(125,232,160,.3); background: rgba(125,232,160,.08); }
+.qa-done  { color: var(--status-done); border-color: rgba(125,232,160,.3); background: rgba(125,232,160,.08); }
+.qa-no    { color: #e87a7a; border-color: rgba(232,122,122,.3); background: rgba(232,122,122,.08); }
+
+.q-badge {
+  font-family: var(--font-mono);
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border: 1px solid;
+}
 
 /* side panels */
-.side-panels{display:flex;flex-direction:column;gap:12px}
-.side-card{background:#060f1c;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:14px}
-.side-title{font-size:12px;font-weight:600;color:#6b7f99;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
-.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.kpi{background:#030b16;border:1px solid rgba(255,255,255,.05);border-radius:9px;padding:10px;text-align:center}
-.kpi-n{font-size:1.5rem;font-weight:800;line-height:1;letter-spacing:-.03em}
-.kpi-l{font-size:11px;color:#3d5470;margin-top:3px}
-.log-list{display:flex;flex-direction:column;gap:5px;max-height:140px;overflow-y:auto}
-.log-item{font-size:11.5px;color:#4a6180;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.03);display:flex;gap:6px;align-items:baseline}
-.log-time{font-size:10px;color:#243345;flex-shrink:0;font-family:monospace}
-.log-msg{flex:1}
+.side-panels { display: flex; flex-direction: column; gap: 12px; }
+.side-card {
+  background: var(--bg-1);
+  border: 1px solid var(--hair-mid);
+  padding: 14px;
+}
+.side-title {
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 12px;
+  display: block;
+}
 
-/* customer pane */
-.customer-wrap{display:grid;grid-template-columns:340px 1fr;gap:14px;align-items:start}
-.join-card{background:#060f1c;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:20px}
-.join-title{font-size:15px;font-weight:700;color:#e8edf6;margin-bottom:4px}
-.join-sub{font-size:12.5px;color:#5d7090;margin-bottom:18px}
-.field{margin-bottom:13px}
-.field label{display:block;font-size:12px;font-weight:600;color:#5d7090;margin-bottom:5px}
-.field input,.field select{width:100%;padding:9px 13px;border-radius:9px;font-size:13.5px;font-family:inherit;background:#030b16;border:1px solid rgba(255,255,255,.07);color:#e8edf6;outline:none;transition:border-color .15s}
-.field input:focus,.field select:focus{border-color:rgba(59,130,246,.45)}
-.field select option{background:#060f1c}
-.join-btn{width:100%;padding:10px;border-radius:9px;font-size:13.5px;font-weight:600;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;border:none;cursor:pointer;box-shadow:0 2px 12px rgba(59,130,246,.25);transition:transform .15s,box-shadow .15s;display:flex;align-items:center;justify-content:center;gap:6px}
-.join-btn:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(59,130,246,.35)}
-.ticket-view{display:none;flex-direction:column;align-items:center;text-align:center;padding:28px 16px}
-.ticket-num{width:80px;height:80px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:800;margin:0 auto 16px;border-width:2px;border-style:solid}
-.ticket-status{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:99px;font-size:13px;font-weight:500;margin-bottom:12px}
-.ticket-info{font-size:13px;color:#5d7090;line-height:1.7}
-.ticket-update{font-size:11.5px;color:#2d4460;margin-top:16px}
-.position-panel{background:#060f1c;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:20px}
-.pos-title{font-size:12px;font-weight:600;color:#5d7090;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
-.pos-queue{display:flex;flex-direction:column;gap:6px}
-.pos-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.04)}
-.pos-tkt{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
-.pos-name{font-size:12.5px;font-weight:500;color:#9ab0cc}
-.pos-you{font-size:11px;color:#3b82f6;font-weight:600;margin-left:auto}
+.kpi-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.kpi {
+  border: 1px solid var(--hair);
+  padding: 10px;
+  text-align: center;
+  background: var(--bg);
+}
+.kpi-n {
+  font-family: var(--font-display);
+  font-size: 1.6rem; font-weight: 400; line-height: 1;
+  letter-spacing: -0.02em;
+  font-variation-settings: 'opsz' 48;
+}
+.kpi-l {
+  font-family: var(--font-mono);
+  font-size: .58rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-top: 3px;
+}
 
-/* ── FEATURES ─────────────────────────────────────────────── */
-.feat-section{max-width:1000px;margin:0 auto;padding:0 1.5rem 5rem}
-.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:10px}
-.feat-card{background:#060f1c;border:1px solid rgba(255,255,255,.05);border-radius:13px;padding:22px;transition:border-color .2s,background .2s}
-.feat-card:hover{border-color:rgba(59,130,246,.22);background:#07121f}
-.feat-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
-.feat-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.feat-h{font-size:14px;font-weight:700;color:#d0def5;margin-bottom:6px}
-.feat-p{font-size:13px;color:#5d7090;line-height:1.65}
+.log-list {
+  display: flex; flex-direction: column; gap: 4px;
+  max-height: 140px; overflow-y: auto;
+}
+.log-item {
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  color: var(--text-subtle);
+  padding: 3px 0;
+  border-bottom: 1px solid var(--hair);
+  display: flex; gap: 6px; align-items: baseline;
+  letter-spacing: .02em;
+}
+.log-time { color: var(--text-subtle); flex-shrink: 0; opacity: .6; }
+.log-msg  { flex: 1; }
 
-/* ── STACK ────────────────────────────────────────────────── */
-.stack-section{max-width:1000px;margin:0 auto;padding:0 1.5rem 5rem}
-.stack-box{background:#060f1c;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:32px;position:relative;overflow:hidden}
-.stack-topline{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#3b82f6 35%,#6366f1 65%,transparent)}
-.stack-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:24px}
-.stack-h{font-size:1.1rem;font-weight:700;color:#edf1fb;letter-spacing:-.02em}
-.stack-sub{font-size:13px;color:#4a6180;margin-top:3px}
-.stack-pills{display:flex;flex-wrap:wrap;gap:7px}
-.pill{padding:5px 13px;border-radius:99px;font-size:12.5px;font-weight:500}
+/* ── CUSTOMER PANE ────────────────────────────────────────── */
+.customer-wrap {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 14px;
+  align-items: start;
+}
 
-/* ── CTA ──────────────────────────────────────────────────── */
-.cta-section{max-width:1000px;margin:0 auto;padding:0 1.5rem 5rem}
-.cta-inner{background:#060f1c;border:1px solid rgba(59,130,246,.18);border-radius:16px;padding:48px 36px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
-.cta-topline{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#3b82f6 40%,#6366f1 60%,transparent)}
-.cta-copy h2{font-size:1.6rem;font-weight:800;letter-spacing:-.03em;color:#edf1fb;margin-bottom:.5rem}
-.cta-copy p{font-size:14px;color:#5d7090;line-height:1.65;max-width:380px}
-.cta-actions{display:flex;gap:9px;flex-wrap:wrap;flex-shrink:0}
+.join-card {
+  background: var(--bg-1);
+  border: 1px solid var(--hair-mid);
+  padding: 20px;
+}
+.join-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem; font-weight: 600;
+  color: var(--text);
+  font-variation-settings: 'opsz' 48;
+  margin-bottom: 3px;
+}
+.join-sub {
+  font-family: var(--font-mono);
+  font-size: .65rem;
+  letter-spacing: .06em;
+  color: var(--text-subtle);
+  margin-bottom: 18px;
+}
+
+.field { margin-bottom: 12px; }
+.field label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 5px;
+}
+.field input,
+.field select {
+  width: 100%;
+  padding: 9px 12px;
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  background: var(--bg);
+  border: 1px solid var(--hair-mid);
+  color: var(--text);
+  outline: none;
+  transition: border-color .15s;
+  letter-spacing: .03em;
+}
+.field input::placeholder { color: var(--text-subtle); }
+.field input:focus,
+.field select:focus { border-color: rgba(212,255,58,.45); }
+.field select option { background: var(--bg-1); }
+
+.join-btn {
+  width: 100%;
+  padding: 10px;
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: background .15s, color .15s;
+}
+.join-btn:hover { background: var(--text); }
+
+/* ticket view */
+.ticket-view {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 28px 16px;
+}
+.ticket-num {
+  width: 80px; height: 80px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.5rem; font-weight: 700;
+  font-variation-settings: 'opsz' 72;
+  margin: 0 auto 16px;
+  border: 2px solid;
+}
+.ticket-headline {
+  font-family: var(--font-display);
+  font-size: 1.1rem; font-weight: 600;
+  color: var(--text);
+  font-variation-settings: 'opsz' 48;
+  margin-bottom: 8px;
+}
+.ticket-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono);
+  font-size: .65rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: .3rem .8rem;
+  border: 1px solid;
+  margin-bottom: 12px;
+}
+.ticket-info {
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  color: var(--text-subtle);
+  line-height: 1.7;
+  letter-spacing: .03em;
+}
+.ticket-update {
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  color: var(--text-subtle);
+  margin-top: 14px;
+  letter-spacing: .04em;
+  opacity: .6;
+}
+
+.leave-btn {
+  margin-top: 18px;
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-subtle);
+  border: 1px solid var(--hair-mid);
+  transition: color .15s, border-color .15s;
+}
+.leave-btn:hover { color: #e87a7a; border-color: rgba(232,122,122,.3); }
+
+/* position panel */
+.position-panel {
+  background: var(--bg-1);
+  border: 1px solid var(--hair-mid);
+  padding: 16px 20px;
+}
+.pos-title {
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 14px;
+  display: block;
+}
+.pos-queue { display: flex; flex-direction: column; gap: 5px; }
+.pos-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--hair);
+  background: var(--bg);
+}
+.pos-tkt {
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 700;
+  flex-shrink: 0;
+  border: 1px solid var(--hair-mid);
+}
+.pos-name {
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  color: var(--text-muted);
+  letter-spacing: .02em;
+}
+.pos-you {
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-left: auto;
+}
+
+/* ── FEATURES SECTION ─────────────────────────────────────── */
+.feat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1px;
+  background: var(--hair-mid);
+  border: 1px solid var(--hair-mid);
+}
+.feat-card {
+  background: var(--bg-1);
+  padding: 24px;
+  transition: background .2s;
+}
+.feat-card:hover { background: var(--bg-2); }
+
+.feat-num {
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  letter-spacing: .1em;
+  color: var(--accent);
+  margin-bottom: .75rem;
+  display: block;
+}
+.feat-h {
+  font-family: var(--font-display);
+  font-size: 1.05rem; font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  font-variation-settings: 'opsz' 48;
+  margin-bottom: .5rem;
+}
+.feat-p {
+  font-size: .88rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ── TECH STACK SECTION ───────────────────────────────────── */
+.stack-box {
+  border: 1px solid var(--hair-mid);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  position: relative;
+  background: var(--bg-1);
+}
+.stack-box-head {
+  display: flex; align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+.stack-h {
+  font-family: var(--font-display);
+  font-size: 1.1rem; font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  font-variation-settings: 'opsz' 48;
+}
+.stack-sub {
+  font-family: var(--font-mono);
+  font-size: .65rem;
+  color: var(--text-subtle);
+  letter-spacing: .04em;
+  margin-top: .35rem;
+}
+
+.stack-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.pill {
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: .3rem .7rem;
+  border: 1px solid var(--hair-mid);
+  color: var(--text-muted);
+  transition: color .15s, border-color .15s;
+}
+.pill:hover { color: var(--text); border-color: var(--hair-strong); }
+
+/* ── CTA SECTION ──────────────────────────────────────────── */
+.cta-inner {
+  border: 1px solid var(--hair-mid);
+  padding: clamp(2rem, 5vw, 3.5rem);
+  position: relative;
+  background: var(--bg-1);
+  display: flex; align-items: center;
+  justify-content: space-between;
+  gap: 2rem; flex-wrap: wrap;
+}
+.cta-bar {
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: var(--accent);
+  opacity: .35;
+}
+.cta-h {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  font-variation-settings: 'opsz' 72, 'SOFT' 100;
+  margin-bottom: .5rem;
+  line-height: 1;
+}
+.cta-sub {
+  font-size: .9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 380px;
+}
+.cta-actions { display: flex; gap: .65rem; flex-wrap: wrap; flex-shrink: 0; }
 
 /* ── FOOTER ───────────────────────────────────────────────── */
-footer{max-width:1000px;margin:0 auto;padding:1.5rem 1.5rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1px solid rgba(255,255,255,.04)}
-footer p{font-size:12px;color:#2d4460}
-footer a{font-size:12px;color:#3b82f6}
-footer a:hover{text-decoration:underline}
-
-@media(max-width:820px){
-  .hero{grid-template-columns:1fr;gap:2rem;padding:3.5rem 1.5rem 3rem}
-  .mockup-col{display:none}
-  .staff-wrap{grid-template-columns:1fr}
-  .customer-wrap{grid-template-columns:1fr}
-  .cta-inner{flex-direction:column;padding:32px 24px}
+.page-footer {
+  position: relative; z-index: 2;
+  border-top: 1px solid var(--hair);
+  background: var(--bg-1);
 }
-@media(max-width:560px){
-  .demo-tabs{flex-wrap:wrap}
+.page-footer__inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 2rem var(--pad-x);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.page-footer__left {
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  color: var(--text-subtle);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  line-height: 1.8;
+}
+.page-footer__right {
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  color: var(--accent);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  transition: color .15s;
+}
+.page-footer__right:hover { color: var(--text); }
+
+/* ── REVEAL ───────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .5s var(--ease), transform .5s var(--ease);
+}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; gap: 2.5rem; padding-top: 5.5rem; }
+  .mockup-col { display: none; }
+  .staff-wrap { grid-template-columns: 1fr; }
+  .customer-wrap { grid-template-columns: 1fr; }
+  .cta-inner { flex-direction: column; align-items: flex-start; }
+  .sec-head { grid-template-columns: 3.5rem 1fr; gap: 1rem; }
+}
+
+@media (max-width: 560px) {
+  .demo-tabs { flex-wrap: wrap; }
+  .sec-head { grid-template-columns: 1fr; }
+  .sec-num { font-size: 3rem; color: var(--accent); }
+  .stats-bar { grid-template-columns: 1fr; }
+  .stat-cell { border-right: none; border-bottom: 1px solid var(--hair); }
+  .stat-cell:last-child { border-bottom: none; }
+  .kpi-row { grid-template-columns: 1fr; }
+}
+
+/* ── REDUCED MOTION ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero__meta, .hero__badge, .hero__title, .hero__lede,
+  .hero__cta, .hero__facts, .mockup-col {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .reveal { opacity: 1 !important; transform: none !important; }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="index.html" class="logo">
-    <div class="logo-mark">
-      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-    </div>
-    <span class="logo-name">QueuePilot</span>
-  </a>
-  <div class="nav-actions">
-    <a href="index.html" class="nav-link">← Portfolio</a>
-    <a href="https://github.com/drame31" target="_blank" class="nav-btn">GitHub</a>
-  </div>
-</nav>
+<div class="grain" aria-hidden="true"></div>
 
-<!-- HERO -->
+<!-- ── NAV ──────────────────────────────────────────────────── -->
+<header class="nav">
+  <a href="index.html" class="nav__brand" aria-label="Derek Muñoz — Home">
+    DEREK.MUÑOZ_S / QUEUEPILOT
+    <span class="nav__live" aria-hidden="true"></span>
+  </a>
+
+  <div class="nav__actions">
+    <a href="index.html" class="nav__back">← BACK TO PORTFOLIO</a>
+    <a href="https://github.com/drame31" target="_blank" rel="noopener" class="nav__gh">GITHUB</a>
+  </div>
+</header>
+
+<main>
+
+<!-- ── HERO ─────────────────────────────────────────────────── -->
 <div class="hero">
-  <div class="au">
-    <div class="badge"><span class="badge-dot"></span>Full-stack · FastAPI + React + WebSockets</div>
-    <h1>Queue management<br>that actually <span>works</span></h1>
-    <p class="hero-sub">
+  <!-- Copy column -->
+  <div>
+    <div class="hero__meta" aria-hidden="true">
+      <span class="hero__meta-accent">// 01 · PROJECT</span>
+      <span class="hero__meta-sep">╌╌╌╌╌╌╌</span>
+      <span>QUEUEPILOT</span>
+      <span class="hero__meta-sep">·</span>
+      <span>2025</span>
+    </div>
+
+    <div class="hero__badge">
+      <span class="hero__badge-dot" aria-hidden="true"></span>
+      FULL-STACK · FASTAPI + REACT + WEBSOCKETS
+    </div>
+
+    <h1 class="hero__title">
+      Queue management<br>that actually <em>works.</em>
+    </h1>
+
+    <p class="hero__lede">
       A virtual queue system for barbershops, clinics, and local businesses.
       Customers join via QR — no app needed. Staff manages everything from one panel.
       Every update is pushed live over WebSocket.
     </p>
-    <div class="hero-btns">
-      <button class="btn-main" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">
-        Try the demo
-        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+
+    <div class="hero__cta">
+      <button class="btn btn--primary" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">
+        → TRY THE DEMO
       </button>
-      <a href="https://github.com/drame31" target="_blank" class="btn-sec">
-        <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-        Source code
+      <a href="https://github.com/drame31" target="_blank" rel="noopener" class="btn btn--ghost">
+        VIEW SOURCE
       </a>
     </div>
-    <div class="hero-facts">
-      <div class="hero-fact"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>WebSocket updates — no polling, changes propagate in under 100ms</div>
-      <div class="hero-fact"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>QR check-in — customers join from any phone browser, no install</div>
-      <div class="hero-fact"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>JWT + refresh token rotation — bcrypt passwords, role-protected routes</div>
+
+    <div class="hero__facts">
+      <div class="hero__fact">WebSocket updates — no polling. Changes propagate under 100ms.</div>
+      <div class="hero__fact">QR check-in — customers join from any phone browser. No install.</div>
+      <div class="hero__fact">JWT + refresh token rotation — bcrypt passwords, role-protected routes.</div>
     </div>
   </div>
 
-  <!-- Hero mockup -->
-  <div class="mockup-col au2">
+  <!-- Mockup column -->
+  <div class="mockup-col" aria-hidden="true">
     <div class="float-wrap">
       <div class="mockup">
+        <!-- browser chrome -->
         <div class="mk-bar">
-          <span style="background:#ef4444;opacity:.6"></span>
-          <span style="background:#f59e0b;opacity:.6"></span>
-          <span style="background:#22c55e;opacity:.6"></span>
+          <span class="mk-bar-dot"></span>
+          <span class="mk-bar-dot"></span>
+          <span class="mk-bar-dot"></span>
           <span class="mk-bar-url">queuepilot · staff panel</span>
         </div>
+        <!-- business header -->
         <div class="mk-head">
           <div>
             <p class="mk-biz">Barbería Atlas</p>
-            <p class="mk-biz-sub">Staff panel</p>
+            <p class="mk-biz-sub">STAFF PANEL</p>
           </div>
-          <span class="mk-live"><span class="mk-live-dot"></span>live</span>
+          <span class="mk-live"><span class="mk-live-dot"></span>LIVE</span>
         </div>
+        <!-- stats -->
         <div class="mk-stats-row">
-          <div class="mk-sc"><p class="mk-sv" style="color:#3b82f6" id="hm-w">3</p><p class="mk-sl">Waiting</p></div>
-          <div class="mk-sc"><p class="mk-sv" style="color:#f59e0b" id="hm-s">1</p><p class="mk-sl">Serving</p></div>
-          <div class="mk-sc"><p class="mk-sv" style="color:#10b981" id="hm-d">17</p><p class="mk-sl">Done</p></div>
+          <div class="mk-sc">
+            <p class="mk-sv" style="color:var(--status-wait)" id="hm-w">3</p>
+            <p class="mk-sl">WAITING</p>
+          </div>
+          <div class="mk-sc">
+            <p class="mk-sv" style="color:var(--status-serv)" id="hm-s">1</p>
+            <p class="mk-sl">SERVING</p>
+          </div>
+          <div class="mk-sc">
+            <p class="mk-sv" style="color:var(--status-done)" id="hm-d">17</p>
+            <p class="mk-sl">DONE</p>
+          </div>
         </div>
+        <!-- queue list -->
         <div class="mk-list" id="hm-list"></div>
       </div>
     </div>
@@ -294,30 +1264,54 @@ footer a:hover{text-decoration:underline}
   </div>
 </div>
 
-<!-- LIVE DEMO -->
-<section id="demo" class="demo-section">
-  <p class="demo-label">Interactive demo</p>
-  <h2 class="demo-title">Try it yourself</h2>
-  <p class="demo-desc">Switch between the staff panel and the customer view. Add yourself to the queue and watch the staff side update. Manage queue entries and see the stats change in real time.</p>
+<!-- ASCII divider -->
+<div class="ascii-div" aria-hidden="true">
+  <div class="ascii-div__inner">
+    <span class="ascii-div__label">// 02 · DEMO</span>
+    <span class="ascii-div__line">╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌</span>
+  </div>
+</div>
 
-  <div class="demo-tabs">
-    <button class="dtab on" onclick="switchTab('staff')">Staff panel</button>
-    <button class="dtab" onclick="switchTab('customer')">Customer view</button>
+<!-- ── DEMO SECTION ──────────────────────────────────────────── -->
+<section id="demo" class="section">
+  <header class="sec-head reveal">
+    <div class="sec-num" aria-hidden="true">02</div>
+    <div>
+      <span class="sec-label">// INTERACTIVE DEMO</span>
+      <h2 class="sec-title">Try it <em>yourself.</em></h2>
+      <p class="sec-lede">Switch between the staff panel and the customer view. Add yourself to the queue and watch the staff side update. Manage entries and see the stats change.</p>
+    </div>
+  </header>
+
+  <div class="reveal">
+    <div class="demo-tabs" role="tablist" aria-label="Demo views">
+      <button class="dtab on" onclick="switchTab('staff', event)" role="tab" aria-selected="true">[OWNER / STAFF]</button>
+      <button class="dtab" onclick="switchTab('customer', event)" role="tab" aria-selected="false">[CUSTOMER]</button>
+    </div>
   </div>
 
   <!-- STAFF PANE -->
-  <div class="demo-pane on" id="pane-staff">
+  <div class="demo-pane on" id="pane-staff" role="tabpanel">
     <div class="staff-wrap">
       <!-- Queue panel -->
       <div class="staff-queue">
         <div class="pane-head">
-          <span class="pane-title">Live queue — Barbería Atlas</span>
-          <span class="ws-pill"><span class="ws-dot"></span>WebSocket connected</span>
+          <span class="pane-title">LIVE QUEUE — BARBERÍA ATLAS</span>
+          <span class="ws-pill"><span class="ws-dot" aria-hidden="true"></span>WS CONNECTED</span>
         </div>
         <div class="stats-bar">
-          <div class="stat-cell"><p class="stat-n" style="color:#3b82f6" id="st-w">0</p><p class="stat-l">Waiting</p></div>
-          <div class="stat-cell"><p class="stat-n" style="color:#f59e0b" id="st-s">0</p><p class="stat-l">In service</p></div>
-          <div class="stat-cell"><p class="stat-n" style="color:#10b981" id="st-d">0</p><p class="stat-l">Served today</p></div>
+          <div class="stat-cell">
+            <p class="stat-n" style="color:var(--status-wait)" id="st-w">0</p>
+            <p class="stat-l">WAITING</p>
+          </div>
+          <div class="stat-cell">
+            <p class="stat-n" style="color:var(--status-serv)" id="st-s">0</p>
+            <p class="stat-l">IN SERVICE</p>
+          </div>
+          <div class="stat-cell">
+            <p class="stat-n" style="color:var(--status-done)" id="st-d">0</p>
+            <p class="stat-l">SERVED TODAY</p>
+          </div>
         </div>
         <div class="q-list" id="staff-list"></div>
       </div>
@@ -325,16 +1319,25 @@ footer a:hover{text-decoration:underline}
       <!-- Side panels -->
       <div class="side-panels">
         <div class="side-card">
-          <p class="side-title">Today's KPIs</p>
+          <span class="side-title">// TODAY'S KPIs</span>
           <div class="kpi-row">
-            <div class="kpi"><p class="kpi-n" style="color:#3b82f6" id="kpi-total">0</p><p class="kpi-l">Total queued</p></div>
-            <div class="kpi"><p class="kpi-n" style="color:#f59e0b" id="kpi-wait">0m</p><p class="kpi-l">Avg wait</p></div>
+            <div class="kpi">
+              <p class="kpi-n" style="color:var(--status-wait)" id="kpi-total">0</p>
+              <p class="kpi-l">TOTAL QUEUED</p>
+            </div>
+            <div class="kpi">
+              <p class="kpi-n" style="color:var(--status-serv)" id="kpi-wait">0m</p>
+              <p class="kpi-l">AVG WAIT</p>
+            </div>
           </div>
         </div>
         <div class="side-card">
-          <p class="side-title">Activity log</p>
+          <span class="side-title">// ACTIVITY LOG</span>
           <div class="log-list" id="log-list">
-            <div class="log-item"><span class="log-time">—</span><span class="log-msg" style="color:#2d4460">Waiting for events...</span></div>
+            <div class="log-item">
+              <span class="log-time">--:--</span>
+              <span class="log-msg">Waiting for events...</span>
+            </div>
           </div>
         </div>
       </div>
@@ -342,19 +1345,19 @@ footer a:hover{text-decoration:underline}
   </div>
 
   <!-- CUSTOMER PANE -->
-  <div class="demo-pane" id="pane-customer">
+  <div class="demo-pane" id="pane-customer" role="tabpanel">
     <div class="customer-wrap">
       <!-- Join form / Ticket view -->
       <div>
         <div class="join-card" id="join-form-card">
           <p class="join-title">Barbería Atlas</p>
-          <p class="join-sub">Open now · <span id="c-waiting-count">0</span> people waiting</p>
+          <p class="join-sub">OPEN NOW · <span id="c-waiting-count">0</span> PEOPLE WAITING</p>
           <div class="field">
-            <label>Your name</label>
+            <label for="c-name">YOUR NAME</label>
             <input type="text" id="c-name" placeholder="e.g. María García" maxlength="30">
           </div>
           <div class="field">
-            <label>Service</label>
+            <label for="c-service">SERVICE</label>
             <select id="c-service">
               <option value="">No preference</option>
               <option value="Corte de cabello">Haircut (30 min)</option>
@@ -364,130 +1367,163 @@ footer a:hover{text-decoration:underline}
             </select>
           </div>
           <button class="join-btn" onclick="joinQueue()">
-            Join the queue
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            JOIN THE QUEUE →
           </button>
         </div>
 
         <div class="join-card" id="ticket-card" style="display:none">
           <div class="ticket-view" id="ticket-view" style="display:flex">
             <div class="ticket-num" id="t-num">—</div>
-            <h3 id="t-headline" style="font-size:1.1rem;font-weight:700;color:#e8edf6;margin-bottom:8px"></h3>
+            <h3 class="ticket-headline" id="t-headline"></h3>
             <div class="ticket-status" id="t-status"></div>
             <p class="ticket-info" id="t-info"></p>
-            <p class="ticket-update">This view updates as staff manages the queue</p>
-            <button onclick="leaveQueue()" style="margin-top:20px;padding:7px 16px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;background:transparent;color:#4a6180;border:1px solid rgba(255,255,255,.08);font-family:inherit">Leave queue</button>
+            <p class="ticket-update">THIS VIEW UPDATES AS STAFF MANAGES THE QUEUE</p>
+            <button class="leave-btn" onclick="leaveQueue()">LEAVE QUEUE</button>
           </div>
         </div>
       </div>
 
       <!-- Live queue view for customer -->
       <div class="position-panel">
-        <p class="pos-title">Current queue</p>
+        <span class="pos-title">// CURRENT QUEUE</span>
         <div class="pos-queue" id="customer-queue-view"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FEATURES -->
-<section class="feat-section">
-  <div style="margin-bottom:2.5rem">
-    <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8b5cf6;margin-bottom:8px">Features</p>
-    <h2 style="font-size:1.7rem;font-weight:700;letter-spacing:-.025em;color:#edf1fb">How the system works</h2>
+<!-- ASCII divider -->
+<div class="ascii-div" aria-hidden="true">
+  <div class="ascii-div__inner">
+    <span class="ascii-div__label">// 03 · HOW IT WORKS</span>
+    <span class="ascii-div__line">╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌</span>
   </div>
-  <div class="feat-grid">
+</div>
+
+<!-- ── FEATURES SECTION ──────────────────────────────────────── -->
+<section class="section">
+  <header class="sec-head reveal">
+    <div class="sec-num" aria-hidden="true">03</div>
+    <div>
+      <span class="sec-label">// FEATURES</span>
+      <h2 class="sec-title">How the system <em>works.</em></h2>
+    </div>
+  </header>
+
+  <div class="feat-grid reveal">
     <div class="feat-card">
-      <div class="feat-icon" style="background:rgba(59,130,246,.09);border:1px solid rgba(59,130,246,.16);color:#3b82f6">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      </div>
-      <p class="feat-h">Real-time via WebSocket</p>
-      <p class="feat-p">Every status change — a customer joining, being called, or served — is pushed to all connected clients immediately. No polling interval, no stale data.</p>
+      <span class="feat-num">/01 · REAL-TIME</span>
+      <h3 class="feat-h">WebSocket updates</h3>
+      <p class="feat-p">Every status change — a customer joining, being called, or served — is pushed to all connected clients immediately. No polling interval. No stale data.</p>
     </div>
     <div class="feat-card">
-      <div class="feat-icon" style="background:rgba(139,92,246,.09);border:1px solid rgba(139,92,246,.16);color:#8b5cf6">
-        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="4"/><path d="M7 12h10M12 7v10"/></svg>
-      </div>
-      <p class="feat-h">QR walk-in check-in</p>
-      <p class="feat-p">The business generates a QR code. Customers scan it with any phone camera and fill in a simple form. No account, no app download, works on any browser.</p>
+      <span class="feat-num">/02 · CHECK-IN</span>
+      <h3 class="feat-h">QR walk-in</h3>
+      <p class="feat-p">The business generates a QR code. Customers scan it with any phone camera and fill in a simple form. No account, no app download — works on any browser.</p>
     </div>
     <div class="feat-card">
-      <div class="feat-icon" style="background:rgba(16,185,129,.09);border:1px solid rgba(16,185,129,.16);color:#10b981">
-        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-      </div>
-      <p class="feat-h">Analytics dashboard</p>
+      <span class="feat-num">/03 · ANALYTICS</span>
+      <h3 class="feat-h">Owner dashboard</h3>
       <p class="feat-p">Peak hour heatmap, no-show rate, average wait time, and a 7-day trend — all calculated from real queue data and rendered with Recharts.</p>
     </div>
     <div class="feat-card">
-      <div class="feat-icon" style="background:rgba(245,158,11,.09);border:1px solid rgba(245,158,11,.16);color:#f59e0b">
-        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      </div>
-      <p class="feat-h">Role-based access</p>
+      <span class="feat-num">/04 · AUTH</span>
+      <h3 class="feat-h">Role-based access</h3>
       <p class="feat-p">Owner sets up services and generates QR codes. Staff manages the live queue. Customers join via the public link. Three roles, three separate views, one JWT-secured API.</p>
     </div>
     <div class="feat-card">
-      <div class="feat-icon" style="background:rgba(244,114,182,.09);border:1px solid rgba(244,114,182,.16);color:#f472b6">
-        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-      </div>
-      <p class="feat-h">Wait time estimation</p>
+      <span class="feat-num">/05 · ESTIMATION</span>
+      <h3 class="feat-h">Wait time calculation</h3>
       <p class="feat-p">Each position has a calculated expected wait based on how many services are ahead and their configured durations — updated automatically as the queue moves.</p>
     </div>
     <div class="feat-card">
-      <div class="feat-icon" style="background:rgba(96,165,250,.09);border:1px solid rgba(96,165,250,.16);color:#60a5fa">
-        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      </div>
-      <p class="feat-h">Secure authentication</p>
-      <p class="feat-p">Short-lived access token with refresh token rotation. Passwords hashed via bcrypt. All protected endpoints verify role from the JWT payload.</p>
+      <span class="feat-num">/06 · SECURITY</span>
+      <h3 class="feat-h">Secure auth flow</h3>
+      <p class="feat-p">Short-lived access tokens with refresh token rotation. Passwords hashed via bcrypt. All protected endpoints verify role from the JWT payload.</p>
     </div>
   </div>
 </section>
 
-<!-- TECH STACK -->
-<section class="stack-section">
-  <div class="stack-box">
-    <div class="stack-topline"></div>
-    <div class="stack-header">
+<!-- ASCII divider -->
+<div class="ascii-div" aria-hidden="true">
+  <div class="ascii-div__inner">
+    <span class="ascii-div__label">// 04 · STACK</span>
+    <span class="ascii-div__line">╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌</span>
+  </div>
+</div>
+
+<!-- ── TECH STACK SECTION ─────────────────────────────────────── -->
+<section class="section">
+  <header class="sec-head reveal">
+    <div class="sec-num" aria-hidden="true">04</div>
+    <div>
+      <span class="sec-label">// TECH STACK</span>
+      <h2 class="sec-title">What it's <em>built on.</em></h2>
+    </div>
+  </header>
+
+  <div class="stack-box reveal">
+    <div class="stack-box-head">
       <div>
-        <p class="stack-h">Tech stack</p>
-        <p class="stack-sub">Async Python backend — Reactive TypeScript frontend</p>
+        <p class="stack-h">Async Python backend — Reactive TypeScript frontend</p>
+        <p class="stack-sub">Each library in this list ships in production code. No pads.</p>
       </div>
     </div>
     <div class="stack-pills">
-      <span class="pill" style="background:rgba(97,218,251,.08);color:#61dafb;border:1px solid rgba(97,218,251,.18)">React 18</span>
-      <span class="pill" style="background:rgba(59,130,246,.09);color:#60a5fa;border:1px solid rgba(59,130,246,.2)">TypeScript</span>
-      <span class="pill" style="background:rgba(16,185,129,.08);color:#10b981;border:1px solid rgba(16,185,129,.18)">FastAPI</span>
-      <span class="pill" style="background:rgba(139,92,246,.09);color:#a78bfa;border:1px solid rgba(139,92,246,.2)">WebSockets</span>
-      <span class="pill" style="background:rgba(249,115,22,.08);color:#fb923c;border:1px solid rgba(249,115,22,.18)">SQLAlchemy</span>
-      <span class="pill" style="background:rgba(245,158,11,.08);color:#fbbf24;border:1px solid rgba(245,158,11,.18)">Zustand</span>
-      <span class="pill" style="background:rgba(6,182,212,.08);color:#22d3ee;border:1px solid rgba(6,182,212,.18)">Tailwind CSS</span>
-      <span class="pill" style="background:rgba(167,139,250,.08);color:#c4b5fd;border:1px solid rgba(167,139,250,.18)">Vite</span>
-      <span class="pill" style="background:rgba(16,185,129,.07);color:#6ee7b7;border:1px solid rgba(16,185,129,.15)">Recharts</span>
-      <span class="pill" style="background:rgba(232,121,176,.08);color:#f9a8d4;border:1px solid rgba(232,121,176,.18)">JWT + bcrypt</span>
+      <span class="pill">React 18</span>
+      <span class="pill">TypeScript</span>
+      <span class="pill">FastAPI</span>
+      <span class="pill">WebSockets</span>
+      <span class="pill">SQLAlchemy</span>
+      <span class="pill">Zustand</span>
+      <span class="pill">Tailwind CSS</span>
+      <span class="pill">Vite</span>
+      <span class="pill">Recharts</span>
+      <span class="pill">JWT + bcrypt</span>
+      <span class="pill">Python 3.11</span>
+      <span class="pill">SQLite</span>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section">
-  <div class="cta-inner">
-    <div class="cta-topline"></div>
-    <div class="cta-copy">
-      <h2>See the full code</h2>
-      <p>Backend, frontend, WebSocket handlers, JWT middleware, and database models — all available on GitHub.</p>
+<!-- ASCII divider -->
+<div class="ascii-div" aria-hidden="true">
+  <div class="ascii-div__inner">
+    <span class="ascii-div__label">// 05 · CODE</span>
+    <span class="ascii-div__line">╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌</span>
+  </div>
+</div>
+
+<!-- ── CTA SECTION ────────────────────────────────────────────── -->
+<section class="section">
+  <div class="cta-inner reveal">
+    <div class="cta-bar" aria-hidden="true"></div>
+    <div>
+      <h2 class="cta-h">See the full code.</h2>
+      <p class="cta-sub">Backend, frontend, WebSocket handlers, JWT middleware, and database models — all on GitHub.</p>
     </div>
     <div class="cta-actions">
-      <a href="https://github.com/drame31" target="_blank" class="btn-main">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-        View on GitHub
+      <a href="https://github.com/drame31" target="_blank" rel="noopener" class="btn btn--primary">
+        → VIEW ON GITHUB
       </a>
-      <a href="index.html" class="btn-sec">← Back to portfolio</a>
+      <a href="index.html" class="btn btn--ghost">← BACK TO PORTFOLIO</a>
     </div>
   </div>
 </section>
 
-<footer>
-  <p>QueuePilot — Portfolio project by Derek Muñoz</p>
-  <a href="index.html">drame31.github.io</a>
+</main>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer class="page-footer">
+  <div class="page-footer__inner">
+    <div class="page-footer__left">
+      QUEUEPILOT · PORTFOLIO PROJECT BY DEREK MUÑOZ<br>
+      STACK: FASTAPI · REACT 18 · TYPESCRIPT · WEBSOCKETS · SQLALCHEMY
+    </div>
+    <a href="index.html" class="page-footer__right">
+      ← DRAME31.GITHUB.IO
+    </a>
+  </div>
 </footer>
 
 <script>
@@ -526,8 +1562,17 @@ function waitFor(idx){
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Hero mini mockup
+// Hero mini mockup — uses CSS variables for colours
 // ─────────────────────────────────────────────────────────────────────────────
+const CSS = getComputedStyle(document.documentElement);
+const C_WAIT = CSS.getPropertyValue('--status-wait').trim();  // lime
+const C_SERV = CSS.getPropertyValue('--status-serv').trim();  // amber
+const C_DONE = CSS.getPropertyValue('--status-done').trim();  // green
+const C_TEXT = CSS.getPropertyValue('--text-subtle').trim();
+const C_BG1  = CSS.getPropertyValue('--bg-1').trim();
+const C_HAIR = CSS.getPropertyValue('--hair').trim();
+const C_ACCT = CSS.getPropertyValue('--accent').trim();
+
 let heroHL = 0;
 const HQ = [
   {ticket:'A-01',name:'Carlos M.',svc:'Corte + barba',status:'in_service'},
@@ -535,39 +1580,42 @@ const HQ = [
   {ticket:'A-03',name:'Andrés V.',svc:'Afeitado clásico',status:'waiting',wait:22},
   {ticket:'A-04',name:'Laura P.',svc:'Tinte completo',status:'waiting',wait:35},
 ];
+
 function renderHeroMk(){
   const el = document.getElementById('hm-list');
   if(!el) return;
   el.innerHTML = HQ.map((e,i)=>{
     const srv = e.status==='in_service';
     const act = heroHL===i;
-    const tc = srv?'#f59e0b':'#3b82f6';
-    const tb = srv?'rgba(245,158,11,.14)':'rgba(59,130,246,.11)';
-    const tbd = srv?'rgba(245,158,11,.28)':'rgba(59,130,246,.22)';
-    const rb = act?'rgba(59,130,246,.07)':'rgba(255,255,255,.018)';
-    const rbd = act?'rgba(59,130,246,.2)':'rgba(255,255,255,.04)';
-    return `<div class="mk-row" style="background:${rb};border:1px solid ${rbd}">
+    // highlight active row with a subtle accent border
+    const rowBorder = act ? 'rgba(212,255,58,.22)' : 'rgba(245,240,230,.06)';
+    const rowBg     = act ? 'rgba(212,255,58,.04)' : 'transparent';
+    const tktColor  = srv ? C_SERV : C_WAIT;
+    return `<div class="mk-row" style="background:${rowBg};border-color:${rowBorder}">
       <div class="mk-row-l">
-        <div class="mk-tkt" style="background:${tb};color:${tc};border:1px solid ${tbd}">${e.ticket}</div>
-        <div><p class="mk-rname">${e.name}</p><p class="mk-rsvc">${e.svc}</p></div>
+        <div class="mk-tkt" style="color:${tktColor};border-color:${tktColor}44">${e.ticket}</div>
+        <div>
+          <p class="mk-rname">${e.name}</p>
+          <p class="mk-rsvc">${e.svc}</p>
+        </div>
       </div>
-      ${srv?`<span class="mk-rbadge" style="background:rgba(245,158,11,.12);color:#f59e0b">Serving</span>`
-          :`<span class="mk-rwait">~${e.wait}m</span>`}
+      ${srv
+        ? `<span class="mk-rbadge" style="color:${C_SERV};background:${C_SERV}18">SERVING</span>`
+        : `<span class="mk-rwait">~${e.wait}m</span>`}
     </div>`;
   }).join('');
 }
 renderHeroMk();
-setInterval(()=>{ heroHL=(heroHL+1)%HQ.length; renderHeroMk(); },2800);
+setInterval(()=>{ heroHL=(heroHL+1)%HQ.length; renderHeroMk(); }, 2800);
 setInterval(()=>{
-  const el=document.getElementById('hm-list');
+  const el = document.getElementById('hm-list');
   if(!el) return;
-  const p=document.createElement('div');
-  p.className='mk-notif';
-  p.style.cssText='background:rgba(16,185,129,.08);color:#10b981;border:1px solid rgba(16,185,129,.2)';
-  p.textContent='🔔 New customer joined';
+  const p = document.createElement('div');
+  p.className = 'mk-notif';
+  p.textContent = '+ NEW CUSTOMER JOINED';
   el.appendChild(p);
-  setTimeout(()=>p.remove(),2400);
-},5000);
+  setTimeout(()=>p.remove(), 2400);
+}, 5000);
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Render functions
@@ -585,47 +1633,49 @@ function renderStaff(){
   document.getElementById('st-s').textContent = serving.length;
   document.getElementById('st-d').textContent = state.served;
   document.getElementById('kpi-total').textContent = state.served + state.queue.length;
-  const avgMin = state.queue.length ? Math.round(state.queue.reduce((a,e,i)=>a+waitFor(i),0)/state.queue.length) : 0;
+  const avgMin = state.queue.length
+    ? Math.round(state.queue.reduce((a,e,i)=>a+waitFor(i),0)/state.queue.length)
+    : 0;
   document.getElementById('kpi-wait').textContent = avgMin + 'm';
 
   // log
   const logEl = document.getElementById('log-list');
   if(state.log.length===0){
-    logEl.innerHTML = '<div class="log-item"><span class="log-time">—</span><span class="log-msg" style="color:#2d4460">Waiting for events...</span></div>';
+    logEl.innerHTML = '<div class="log-item"><span class="log-time">--:--</span><span class="log-msg">Waiting for events...</span></div>';
   } else {
     logEl.innerHTML = state.log.map(l=>`<div class="log-item"><span class="log-time">${l.t}</span><span class="log-msg">${l.m}</span></div>`).join('');
   }
 
+  // queue list
   const list = document.getElementById('staff-list');
   if(state.queue.length===0){
-    list.innerHTML='<p class="q-empty">Queue is empty</p>';
+    list.innerHTML='<p class="q-empty">QUEUE IS EMPTY</p>';
     return;
   }
 
   list.innerHTML = state.queue.map((e,i)=>{
-    const isServ = e.status==='in_service';
+    const isServ   = e.status==='in_service';
     const isCalled = e.status==='called';
-    const tc = isServ?'#f59e0b':isCalled?'#fbbf24':'#3b82f6';
-    const tb = isServ?'rgba(245,158,11,.14)':isCalled?'rgba(251,191,36,.1)':'rgba(59,130,246,.11)';
-    const tbd = isServ?'rgba(245,158,11,.28)':isCalled?'rgba(251,191,36,.22)':'rgba(59,130,246,.22)';
-    const wt = waitFor(i);
+    const tc  = isServ ? C_SERV : isCalled ? C_SERV : C_WAIT;
+    const wt  = waitFor(i);
+
     let badge = '';
-    if(isServ) badge = `<span class="q-badge" style="background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.22)">In service</span>`;
-    else if(isCalled) badge = `<span class="q-badge" style="background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.2)">Called</span>`;
-    else badge = `<span class="q-badge" style="background:rgba(59,130,246,.09);color:#60a5fa;border:1px solid rgba(59,130,246,.18)">Waiting · ~${wt}m</span>`;
+    if(isServ)   badge = `<span class="q-badge" style="color:${C_SERV};border-color:${C_SERV}44">IN SERVICE</span>`;
+    else if(isCalled) badge = `<span class="q-badge" style="color:${C_SERV};border-color:${C_SERV}44">CALLED</span>`;
+    else         badge = `<span class="q-badge" style="color:${C_WAIT};border-color:${C_WAIT}44">WAITING · ~${wt}m</span>`;
 
     let actions = '';
-    if(e.status==='waiting') actions+=`<button class="qa qa-call" onclick="act(${e.id},'called')">Call</button>`;
-    if(e.status==='waiting'||e.status==='called') actions+=`<button class="qa qa-serve" onclick="act(${e.id},'in_service')">Serve</button>`;
-    if(e.status==='in_service') actions+=`<button class="qa qa-done" onclick="act(${e.id},'done')">Done</button>`;
-    if(e.status!=='done') actions+=`<button class="qa qa-no" onclick="act(${e.id},'no_show')">No-show</button>`;
+    if(e.status==='waiting')                      actions+=`<button class="qa qa-call"  onclick="act(${e.id},'called')">CALL</button>`;
+    if(e.status==='waiting'||e.status==='called') actions+=`<button class="qa qa-serve" onclick="act(${e.id},'in_service')">SERVE</button>`;
+    if(e.status==='in_service')                   actions+=`<button class="qa qa-done"  onclick="act(${e.id},'done')">DONE</button>`;
+    if(e.status!=='done')                         actions+=`<button class="qa qa-no"    onclick="act(${e.id},'no_show')">NO-SHOW</button>`;
 
     const isMe = e.id===state.myTicketId;
-    return `<div class="q-item" style="${isMe?'border-color:rgba(59,130,246,.3);background:rgba(59,130,246,.05)':''}">
+    return `<div class="q-item" style="${isMe?`border-color:${C_WAIT}44;background:${C_WAIT}06`:``}">
       <div class="q-item-l">
-        <div class="q-tkt" style="background:${tb};color:${tc};border:1px solid ${tbd}">${e.ticket}</div>
+        <div class="q-tkt" style="color:${tc};border-color:${tc}44">${e.ticket}</div>
         <div>
-          <p class="q-name">${e.name}${isMe?' <span style="font-size:11px;color:#3b82f6;font-weight:500">(you)</span>':''}</p>
+          <p class="q-name">${e.name}${isMe?` <span style="font-size:.6rem;color:${C_WAIT};font-weight:600;letter-spacing:.06em">(YOU)</span>`:``}</p>
           <p class="q-meta">${e.svc}</p>
         </div>
       </div>
@@ -637,24 +1687,23 @@ function renderStaff(){
 function renderCustomer(){
   // waiting count badge on form
   const wc = state.queue.filter(e=>e.status==='waiting').length;
-  const el = document.getElementById('c-waiting-count');
-  if(el) el.textContent = wc;
+  const cEl = document.getElementById('c-waiting-count');
+  if(cEl) cEl.textContent = wc;
 
   // customer queue view (position panel)
   const posEl = document.getElementById('customer-queue-view');
   if(posEl){
     if(state.queue.length===0){
-      posEl.innerHTML='<p style="font-size:13px;color:#2d4460;text-align:center;padding:24px">Queue is empty</p>';
+      posEl.innerHTML='<p style="font-family:var(--font-mono);font-size:.65rem;color:var(--text-subtle);text-align:center;padding:24px;letter-spacing:.06em;text-transform:uppercase">QUEUE IS EMPTY</p>';
     } else {
       posEl.innerHTML = state.queue.map(e=>{
         const isServ = e.status==='in_service';
-        const tc = isServ?'#f59e0b':'#3b82f6';
-        const tb = isServ?'rgba(245,158,11,.12)':'rgba(59,130,246,.09)';
+        const tc = isServ ? C_SERV : C_WAIT;
         const isMe = e.id===state.myTicketId;
-        return `<div class="pos-row" style="${isMe?'border-color:rgba(59,130,246,.28);background:rgba(59,130,246,.05)':'background:rgba(255,255,255,.018)'}">
-          <div class="pos-tkt" style="background:${tb};color:${tc};border:1px solid ${tc}28">${e.ticket}</div>
+        return `<div class="pos-row" style="${isMe?`border-color:${C_WAIT}44;background:${C_WAIT}06`:``}">
+          <div class="pos-tkt" style="color:${tc};border-color:${tc}44">${e.ticket}</div>
           <span class="pos-name">${e.name}</span>
-          ${isMe?'<span class="pos-you">← you</span>':''}
+          ${isMe?`<span class="pos-you">← YOU</span>`:''}
         </div>`;
       }).join('');
     }
@@ -663,36 +1712,39 @@ function renderCustomer(){
   // ticket view if joined
   if(state.myTicketId!==null){
     const entry = state.queue.find(e=>e.id===state.myTicketId);
-    const idx = state.queue.findIndex(e=>e.id===state.myTicketId);
+    const idx   = state.queue.findIndex(e=>e.id===state.myTicketId);
 
     document.getElementById('join-form-card').style.display='none';
     document.getElementById('ticket-card').style.display='block';
 
     if(!entry){
-      // completed/removed
-      document.getElementById('t-num').style.background='rgba(16,185,129,.12)';
-      document.getElementById('t-num').style.borderColor='rgba(16,185,129,.3)';
-      document.getElementById('t-num').style.color='#10b981';
-      document.getElementById('t-num').textContent='✓';
-      document.getElementById('t-headline').textContent='You\'re all set!';
-      document.getElementById('t-status').textContent='Service completed';
-      document.getElementById('t-status').style.cssText='background:rgba(16,185,129,.1);color:#10b981;border:1px solid rgba(16,185,129,.2)';
-      document.getElementById('t-info').textContent='Thanks for visiting Barbería Atlas.';
+      // completed / removed
+      document.getElementById('t-num').style.background    = `${C_DONE}18`;
+      document.getElementById('t-num').style.borderColor   = `${C_DONE}44`;
+      document.getElementById('t-num').style.color         = C_DONE;
+      document.getElementById('t-num').textContent         = '✓';
+      document.getElementById('t-headline').textContent    = 'You\'re all set.';
+      document.getElementById('t-status').textContent      = 'SERVICE COMPLETED';
+      document.getElementById('t-status').style.cssText    = `color:${C_DONE};border-color:${C_DONE}44;background:${C_DONE}10`;
+      document.getElementById('t-info').textContent        = 'Thanks for visiting Barbería Atlas.';
       return;
     }
 
-    const isServ=entry.status==='in_service'||entry.status==='called';
-    const pos = idx+1;
-    const wait = waitFor(idx);
+    const isServ = entry.status==='in_service'||entry.status==='called';
+    const pos    = idx+1;
+    const wait   = waitFor(idx);
+    const tColor = isServ ? C_SERV : C_WAIT;
 
-    document.getElementById('t-num').textContent=entry.ticket;
-    document.getElementById('t-num').style.background=isServ?'rgba(245,158,11,.12)':'rgba(59,130,246,.1)';
-    document.getElementById('t-num').style.borderColor=isServ?'rgba(245,158,11,.3)':'rgba(59,130,246,.25)';
-    document.getElementById('t-num').style.color=isServ?'#f59e0b':'#3b82f6';
-    document.getElementById('t-headline').textContent=isServ?'It\'s your turn!':`Position #${pos}`;
-    document.getElementById('t-status').textContent=isServ?'🔔 Please come to the counter':wait?`~${wait} min estimated wait`:`${pos-1} person(s) ahead of you`;
-    document.getElementById('t-status').style.cssText=isServ?'background:rgba(245,158,11,.1);color:#f59e0b;border:1px solid rgba(245,158,11,.2)':'background:rgba(59,130,246,.08);color:#60a5fa;border:1px solid rgba(59,130,246,.18)';
-    document.getElementById('t-info').textContent=`Service: ${entry.svc}`;
+    document.getElementById('t-num').textContent         = entry.ticket;
+    document.getElementById('t-num').style.background    = `${tColor}12`;
+    document.getElementById('t-num').style.borderColor   = `${tColor}40`;
+    document.getElementById('t-num').style.color         = tColor;
+    document.getElementById('t-headline').textContent    = isServ ? 'It\'s your turn.' : `Position #${pos}`;
+    document.getElementById('t-status').textContent      = isServ ? 'PLEASE COME TO THE COUNTER'
+                                                          : wait  ? `~${wait} MIN ESTIMATED WAIT`
+                                                          : `${pos-1} PERSON(S) AHEAD`;
+    document.getElementById('t-status').style.cssText    = `color:${tColor};border-color:${tColor}44;background:${tColor}0d`;
+    document.getElementById('t-info').textContent        = `Service: ${entry.svc}`;
   }
 }
 
@@ -706,7 +1758,7 @@ function act(id, status){
   if(status==='done'||status==='no_show'){
     state.queue = state.queue.filter(e=>e.id!==id);
     if(status==='done'){ state.served++; addLog(`${name} — service completed`); }
-    else { addLog(`${name} — marked as no-show`); }
+    else               { addLog(`${name} — marked as no-show`); }
   } else {
     entry.status = status;
     const labels = {called:'called to counter',in_service:'service started'};
@@ -731,11 +1783,11 @@ function joinQueue(){
 
 function leaveQueue(){
   if(state.myTicketId!==null){
-    const e=state.queue.find(q=>q.id===state.myTicketId);
+    const e = state.queue.find(q=>q.id===state.myTicketId);
     if(e) addLog(`${e.name} left the queue`);
-    state.queue=state.queue.filter(q=>q.id!==state.myTicketId);
+    state.queue = state.queue.filter(q=>q.id!==state.myTicketId);
   }
-  state.myTicketId=null;
+  state.myTicketId = null;
   document.getElementById('join-form-card').style.display='block';
   document.getElementById('ticket-card').style.display='none';
   document.getElementById('c-name').value='';
@@ -745,18 +1797,40 @@ function leaveQueue(){
 // ─────────────────────────────────────────────────────────────────────────────
 // Tab switching
 // ─────────────────────────────────────────────────────────────────────────────
-function switchTab(t){
-  document.querySelectorAll('.dtab').forEach(b=>b.classList.remove('on'));
+function switchTab(t, e){
+  document.querySelectorAll('.dtab').forEach(b=>{
+    b.classList.remove('on');
+    b.setAttribute('aria-selected','false');
+  });
   document.querySelectorAll('.demo-pane').forEach(p=>p.classList.remove('on'));
-  event.target.classList.add('on');
+  if(e && e.target){
+    e.target.classList.add('on');
+    e.target.setAttribute('aria-selected','true');
+  }
   document.getElementById('pane-'+t).classList.add('on');
   render();
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Scroll reveal (same logic as script.js but self-contained for this page)
+// ─────────────────────────────────────────────────────────────────────────────
+const ro = new IntersectionObserver(entries=>{
+  entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('is-visible'); });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+// Nav scroll border
+const nav = document.querySelector('.nav');
+window.addEventListener('scroll',()=>{
+  nav.style.borderBottomColor = window.scrollY > 10 ? 'var(--hair)' : 'transparent';
+},{passive:true});
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Initial render
+// ─────────────────────────────────────────────────────────────────────────────
 render();
 
-// Simulate a customer joining every 18 seconds to keep the demo feeling alive
+// Simulate a customer joining every 18 seconds to keep the demo alive
 const AUTO_NAMES = ['Martín L.','Valeria O.','Rodrigo C.','Elena F.','Pablo M.','Diana S.'];
 let autoIdx = 0;
 setInterval(()=>{
