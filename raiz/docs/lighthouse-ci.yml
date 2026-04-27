@@ -1,0 +1,53 @@
+ci:
+  collect:
+    numberOfRuns: 3
+    url:
+      - http://localhost:8080/
+      - http://localhost:8080/raiz/
+    settings:
+      # Simulate a mid-range mobile device
+      emulatedFormFactor: mobile
+      throttlingMethod: devtools
+
+  assert:
+    assertions:
+      # Performance: 90+ required, fail build if below
+      categories:performance:
+        - error
+        - minScore: 0.90
+          aggregationMethod: optimistic
+
+      # Accessibility: 95+ required
+      categories:accessibility:
+        - error
+        - minScore: 0.95
+          aggregationMethod: optimistic
+
+      # Best Practices: 95+ required
+      categories:best-practices:
+        - error
+        - minScore: 0.95
+          aggregationMethod: optimistic
+
+      # SEO: 100 required — no excuse for less on a controlled codebase
+      categories:seo:
+        - error
+        - minScore: 1.0
+          aggregationMethod: optimistic
+
+      # Core Web Vitals
+      first-contentful-paint:
+        - warn
+        - maxNumericValue: 1800  # 1.8s warning threshold
+      largest-contentful-paint:
+        - error
+        - maxNumericValue: 2500  # 2.5s is the "good" threshold
+      cumulative-layout-shift:
+        - error
+        - maxNumericValue: 0.1
+      total-blocking-time:
+        - warn
+        - maxNumericValue: 300
+
+  upload:
+    target: temporary-public-storage
