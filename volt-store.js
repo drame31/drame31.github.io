@@ -62,7 +62,7 @@
       id: 'orbis-watch-gt',
       name: 'Orbis Watch GT',
       category: 'wearables',
-      badge: 'bestseller',
+      badge: null,
       price: 219.00,
       originalPrice: null,
       rating: 4.7,
@@ -123,7 +123,7 @@
       id: 'meridian-g-pro',
       name: 'Meridian G Pro',
       category: 'input',
-      badge: 'bestseller',
+      badge: null,
       price: 89.00,
       originalPrice: null,
       rating: 4.7,
@@ -313,7 +313,7 @@
   }
 
   function saveCartToStorage() {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(state.cart));
+    try { localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(state.cart)); } catch (e) { /* private browsing or storage quota */ }
   }
 
   function loadCartFromStorage() {
@@ -358,9 +358,9 @@
 
   function buildCardHTML(p) {
     const imageHTML = p.image
-      ? `<img src="${p.image}" alt="${p.name} — ${p.category} — VOLT Store" class="card-img" loading="lazy" decoding="async" />`
+      ? `<img src="${p.image}" alt="${p.name} — VOLT Store product photo" class="card-img" loading="lazy" decoding="async" />`
       : `<div class="card-placeholder" style="background-color:${CATEGORY_COLORS[p.category]}"><span class="placeholder-label">${p.shortCode}</span></div>`;
-    return `<article class="product-card reveal" data-product-id="${p.id}" data-category="${p.category}">
+    return `<article class="product-card reveal" role="listitem" data-product-id="${p.id}" data-category="${p.category}">
   <div class="card-image">
     ${imageHTML}
     ${p.badge ? `<span class="badge badge--${p.badge}">${badgeLabel(p.badge)}</span>` : ''}
@@ -475,9 +475,15 @@
     renderCart();
   }
 
+  const MAX_CART_QTY = 10;
+
   function updateQuantity(productId, delta) {
     const item = findCartItem(productId);
     if (!item) return;
+    if (delta > 0 && item.quantity >= MAX_CART_QTY) {
+      showToast(`Max quantity is ${MAX_CART_QTY} per item.`);
+      return;
+    }
     item.quantity += delta;
     if (item.quantity <= 0) {
       removeFromCart(productId);
@@ -560,7 +566,7 @@
     <div class="qty-stepper">
       <button class="qty-btn" data-action="decrement" data-product-id="${item.id}" ${item.quantity === 1 ? 'disabled' : ''} aria-label="Decrease quantity">−</button>
       <span class="qty-value">${item.quantity}</span>
-      <button class="qty-btn" data-action="increment" data-product-id="${item.id}" aria-label="Increase quantity">+</button>
+      <button class="qty-btn" data-action="increment" data-product-id="${item.id}" ${item.quantity >= MAX_CART_QTY ? 'disabled' : ''} aria-label="Increase quantity">+</button>
     </div>
   </div>
   <button class="cart-item-remove" data-product-id="${item.id}" aria-label="Remove ${item.name}">
@@ -596,6 +602,7 @@
     const backdrop = document.getElementById('cart-backdrop');
     if (!drawer) return;
     drawer.classList.add('open');
+    drawer.removeAttribute('aria-hidden');
     if (backdrop) { backdrop.hidden = false; backdrop.classList.add('visible'); }
     cartIsOpen = true;
     document.body.style.overflow = 'hidden';
@@ -608,7 +615,10 @@
     const backdrop = document.getElementById('cart-backdrop');
     if (!drawer) return;
     drawer.classList.remove('open');
-    if (backdrop) { backdrop.classList.remove('visible'); backdrop.hidden = true; }
+    drawer.setAttribute('aria-hidden', 'true');
+    if (backdrop) { backdrop.classList.remove('visible'); setTimeout(() => { backdrop.hidden = true; }, 300); }
+    const cartTrigger = document.getElementById('cart-icon-btn');
+    if (cartTrigger) cartTrigger.focus();
     cartIsOpen = false;
     document.body.style.overflow = '';
   }
@@ -624,7 +634,7 @@
     if (cartClose) cartClose.addEventListener('click', closeCart);
     if (cartBackdrop) cartBackdrop.addEventListener('click', closeCart);
     if (continueShopping) continueShopping.addEventListener('click', (e) => { e.preventDefault(); closeCart(); });
-    if (checkoutBtn) checkoutBtn.addEventListener('click', () => { closeCart(); openCheckout(); });
+    if (checkoutBtn) checkoutBtn.addEventListener('click', () => { closeCart(); openCheckout(checkoutBtn); });
   }
 
   // ---------------------------------------------------------------------------
@@ -632,6 +642,7 @@
   // ---------------------------------------------------------------------------
 
   let panelIsOpen = false;
+  let panelTriggerEl = null;
 
   function buildPanelHTML(p) {
     const priceHTML = p.originalPrice
@@ -644,7 +655,7 @@
 </div>
 <div class="panel-body">
   ${p.image
-      ? `<img src="${p.image}" alt="${p.name} — ${p.category} product detail — VOLT Store" class="panel-img" loading="lazy" decoding="async" />`
+      ? `<img src="${p.image}" alt="${p.name} — product detail photo — VOLT Store" class="panel-img" loading="lazy" decoding="async" />`
       : `<div class="panel-image" style="background:${CATEGORY_COLORS[p.category]}"><span>${p.shortCode}</span></div>`
     }
   ${p.badge ? `<span class="badge badge--${p.badge}">${badgeLabel(p.badge)}</span>` : ''}
@@ -663,20 +674,22 @@
 </div>`;
   }
 
-  function openPanel(productId) {
+  function openPanel(productId, triggerEl) {
     const product = findProduct(productId);
     if (!product) return;
     const panel = document.getElementById('product-panel');
     const backdrop = document.getElementById('panel-backdrop');
     if (!panel) return;
+    panelTriggerEl = triggerEl || null;
     state.panelProduct = product;
     panel.innerHTML = buildPanelHTML(product);
     panel.classList.add('open');
+    panel.removeAttribute('aria-hidden');
     if (backdrop) { backdrop.hidden = false; backdrop.classList.add('visible'); }
     panelIsOpen = true;
     document.body.style.overflow = 'hidden';
     const panelClose = panel.querySelector('#panel-close');
-    if (panelClose) panelClose.addEventListener('click', closePanel);
+    if (panelClose) { panelClose.addEventListener('click', closePanel); panelClose.focus(); }
     const panelAddBtn = panel.querySelector('.panel-add-to-cart');
     if (panelAddBtn) panelAddBtn.addEventListener('click', (e) => addToCart(e.currentTarget.dataset.productId));
   }
@@ -684,11 +697,12 @@
   function closePanel() {
     const panel = document.getElementById('product-panel');
     const backdrop = document.getElementById('panel-backdrop');
-    if (panel) panel.classList.remove('open');
-    if (backdrop) { backdrop.classList.remove('visible'); backdrop.hidden = true; }
+    if (panel) { panel.classList.remove('open'); panel.setAttribute('aria-hidden', 'true'); }
+    if (backdrop) { backdrop.classList.remove('visible'); setTimeout(() => { backdrop.hidden = true; }, 300); }
     panelIsOpen = false;
     state.panelProduct = null;
     document.body.style.overflow = '';
+    if (panelTriggerEl) { panelTriggerEl.focus(); panelTriggerEl = null; }
   }
 
   function initPanel() {
@@ -698,7 +712,7 @@
       grid.addEventListener('click', (e) => {
         if (e.target.closest('.add-to-cart-btn, .quick-add-btn')) return;
         const card = e.target.closest('.product-card');
-        if (card && card.dataset.productId) openPanel(card.dataset.productId);
+        if (card && card.dataset.productId) openPanel(card.dataset.productId, card);
       });
     }
     if (backdrop) backdrop.addEventListener('click', closePanel);
@@ -713,7 +727,9 @@
   function setCategory(category) {
     state.activeCategory = category;
     document.querySelectorAll('[data-filter]').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.filter === category);
+      const isActive = btn.dataset.filter === category;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
     renderProducts();
     renderActiveChips();
@@ -747,6 +763,7 @@
 
   function initFilters() {
     document.querySelectorAll('[data-filter]').forEach(btn => {
+      btn.setAttribute('aria-pressed', btn.dataset.filter === state.activeCategory ? 'true' : 'false');
       btn.addEventListener('click', () => setCategory(btn.dataset.filter));
     });
 
@@ -759,12 +776,14 @@
     }
 
     document.querySelectorAll('[data-category]').forEach(tile => {
-      tile.addEventListener('click', (e) => {
+      function activateTile(e) {
         e.preventDefault();
         setCategory(tile.dataset.category);
         const productsSection = document.getElementById('products');
         if (productsSection) productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
+      }
+      tile.addEventListener('click', activateTile);
+      tile.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') activateTile(e); });
     });
 
     const chipsContainer = document.getElementById('active-chips');
@@ -902,17 +921,30 @@
   // 11. MOBILE NAV
   // ---------------------------------------------------------------------------
 
+  function initDesktopNavAriaHidden() {
+    const desktopNav = document.getElementById('desktop-nav');
+    if (!desktopNav) return;
+    const mq = window.matchMedia('(max-width: 1023px)');
+    function update(e) { desktopNav.setAttribute('aria-hidden', e.matches ? 'true' : 'false'); }
+    update(mq);
+    mq.addEventListener('change', update);
+  }
+
+  let closeMobileNav = null;
+
   function initMobileNav() {
     const nav = document.getElementById('mobile-nav');
     const closeBtn = document.getElementById('mobile-nav-close');
+    const menuTrigger = document.getElementById('menu-trigger');
 
-    function closeMobileNav() {
+    closeMobileNav = function () {
       if (!nav) return;
       nav.classList.remove('open');
       nav.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
       if (menuTrigger) menuTrigger.setAttribute('aria-expanded', 'false');
-    }
+      if (menuTrigger) menuTrigger.focus();
+    };
 
     function openMobileNav() {
       if (!nav) return;
@@ -924,8 +956,6 @@
     }
 
     if (closeBtn) closeBtn.addEventListener('click', closeMobileNav);
-
-    const menuTrigger = document.getElementById('menu-trigger');
     if (menuTrigger) menuTrigger.addEventListener('click', openMobileNav);
 
     if (nav) {
@@ -961,10 +991,14 @@
   // 13. CHECKOUT
   // ---------------------------------------------------------------------------
 
-  function openCheckout() {
+  let checkoutTriggerEl = null;
+
+  function openCheckout(triggerEl) {
     const overlay = document.getElementById('checkout-overlay');
     if (!overlay) return;
+    checkoutTriggerEl = triggerEl || null;
     overlay.classList.add('open');
+    overlay.removeAttribute('aria-hidden');
     document.body.style.overflow = 'hidden';
     populateCheckoutSummary();
     const firstInput = overlay.querySelector('input');
@@ -975,7 +1009,9 @@
     const overlay = document.getElementById('checkout-overlay');
     if (!overlay) return;
     overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    if (checkoutTriggerEl) { checkoutTriggerEl.focus(); checkoutTriggerEl = null; }
     const form = overlay.querySelector('form');
     if (form) {
       form.reset();
@@ -1109,26 +1145,39 @@
   function initNewsletter() {
     const input = document.getElementById('newsletter-input');
     const btn = document.getElementById('newsletter-submit');
+    const errorEl = document.getElementById('newsletter-error');
+    const successEl = document.getElementById('newsletter-success');
+    const wrapper = document.getElementById('newsletter-form-wrapper');
     if (!btn) return;
-    btn.addEventListener('click', () => {
+
+    function showError(msg) {
+      if (errorEl) { errorEl.textContent = msg; errorEl.style.display = 'block'; }
+      if (input) { input.classList.add('input-error'); input.focus(); }
+    }
+
+    function clearError() {
+      if (errorEl) { errorEl.textContent = ''; errorEl.style.display = 'none'; }
+      if (input) input.classList.remove('input-error');
+    }
+
+    function submit() {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       const email = input ? input.value.trim() : '';
-      if (!emailRegex.test(email)) {
-        if (input) { input.classList.add('input-error'); input.focus(); }
-        return;
-      }
-      if (input) input.classList.remove('input-error');
+      if (!email) { showError('Please enter your email address.'); return; }
+      if (!emailRegex.test(email)) { showError('That doesn\'t look like a valid email address.'); return; }
+      clearError();
       btn.disabled = true;
       btn.textContent = 'Subscribing...';
       setTimeout(() => {
-        if (input) {
-          input.style.transition = 'opacity 0.4s ease';
-          input.style.opacity = '0';
-          setTimeout(() => { input.style.display = 'none'; }, 400);
-        }
-        btn.textContent = "You're in.";
+        if (wrapper) wrapper.style.display = 'none';
+        if (successEl) successEl.style.display = 'block';
       }, 1000);
-    });
+    }
+
+    btn.addEventListener('click', submit);
+    if (input) {
+      input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); submit(); } });
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -1164,9 +1213,7 @@
       if (checkoutOverlay && checkoutOverlay.classList.contains('open')) { closeCheckout(); return; }
       const mobileNav = document.getElementById('mobile-nav');
       if (mobileNav && mobileNav.classList.contains('open')) {
-        mobileNav.classList.remove('open');
-        mobileNav.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
+        if (closeMobileNav) closeMobileNav();
       }
     });
   }
@@ -1245,6 +1292,7 @@
     initCheckout();
     initNewsletter();
     initAnnouncementBar();
+    initDesktopNavAriaHidden();
     initMobileNav();
     initGlobalKeyListeners();
     initInlineActions();
