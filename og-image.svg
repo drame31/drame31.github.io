@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0c0a08"/>
+  <!-- Subtle teal gradient orb top-right -->
+  <radialGradient id="orb" cx="85%" cy="20%" r="40%">
+    <stop offset="0%" stop-color="#00d4aa" stop-opacity="0.08"/>
+    <stop offset="100%" stop-color="#00d4aa" stop-opacity="0"/>
+  </radialGradient>
+  <rect width="1200" height="630" fill="url(#orb)"/>
+  <!-- Border frame -->
+  <rect x="40" y="40" width="1120" height="550" rx="8" fill="none" stroke="#2a2520" stroke-width="1"/>
+  <!-- Teal accent line -->
+  <line x1="80" y1="200" x2="200" y2="200" stroke="#00d4aa" stroke-width="2" opacity="0.7"/>
+  <!-- Label -->
+  <text x="80" y="180" font-family="'Syne', 'system-ui', sans-serif" font-size="14" font-weight="600" fill="#7a756f" letter-spacing="0.15em" text-transform="uppercase">FULL-STACK DEVELOPER</text>
+  <!-- Name -->
+  <text x="80" y="310" font-family="'Georgia', 'Times New Roman', serif" font-size="80" font-weight="400" fill="#f0ece6" letter-spacing="-0.02em" font-style="italic">Derek Muñoz</text>
+  <!-- Tagline -->
+  <text x="80" y="375" font-family="'Syne', 'system-ui', sans-serif" font-size="22" fill="#7a756f" letter-spacing="0.01em">FastAPI · React · TypeScript · Python · PostgreSQL</text>
+  <!-- URL -->
+  <text x="80" y="545" font-family="'Courier New', monospace" font-size="16" fill="#00d4aa" opacity="0.8">drame31.github.io</text>
+  <!-- Location -->
+  <text x="1120" y="545" font-family="'Syne', 'system-ui', sans-serif" font-size="16" fill="#7a756f" text-anchor="end">Costa Rica · Remote</text>
+</svg>

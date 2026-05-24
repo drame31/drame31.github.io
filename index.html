@@ -1,554 +1,114 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-
-  <title>Derek Muñoz — Full-Stack Developer | FastAPI · React · TypeScript</title>
-  <meta name="description" content="Full-stack developer based in Costa Rica. Python backends (FastAPI, Flask), React 18 + TypeScript frontends, real-time WebSocket systems. 5 shipped projects. Available for remote roles.">
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://drame31.github.io/">
-  <meta property="og:title" content="Derek Muñoz · Full-Stack Developer">
-  <meta property="og:description" content="I build systems that handle the messy real-world problems: real-time queues, security log analysis, job trackers. 2 years self-taught. 5 projects shipped.">
-  <meta property="og:image" content="https://drame31.github.io/og-cover.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:locale" content="en_US">
-
-  <!-- Twitter / X card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://drame31.github.io/">
-  <meta name="twitter:title" content="Derek Muñoz · Full-Stack Developer">
-  <meta name="twitter:description" content="I build systems that handle the messy real-world problems: real-time queues, security log analysis, job trackers. 2 years self-taught. 5 projects shipped.">
-  <meta name="twitter:image" content="https://drame31.github.io/og-cover.png">
-
-  <meta name="theme-color" content="#0c0a08">
-
-  <!-- Font preconnects — must precede the font stylesheet -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <!-- Fonts: Fraunces (display serif) + JetBrains Mono (code labels) -->
-  <!-- Geist is not on Google Fonts — Inter is the approved fallback -->
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Structured data (Person schema) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Derek Muñoz Solís",
-    "url": "https://drame31.github.io/",
-    "jobTitle": "Full-Stack Developer",
-    "description": "Full-stack developer based in Costa Rica. Python backends (FastAPI, Flask), React 18 + TypeScript frontends, real-time WebSocket systems.",
-    "email": "derekmzm@gmail.com",
-    "sameAs": [
-      "https://github.com/drame31",
-      "https://www.linkedin.com/in/derek-m-81b055230"
-    ],
-    "knowsAbout": ["FastAPI", "React", "TypeScript", "Python", "WebSockets", "SQLAlchemy"],
-    "addressLocality": "San José",
-    "addressCountry": "CR"
-  }
-  </script>
-</head>
-<body>
-
-  <!-- Skip link: first focusable element for keyboard users -->
-  <a href="#main" class="skip-link">Skip to main content</a>
-
-  <!-- ===================== HEADER / NAV ===================== -->
-  <header class="site-header" id="site-header" role="banner">
-    <nav class="nav" aria-label="Main navigation">
-      <a href="#" class="nav__brand" aria-label="Derek Muñoz, back to top">Derek Muñoz</a>
-      <ul class="nav__links" role="list">
-        <li><a href="#work" class="nav__link" data-nav="work">Work</a></li>
-        <li><a href="#about" class="nav__link" data-nav="about">About</a></li>
-        <li><a href="#contact" class="nav__link" data-nav="contact">Contact</a></li>
-      </ul>
-      <!-- Mobile menu toggle -->
-      <button class="nav__toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </nav>
-
-    <!-- Mobile dropdown — only 3 links -->
-    <div class="nav__mobile" id="mobileMenu" aria-hidden="true">
-      <ul role="list">
-        <li><a href="#work" class="nav__mobile-link">Work</a></li>
-        <li><a href="#about" class="nav__mobile-link">About</a></li>
-        <li><a href="#contact" class="nav__mobile-link">Contact</a></li>
-      </ul>
-    </div>
-  </header>
-
-  <!-- Scroll-position dots (desktop only, right edge) -->
-  <nav class="scroll-dots" aria-label="Page sections" aria-hidden="true">
-    <button class="scroll-dot active" data-target="hero" title="Top" tabindex="-1"></button>
-    <button class="scroll-dot" data-target="work" title="Work" tabindex="-1"></button>
-    <button class="scroll-dot" data-target="about" title="About" tabindex="-1"></button>
-    <button class="scroll-dot" data-target="more-work" title="More work" tabindex="-1"></button>
-    <button class="scroll-dot" data-target="contact" title="Contact" tabindex="-1"></button>
-  </nav>
-
-  <!-- ===================== MAIN ===================== -->
-  <main id="main">
-
-    <!-- =================== SECTION 1: HERO =================== -->
-    <section id="hero" class="hero" aria-label="Introduction">
-      <div class="container hero__inner">
-
-        <div class="hero__text">
-          <!-- Availability badge -->
-          <div class="availability-badge" role="status" aria-label="Availability status">
-            <span class="availability-badge__dot" aria-hidden="true"></span>
-            <span>Available · Full-stack roles · Remote</span>
-          </div>
-
-          <h1 class="hero__name">
-            Derek<br>
-            <span class="hero__name-accent">Muñoz</span>
-          </h1>
-
-          <p class="hero__role">Full-stack developer. Python backends, React frontends, real-time systems.</p>
-
-          <div class="hero__sub">
-            <p>I came from customer service, which is a strange way to become a developer —
-            until you realize that knowing what frustrates users is half the job.
-            Now I build systems that make the frustrating parts disappear.</p>
-            <p class="hero__sub-location">Based in Costa Rica. Available for remote full-stack roles.</p>
-          </div>
-
-          <div class="hero__ctas">
-            <a href="#work" class="btn btn--primary">See my work &rarr;</a>
-            <a href="mailto:derekmzm@gmail.com" class="btn btn--secondary">Get in touch</a>
-          </div>
-        </div>
-
-        <!-- Live queue demo widget -->
-        <div class="queue-demo" role="complementary" aria-label="Live queue demo — simulated real-time data">
-          <div class="queue-demo__header">
-            <span class="queue-demo__dot" aria-hidden="true"></span>
-            <span class="queue-demo__label">QUEUE SYSTEM ACTIVE</span>
-          </div>
-          <div class="queue-demo__body">
-            <div class="queue-demo__row">
-              <span class="queue-demo__key">Now serving</span>
-              <span class="queue-demo__val" id="queue-serving">#7</span>
-            </div>
-            <div class="queue-demo__row">
-              <span class="queue-demo__key">Ahead of you</span>
-              <span class="queue-demo__val" id="queue-count">3</span>
-            </div>
-            <div class="queue-demo__row">
-              <span class="queue-demo__key">Est. wait</span>
-              <span class="queue-demo__val" id="queue-wait">~12 min</span>
-            </div>
-          </div>
-          <p class="queue-demo__note">Simulated WebSocket updates · no backend required</p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- =============== SECTION 2: FEATURED WORK =============== -->
-    <section id="work" aria-labelledby="work-heading">
-      <div class="container">
-        <div class="section-label-row" data-animate>
-          <span class="section-label">Featured work</span>
-          <h2 class="section-title" id="work-heading">Things I've shipped.</h2>
-        </div>
-
-        <div class="featured-work">
-
-          <!-- QueuePilot — full-width flagship -->
-          <article class="project-card project-card--flagship" aria-labelledby="queuepilot-title" data-animate>
-            <div class="project-card__content">
-              <div class="project-card__meta">
-                <span class="project-number">01</span>
-                <span class="project-type">Full-stack · Real-time</span>
-              </div>
-
-              <h3 class="project-title" id="queuepilot-title">QueuePilot</h3>
-              <p class="project-identity">Real-time virtual queue manager for local businesses.</p>
-
-              <div class="project-body">
-                <p>Barbershops and clinics in Costa Rica still run on physical queues.
-                You walk in, grab a number, sit down, and hope your phone battery lasts.
-                Nobody knows their real wait time. Staff can't see the load coming.</p>
-
-                <p>QueuePilot is a WebSocket-driven queue system with QR check-in, live wait time estimation,
-                and a three-role dashboard for owners, staff, and customers.
-                No app download. Customers scan a QR code and join from their browser.
-                Staff see the queue update in real time. Owners get analytics: peak hours,
-                average service time, daily throughput.</p>
-
-                <p>The hardest part was the state sync. When a customer joins, a staff member
-                calls the next ticket, and an owner is watching the dashboard at the same time —
-                all three views need to update without a page refresh.
-                JWT auth differentiates the roles. FastAPI handles the WebSocket connections.
-                React's state management handles the front-end sync.</p>
-              </div>
-
-              <ul class="tech-tags" aria-label="Technologies used" role="list">
-                <li class="tech-tag">FastAPI</li>
-                <li class="tech-tag">React 18</li>
-                <li class="tech-tag">TypeScript</li>
-                <li class="tech-tag">WebSockets</li>
-                <li class="tech-tag">SQLAlchemy</li>
-                <li class="tech-tag">JWT Auth</li>
-                <li class="tech-tag">Python</li>
-              </ul>
-
-              <div class="project-links">
-                <a href="queuepilot.html" class="btn btn--primary" aria-label="Open QueuePilot live demo">Live demo &rarr;</a>
-                <a href="https://github.com/drame31/queuepilot" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" aria-label="View QueuePilot source on GitHub">GitHub</a>
-              </div>
-            </div>
-
-            <!-- QueuePilot visual: animated queue mockup -->
-            <div class="project-card__visual" aria-hidden="true">
-              <div class="qp-mockup">
-                <div class="qp-mockup__header">
-                  <span class="qp-mockup__brand">QueuePilot</span>
-                  <span class="qp-mockup__role">Staff View</span>
-                </div>
-                <div class="qp-mockup__now-serving">
-                  <span class="qp-mockup__serving-label">Now serving</span>
-                  <span class="qp-mockup__serving-num" id="mockup-serving">#7</span>
-                </div>
-                <div class="qp-mockup__queue">
-                  <div class="qp-mockup__ticket qp-mockup__ticket--next">
-                    <span>#8</span><span class="qp-mockup__ticket-wait" id="mockup-wait-8">~4 min</span>
-                  </div>
-                  <div class="qp-mockup__ticket">
-                    <span>#9</span><span class="qp-mockup__ticket-wait">~8 min</span>
-                  </div>
-                  <div class="qp-mockup__ticket">
-                    <span>#10</span><span class="qp-mockup__ticket-wait">~12 min</span>
-                  </div>
-                </div>
-                <div class="qp-mockup__footer">
-                  <span class="qp-mockup__ws-dot" aria-hidden="true"></span>
-                  <span>WebSocket connected</span>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- HireFlow + LogSentry row -->
-          <div class="project-row">
-
-            <!-- HireFlow — half-width -->
-            <article class="project-card" aria-labelledby="hireflow-title" data-animate>
-              <div class="project-card__meta">
-                <span class="project-number">02</span>
-                <span class="project-type">Full-stack</span>
-              </div>
-
-              <h3 class="project-title" id="hireflow-title">HireFlow</h3>
-              <p class="project-identity">Job application tracker with a Kanban board and a Flask REST API.</p>
-
-              <div class="project-body">
-                <p>Tracking job applications in a spreadsheet works until you have 30 open rows
-                and no way to see what stage they're all in at a glance.
-                HireFlow is a full-stack tracker: Flask REST API, SQLite backend,
-                HTML5 drag-and-drop Kanban board, and a localStorage fallback
-                that kicks in automatically if the API is unavailable.
-                Full CRUD. No setup friction.</p>
-              </div>
-
-              <ul class="tech-tags" aria-label="Technologies used" role="list">
-                <li class="tech-tag">Python</li>
-                <li class="tech-tag">Flask</li>
-                <li class="tech-tag">SQLite</li>
-                <li class="tech-tag">JavaScript</li>
-                <li class="tech-tag">REST API</li>
-              </ul>
-
-              <div class="project-links">
-                <a href="hireflow.html" class="btn btn--primary" aria-label="Open HireFlow live demo">Live demo &rarr;</a>
-                <a href="https://github.com/drame31" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" aria-label="View HireFlow source on GitHub">GitHub</a>
-              </div>
-            </article>
-
-            <!-- LogSentry — half-width -->
-            <article class="project-card" aria-labelledby="logsentry-title" data-animate>
-              <div class="project-card__meta">
-                <span class="project-number">03</span>
-                <span class="project-type">CLI · Security</span>
-              </div>
-
-              <h3 class="project-title" id="logsentry-title">LogSentry</h3>
-              <p class="project-identity">CLI security log analyzer with threat pattern detection and 45 passing tests.</p>
-
-              <div class="project-body">
-                <p>Security logs are dense. Reading them manually means missing things.
-                LogSentry is a Python CLI tool that processes log files, detects threat patterns,
-                and outputs structured reports with Rich terminal formatting.
-                Modular threat detection architecture — adding new patterns means adding a module,
-                not editing the core.
-                45 pytest tests. CI-ready. GitHub only — this one was never meant for a browser.</p>
-              </div>
-
-              <ul class="tech-tags" aria-label="Technologies used" role="list">
-                <li class="tech-tag">Python</li>
-                <li class="tech-tag">pytest</li>
-                <li class="tech-tag">Rich</li>
-                <li class="tech-tag">CLI</li>
-                <li class="tech-tag">Modular Architecture</li>
-              </ul>
-
-              <div class="project-links">
-                <a href="https://github.com/drame31" target="_blank" rel="noopener noreferrer" class="btn btn--primary" aria-label="View LogSentry source on GitHub">GitHub &rarr;</a>
-                <span class="project-links__note">CLI tool — no live demo by design</span>
-              </div>
-            </article>
-
-          </div><!-- /project-row -->
-        </div><!-- /featured-work -->
-      </div>
-    </section>
-
-    <!-- =================== SECTION 3: ABOUT =================== -->
-    <section id="about" aria-labelledby="about-heading">
-      <div class="container">
-        <div class="section-label-row" data-animate>
-          <span class="section-label">About</span>
-          <h2 class="section-title" id="about-heading">Where this came from.</h2>
-        </div>
-
-        <div class="about-layout">
-          <div class="about-text" data-animate>
-            <p class="about-lead">I started writing Python to automate the tedious parts of my job at Concentrix.
-            Not because I had a plan — because the manual parts were slow and I wanted them done faster.
-            The scripts worked. Then I wanted to know why they worked. That's when it turned into something else.</p>
-
-            <p>Every project in this portfolio started with something broken.
-            QueuePilot started with watching people wait in line at a barbershop with no idea how long they'd be there.
-            LogSentry started with a security log that was genuinely hard to read.
-            HireFlow started because job hunting in a spreadsheet falls apart at 30 rows.
-            I build from frustration, not inspiration — which means the things I build have a clear reason to exist.</p>
-
-            <p>I'm studying Computer Engineering at Universidad Hispanoamericana, Costa Rica (2026).
-            Working full-time in parallel. Studying network security on the side — not as a hobby,
-            but because I want to build software that's secure by design, not secure by accident.
-            Looking for a remote team that moves fast and trusts their developers to own problems end-to-end.</p>
-          </div>
-
-          <div class="about-facts" data-animate>
-            <dl class="facts-list">
-              <div class="facts-row">
-                <dt class="facts-key">Location</dt>
-                <dd class="facts-val">San José / Heredia, Costa Rica</dd>
-              </div>
-              <div class="facts-row">
-                <dt class="facts-key">Availability</dt>
-                <dd class="facts-val">Remote · Open to full-stack, backend-leaning roles</dd>
-              </div>
-              <div class="facts-row">
-                <dt class="facts-key">Education</dt>
-                <dd class="facts-val">Computer Engineering — Universidad Hispanoamericana</dd>
-              </div>
-              <div class="facts-row">
-                <dt class="facts-key">Languages</dt>
-                <dd class="facts-val">Spanish (native) · English (B2–C1)</dd>
-              </div>
-              <div class="facts-row">
-                <dt class="facts-key">GitHub</dt>
-                <dd class="facts-val">
-                  <a href="https://github.com/drame31" target="_blank" rel="noopener noreferrer" aria-label="Derek's GitHub profile">github.com/drame31</a>
-                </dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-
-        <!-- Tech credentials — embedded below about text, not a separate section -->
-        <div class="credentials" data-animate aria-label="Technical stack">
-          <h3 class="credentials__title">The stack</h3>
-          <div class="credentials__grid">
-            <div class="credentials__category">
-              <span class="credentials__cat-label">Backend</span>
-              <ul class="tech-tags tech-tags--sm" role="list">
-                <li class="tech-tag">Python</li>
-                <li class="tech-tag">FastAPI</li>
-                <li class="tech-tag">Flask</li>
-                <li class="tech-tag">SQLAlchemy</li>
-                <li class="tech-tag">REST APIs</li>
-                <li class="tech-tag">WebSockets</li>
-                <li class="tech-tag">JWT Auth</li>
-              </ul>
-            </div>
-            <div class="credentials__category">
-              <span class="credentials__cat-label">Frontend</span>
-              <ul class="tech-tags tech-tags--sm" role="list">
-                <li class="tech-tag">React 18</li>
-                <li class="tech-tag">TypeScript</li>
-                <li class="tech-tag">JavaScript ES6+</li>
-                <li class="tech-tag">Tailwind CSS</li>
-                <li class="tech-tag">HTML5 / CSS3</li>
-              </ul>
-            </div>
-            <div class="credentials__category">
-              <span class="credentials__cat-label">Tooling</span>
-              <ul class="tech-tags tech-tags--sm" role="list">
-                <li class="tech-tag">Git</li>
-                <li class="tech-tag">Docker</li>
-                <li class="tech-tag">Linux</li>
-                <li class="tech-tag">Bash</li>
-                <li class="tech-tag">pytest</li>
-                <li class="tech-tag">SQLite</li>
-              </ul>
-            </div>
-            <div class="credentials__category">
-              <span class="credentials__cat-label">Security</span>
-              <ul class="tech-tags tech-tags--sm" role="list">
-                <li class="tech-tag">Network protocols</li>
-                <li class="tech-tag">Entropy math</li>
-                <li class="tech-tag">Threat detection</li>
-                <li class="tech-tag">Linux admin</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ============== SECTION 4: ARCHIVE / MORE WORK ============== -->
-    <section id="more-work" aria-labelledby="more-work-heading">
-      <div class="container">
-        <div class="section-label-row" data-animate>
-          <span class="section-label">More work</span>
-          <h2 class="section-title" id="more-work-heading">The rest of it.</h2>
-        </div>
-
-        <div class="archive-grid">
-
-          <!-- Nexus Analytics -->
-          <article class="archive-card" aria-labelledby="nexus-title" data-animate>
-            <h3 class="archive-card__title" id="nexus-title">Nexus Analytics</h3>
-            <p class="archive-card__desc">Enterprise analytics dashboard — 5 Chart.js visualizations, CSV export, dark/light mode.</p>
-            <ul class="tech-tags tech-tags--sm" aria-label="Technologies used" role="list">
-              <li class="tech-tag">JavaScript</li>
-              <li class="tech-tag">Chart.js</li>
-              <li class="tech-tag">LocalStorage</li>
-              <li class="tech-tag">Data Tables</li>
-            </ul>
-            <a href="nexus-dashboard.html" class="archive-card__link" aria-label="Open Nexus Analytics demo">View project &rarr;</a>
-          </article>
-
-          <!-- VOLT Store -->
-          <article class="archive-card" aria-labelledby="volt-title" data-animate>
-            <h3 class="archive-card__title" id="volt-title">VOLT Store</h3>
-            <p class="archive-card__desc">Dark luxury e-commerce UI with live cart, wishlist, discount codes, and persistent state.</p>
-            <ul class="tech-tags tech-tags--sm" aria-label="Technologies used" role="list">
-              <li class="tech-tag">JavaScript</li>
-              <li class="tech-tag">LocalStorage</li>
-              <li class="tech-tag">CSS3</li>
-            </ul>
-            <a href="volt-store.html" class="archive-card__link" aria-label="Open VOLT Store demo">View project &rarr;</a>
-          </article>
-
-          <!-- CyberLock -->
-          <article class="archive-card" aria-labelledby="cyberlock-title" data-animate>
-            <h3 class="archive-card__title" id="cyberlock-title">CyberLock</h3>
-            <p class="archive-card__desc">Real-time password strength analyzer — entropy calculation, crack time estimation, security audit output.</p>
-            <ul class="tech-tags tech-tags--sm" aria-label="Technologies used" role="list">
-              <li class="tech-tag">JavaScript</li>
-              <li class="tech-tag">Security</li>
-              <li class="tech-tag">Entropy Math</li>
-            </ul>
-            <a href="password-checker.html" class="archive-card__link" aria-label="Open CyberLock demo">View project &rarr;</a>
-          </article>
-
-          <!-- CodePulse -->
-          <article class="archive-card" aria-labelledby="codepulse-title" data-animate>
-            <h3 class="archive-card__title" id="codepulse-title">CodePulse</h3>
-            <p class="archive-card__desc">GitHub profile analyzer with Flask backend and Jinja2 frontend.</p>
-            <ul class="tech-tags tech-tags--sm" aria-label="Technologies used" role="list">
-              <li class="tech-tag">Python</li>
-              <li class="tech-tag">Flask</li>
-              <li class="tech-tag">Jinja2</li>
-              <li class="tech-tag">GitHub API</li>
-            </ul>
-            <a href="https://github.com/drame31" target="_blank" rel="noopener noreferrer" class="archive-card__link" aria-label="View CodePulse on GitHub">GitHub &rarr;</a>
-          </article>
-
-          <!-- Raíz — Client web design simulation -->
-          <article class="archive-card" aria-labelledby="raiz-title" data-animate>
-            <h3 class="archive-card__title" id="raiz-title">Raíz — Restaurante</h3>
-            <p class="archive-card__desc">Landing page for a fictitious Latin fusion restaurant in San José. Commercial UI, local SEO with Restaurant schema, no frameworks.</p>
-            <ul class="tech-tags tech-tags--sm" aria-label="Technologies used" role="list">
-              <li class="tech-tag">HTML5</li>
-              <li class="tech-tag">CSS3</li>
-              <li class="tech-tag">JavaScript</li>
-              <li class="tech-tag">FastAPI</li>
-              <li class="tech-tag">SEO</li>
-            </ul>
-            <a href="raiz/index.html" class="archive-card__link" aria-label="Open Raíz restaurant demo">View project &rarr;</a>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- =================== SECTION 5: CONTACT =================== -->
-    <section id="contact" aria-labelledby="contact-heading">
-      <div class="container">
-        <div class="contact-inner" data-animate>
-          <span class="section-label">Contact</span>
-          <h2 class="section-title contact-heading" id="contact-heading">Let's talk.</h2>
-
-          <p class="contact-opener">If you're building something in Python or React and need someone who can own a feature
-          from the API layer down to the UI — that's the kind of work I'm looking for.</p>
-
-          <a href="mailto:derekmzm@gmail.com" class="email-link" aria-label="Send Derek an email at derekmzm@gmail.com">
-            derekmzm@gmail.com
-          </a>
-
-          <div class="contact-secondary">
-            <a href="https://github.com/drame31" target="_blank" rel="noopener noreferrer" class="contact-secondary-link" aria-label="Derek's GitHub profile">
-              GitHub
-            </a>
-            <span class="contact-secondary-sep" aria-hidden="true">·</span>
-            <a href="https://www.linkedin.com/in/derek-m-81b055230" target="_blank" rel="noopener noreferrer" class="contact-secondary-link" aria-label="Derek's LinkedIn profile">
-              LinkedIn
-            </a>
-          </div>
-
-          <p class="contact-availability">
-            Available for full-stack roles and freelance projects.<br>
-            Based in Costa Rica — remote is fine, preferred, actually.
-          </p>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- =================== FOOTER =================== -->
-  <footer class="site-footer" role="contentinfo">
-    <div class="container footer-inner">
-      <p class="footer-copy">&copy; 2026 Derek Muñoz Solís &mdash; Built with HTML, CSS &amp; vanilla JS.</p>
-      <nav class="footer-nav" aria-label="Footer navigation">
-        <a href="#work">Work</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <a href="https://github.com/drame31" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </nav>
-    </div>
-  </footer>
-
-  <script src="script.js" defer></script>
-</body>
-</html>
+<!DOCTYPE html><html lang="en" data-astro-cid-37fxchfa> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v6.3.5"><!-- Primary meta --><title>Derek Muñoz — Full-Stack Developer</title><meta name="description" content="Full-stack developer specializing in Python, TypeScript, and React. Building performant backend systems and modern web applications. Open to new opportunities."><link rel="canonical" href="https://drame31.github.io/"><meta name="robots" content="index, follow"><meta name="author" content="Derek Muñoz"><meta name="theme-color" content="#0c0a08"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:title" content="Derek Muñoz — Full-Stack Developer"><meta property="og:description" content="Full-stack developer specializing in Python, TypeScript, and React. Building performant backend systems and modern web applications. Open to new opportunities."><meta property="og:image" content="https://drame31.github.io/og-image.svg"><meta property="og:url" content="https://drame31.github.io/"><meta property="og:site_name" content="Derek Muñoz"><meta property="og:locale" content="en_US"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Derek Muñoz — Full-Stack Developer"><meta name="twitter:description" content="Full-stack developer specializing in Python, TypeScript, and React. Building performant backend systems and modern web applications. Open to new opportunities."><meta name="twitter:image" content="https://drame31.github.io/og-image.svg"><!-- Favicon --><link rel="icon" type="image/svg+xml" href="/favicon.svg"><!--
+      Font preloads — Instrument Serif + Syne Variable load eagerly as they are
+      used above the fold. Geist Mono is only used in code blocks / tech tags
+      below the fold and loads lazily via @font-face (font-display: swap).
+      NOTE: woff2 files must be placed in public/fonts/ before deploying.
+    --><link rel="preload" href="/fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/fonts/Syne-Variable.woff2" as="font" type="font/woff2" crossorigin><!-- Geist Mono is NOT preloaded — it is only used below the fold --><link rel="stylesheet" href="/_astro/constants.0QJUSj94.css">
+<style>.tech-tag--sm[data-astro-cid-ekzsz4b5]{font-size:.6875rem;padding:.15em .5em}
+</style></head> <body data-astro-cid-37fxchfa> <!-- Skip to main content — accessible keyboard shortcut --> <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-ink focus:text-teal focus:border focus:border-teal focus:rounded-md" data-astro-cid-37fxchfa>
+Skip to main content
+</a> <!-- Persistent above-fold islands — load immediately --> <style>astro-island,astro-slot,astro-static-slot{display:contents}</style><script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event("astro:load"));})();</script><script>(()=>{var g=Object.defineProperty;var w=(c,s,d)=>s in c?g(c,s,{enumerable:!0,configurable:!0,writable:!0,value:d}):c[s]=d;var l=(c,s,d)=>w(c,typeof s!="symbol"?s+"":s,d);var E=new Set(["__proto__","constructor","prototype"]);{let c={0:t=>y(t),1:t=>d(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(d(t)),5:t=>new Set(d(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>Number.POSITIVE_INFINITY*t},s=t=>{let[p,e]=t;return p in c?c[p](e):void 0},d=t=>t.map(s),y=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([p,e])=>[p,s(e)]));class f extends HTMLElement{constructor(){super(...arguments);l(this,"Component");l(this,"hydrator");l(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let n=this.querySelectorAll("astro-slot"),r={},i=this.querySelectorAll("template[data-astro-template]");for(let o of i){let a=o.closest(this.tagName);a!=null&&a.isSameNode(this)&&(r[o.getAttribute("data-astro-template")||"default"]=o.innerHTML,o.remove())}for(let o of n){let a=o.closest(this.tagName);a!=null&&a.isSameNode(this)&&(r[o.getAttribute("name")||"default"]=o.innerHTML)}let u;try{u=this.hasAttribute("props")?y(JSON.parse(this.getAttribute("props"))):{}}catch(o){let a=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(a+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${a}`,this.getAttribute("props"),o),o}let h;await this.hydrator(this)(this.Component,u,r,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});l(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),n.disconnect(),this.childrenConnectedCallback()},n=new MutationObserver(()=>{var r;((r=this.lastChild)==null?void 0:r.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});n.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}getRetryImportUrl(e){let n=new URL(e,document.baseURI),r=`astro-retry=${Date.now()}`,i=n.hash.replace(/^#/,"");return n.hash=i?`${i}&${r}`:r,n.toString()}async importWithRetry(e){try{return await import(e)}catch(n){return await new Promise(r=>setTimeout(r,1e3)),import(this.getRetryImportUrl(e))}}handleHydrationError(e){let n=this.getAttribute("component-url"),r=new CustomEvent("astro:hydration-error",{cancelable:!0,bubbles:!0,composed:!0,detail:{error:e,componentUrl:n}});this.dispatchEvent(r)&&console.error(`[astro-island] Error hydrating ${n}`,e)}async start(){let e=JSON.parse(this.getAttribute("opts")),n=this.getAttribute("client");if(Astro[n]===void 0){window.addEventListener(`astro:${n}`,()=>this.start(),{once:!0});return}try{await Astro[n](async()=>{let r=this.getAttribute("renderer-url");try{let[i,{default:u}]=await Promise.all([this.importWithRetry(this.getAttribute("component-url")),r?this.importWithRetry(r):Promise.resolve({default:()=>()=>{}})]),h=this.getAttribute("component-export")||"default";if(h.includes(".")){this.Component=i;for(let m of h.split(".")){if(E.has(m)||!this.Component||typeof this.Component!="object"&&typeof this.Component!="function"||!Object.hasOwn(this.Component,m))throw new Error(`Invalid component export path: ${h}`);this.Component=this.Component[m]}}else{if(E.has(h))throw new Error(`Invalid component export path: ${h}`);this.Component=i[h]}return this.hydrator=u,this.hydrate}catch(i){return this.handleHydrationError(i),()=>{}}},e,this)}catch(r){this.handleHydrationError(r)}}attributeChangedCallback(){this.hydrate()}}l(f,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",f)}})();</script><astro-island uid="ZeERC5" prefix="r35" component-url="/_astro/SmoothScroll.BgVic-aH.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;data-astro-cid-37fxchfa&quot;:[0,true]}" ssr client="load" opts="{&quot;name&quot;:&quot;SmoothScroll&quot;,&quot;value&quot;:true}"></astro-island> <astro-island uid="1UVcSY" prefix="r36" component-url="/_astro/ScrollProgress.DcLazukA.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;data-astro-cid-37fxchfa&quot;:[0,true]}" ssr client="load" opts="{&quot;name&quot;:&quot;ScrollProgress&quot;,&quot;value&quot;:true}" await-children><div style="position:fixed;top:0;left:0;right:0;height:2px;z-index:25;pointer-events:none" aria-hidden="true"><div style="height:100%;background-color:var(--color-teal);transform-origin:left;width:0%"></div></div><!--astro:end--></astro-island> <astro-island uid="2x5VBH" prefix="r37" component-url="/_astro/CursorFollower.DlBokFRO.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;data-astro-cid-37fxchfa&quot;:[0,true]}" ssr client="load" opts="{&quot;name&quot;:&quot;CursorFollower&quot;,&quot;value&quot;:true}"></astro-island> <astro-island uid="281h0g" prefix="r38" component-url="/_astro/BackToTop.CTuIEHCD.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;data-astro-cid-37fxchfa&quot;:[0,true]}" ssr client="load" opts="{&quot;name&quot;:&quot;BackToTop&quot;,&quot;value&quot;:true}"></astro-island> <astro-island uid="ZSAFRj" prefix="r39" component-url="/_astro/PageTransition.BRs-8-MO.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;data-astro-cid-37fxchfa&quot;:[0,true]}" ssr client="load" opts="{&quot;name&quot;:&quot;PageTransition&quot;,&quot;value&quot;:true}"></astro-island>   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Derek Muñoz","url":"https://drame31.github.io","email":"derekmzm@gmail.com","jobTitle":"Full-Stack Developer","knowsAbout":["Python","TypeScript","React","FastAPI","PostgreSQL","Docker"],"address":{"@type":"PostalAddress","addressCountry":"CR"},"sameAs":["https://github.com/drame31","https://www.linkedin.com/in/derek-m-81b055230"]}</script> <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Derek Muñoz — Full-Stack Developer","url":"https://drame31.github.io","description":"Portfolio of Derek Muñoz, a full-stack developer specializing in Python, TypeScript, and React.","author":{"@type":"Person","name":"Derek Muñoz","url":"https://drame31.github.io"}}</script>  <header id="site-header" class="fixed top-0 left-0 right-0 z-[20] bg-ink/80 backdrop-blur-md transition-all duration-250" style="border-bottom: 1px solid transparent;"> <div class="container-content"> <nav class="flex items-center justify-between h-16" aria-label="Main navigation"> <a href="/" class="text-paper hover:text-teal transition-colors duration-150" style="font-family: var(--font-display); font-style: italic; font-size: 1.15rem; letter-spacing: -0.01em;" aria-label="Derek Muñoz — home">
+Derek Muñoz
+</a> <ul class="flex items-center gap-8 list-none m-0 p-0" role="list"> <li><a href="/projects" class="nav-link">Work</a></li> <li><a href="/about" class="nav-link">About</a></li> <li><a href="/contact" class="nav-link">Contact</a></li> </ul> </nav> </div> </header> <script type="module">const o=document.getElementById("site-header");if(o){const e=()=>{const r=window.scrollY>16;o.style.borderBottomColor=r?"var(--color-border)":"transparent";const t=window.scrollY>window.innerHeight*.6;o.style.backgroundColor=t?"rgba(12,10,8,0.92)":""};window.addEventListener("scroll",e,{passive:!0}),e()}</script> <main id="main-content" tabindex="-1"> <!-- ══════════════════════════════════════════════════════════
+         HERO
+    ══════════════════════════════════════════════════════════ --> <section class="relative flex flex-col justify-center min-h-[100dvh] section-padding pt-32 pb-24" aria-label="Introduction"> <!-- Ambient hero gradient (very slow, low opacity) --> <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true"> <div style="
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(ellipse, rgba(92,196,184,0.04) 0%, transparent 70%);
+            animation: fade-in 2s ease-out both;
+          "></div> </div> <div class="container-content relative"> <!-- Greeting label --> <p class="section-label hero-greeting mb-6">
+San José / Heredia, Costa Rica
+</p> <!-- Name in display font --> <p class="hero-line-1 font-display italic text-muted text-2xl md:text-3xl mb-2" style="font-family: var(--font-display); font-style: italic;">
+Derek Muñoz
+</p> <!-- Main headline --> <h1 class="hero-line-2" style="
+            font-family: var(--font-display);
+            font-style: italic;
+            font-weight: 400;
+            font-size: clamp(2.75rem, 7vw, 5.5rem);
+            line-height: 1.08;
+            letter-spacing: -0.02em;
+            color: var(--color-paper);
+            max-width: 820px;
+            margin-bottom: 1.5rem;
+          ">
+Full-Stack Developer<br>&amp; Systems Thinker
+</h1> <!-- Bio --> <p class="hero-subhead text-muted text-lg leading-relaxed mb-8" style="max-width: 52ch;">
+I build backend-heavy full-stack apps — FastAPI APIs, real-time WebSocket systems,
+          React dashboards. Based in Costa Rica, open to remote.
+</p> <!-- CTAs --> <div class="hero-cta flex flex-wrap gap-4 mb-8"> <a href="/projects" class="btn-primary">View my work</a> <a href="/contact" class="btn-ghost">Get in touch</a> </div> <!-- Availability badge --> <div class="hero-badge"> <span class="status-badge">Available for work</span> </div> </div> <!-- Subtle scroll indicator --> <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30" aria-hidden="true"> <span class="text-xs font-mono text-muted tracking-widest">scroll</span> <div class="w-px h-8 bg-muted" style="animation: fade-in 1s ease-out 1.5s both;"></div> </div> </section> <!-- ══════════════════════════════════════════════════════════
+         FEATURED PROJECTS
+    ══════════════════════════════════════════════════════════ --> <section id="work" class="section-padding border-t border-border" aria-label="Featured work"> <div class="container-content"> <script>(()=>{var a=(s,i,o)=>{let r=async()=>{await(await s())()},t=typeof i.value=="object"?i.value:void 0,c={rootMargin:t==null?void 0:t.rootMargin},n=new IntersectionObserver(e=>{for(let l of e)if(l.isIntersecting){n.disconnect(),r();break}},c);for(let e of o.children)n.observe(e)};(self.Astro||(self.Astro={})).visible=a;window.dispatchEvent(new Event("astro:visible"));})();</script><astro-island uid="Z1aIjHj" prefix="r26" component-url="/_astro/RevealOnScroll.BvpfNN6Q.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;direction&quot;:[0,&quot;none&quot;],&quot;delay&quot;:[0,0]}" ssr client="visible" opts="{&quot;name&quot;:&quot;RevealOnScroll&quot;,&quot;value&quot;:true}" await-children><div style="opacity:0;transform:none"><astro-slot> <div class="flex items-center justify-between mb-16"> <p class="section-label">Featured Work</p> <a href="/projects" class="text-xs text-muted hover:text-teal transition-colors duration-150 font-mono">
+All projects →
+</a> </div> </astro-slot></div><!--astro:end--></astro-island> <div class="flex flex-col gap-0"> <astro-island uid="1qdIjx" prefix="r27" component-url="/_astro/RevealOnScroll.BvpfNN6Q.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;direction&quot;:[0,&quot;up&quot;],&quot;delay&quot;:[0,0]}" ssr client="visible" opts="{&quot;name&quot;:&quot;RevealOnScroll&quot;,&quot;value&quot;:true}" await-children><div style="opacity:0;transform:translateY(32px)"><astro-slot> <article class="featured-card group relative grid grid-cols-[auto_1fr] md:grid-cols-[96px_1fr_auto] gap-6 md:gap-10 py-10 border-b border-border last:border-b-0 hover:bg-surface/40 transition-colors duration-300 rounded-lg px-4 -mx-4"> <!-- Project number --> <div class="flex items-start pt-1"> <span class="project-number" aria-hidden="true">01</span> </div> <!-- Main content --> <div class="flex flex-col gap-4"> <!-- Type badges --> <div class="flex flex-wrap gap-2"> <span class="inline-flex items-center font-mono text-[11px] text-muted bg-surface-2 border border-border rounded-sm px-2 py-0.5"> Full-stack </span><span class="inline-flex items-center font-mono text-[11px] text-muted bg-surface-2 border border-border rounded-sm px-2 py-0.5"> Real-time </span> </div> <!-- Title --> <h2 class="font-body font-bold text-2xl md:text-3xl text-paper leading-tight tracking-tight transition-colors duration-150"> <a href="/projects/queuepilot" class="hover:text-teal transition-colors duration-150"> QueuePilot </a> </h2> <!-- Description --> <p class="text-muted leading-relaxed" style="max-width: 58ch;"> Real-time queue management system with WebSocket-driven live updates, JWT authentication, and a React dashboard for operators. </p> <!-- Tech stack --> <div class="flex flex-wrap gap-2"> <span class="tech-tag tech-tag--sm" data-astro-cid-ekzsz4b5> FastAPI </span><span class="tech-tag tech-tag--sm" data-astro-cid-ekzsz4b5> React 18 </span><span class="tech-tag tech-tag--sm" data-astro-cid-ekzsz4b5> TypeScript </span><span class="tech-tag tech-tag--sm" data-astro-cid-ekzsz4b5> WebSockets </span><span class="tech-tag tech-tag--sm" data-astro-cid-ekzsz4b5> SQLAlchemy </span><span class="tech-tag tech-tag--sm" data-astro-cid-ekzsz4b5> JWT Auth </span><span class="tech-tag tech-tag--sm" data-astro-cid-ekzsz4b5> Python </span> </div> </div> <!-- Links column --> <div class="hidden md:flex flex-col items-end justify-between gap-4 py-1"> <span class="font-mono text-xs text-muted">2024</span> <div class="flex flex-col items-end gap-2"> <a href="https://github.com/drame31/queuepilot" target="_blank" rel="noopener noreferrer" class="text-xs text-muted hover:text-paper transition-colors duration-150 font-mono" aria-label="QueuePilot source code on GitHub">
+GitHub ↗
+</a>  <a href="/projects/queuepilot" class="text-xs text-muted hover:text-teal transition-colors duration-150 font-mono mt-2">
+Read more →
+</a> </div> </div> <!-- Mobile links --> <div class="col-span-2 flex gap-4 md:hidden"> <a href="https://github.com/drame31/queuepilot" target="_blank" rel="noopener noreferrer" class="text-xs text-muted hover:text-paper transition-colors duration-150 font-mono" aria-label="QueuePilot source code on GitHub">
+GitHub ↗
+</a>  <a href="/projects/queuepilot" class="text-xs text-muted hover:text-teal transition-colors duration-150 font-mono">
+Read more →
+</a> </div> </article> </astro-slot></div><!--astro:end--></astro-island><astro-island uid="Z2aDlc8" prefix="r28" component-url="/_astro/RevealOnScroll.BvpfNN6Q.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;direction&quot;:[0,&quot;up&quot;],&quot;delay&quot;:[0,0.08]}" ssr client="visible" opts="{&quot;name&quot;:&quot;RevealOnScroll&quot;,&quot;value&quot;:true}" await-children><div style="opacity:0;transform:translateY(32px)"><astro-slot> <article class="featured-card group relative grid grid-cols-[auto_1fr] md:grid-cols-[96px_1fr_auto] gap-6 md:gap-10 py-10 border-b border-border last:border-b-0 hover:bg-surface/40 transition-colors duration-300 rounded-lg px-4 -mx-4"> <!-- Project number --> <div class="flex items-start pt-1"> <span class="project-number" aria-hidden="true">02</span> </div> <!-- Main content --> <div class="flex flex-col gap-4"> <!-- Type badges --> <div class="flex flex-wrap gap-2"> <span class="inline-flex items-center font-mono text-[11px] text-muted bg-surface-2 border border-border rounded-sm px-2 py-0.5"> Full-stack </span><span class="inline-flex items-center font-mono text-[11px] text-muted bg-surface-2 border border-border rounded-sm px-2 py-0.5"> Productivity </span> </div> <!-- Title --> <h2 class="font-body font-bold text-2xl md:text-3xl text-paper leading-tight tracking-tight transition-colors duration-150"> <a href="/projects/hireflow" class="hover:text-teal transition-colors duration-150"> HireFlow </a> </h2> <!-- Description --> <p class="text-muted leading-relaxed" style="max-width: 58ch;"> Job application tracker that turns a chaotic job search into a structured pipeline with status tracking and automated follow-up reminders. </p> <!-- Tech stack --> <div class="flex flex-wrap gap-2"> <span class="tech-tag tech-tag--sm" data-astro-cid-ekzsz4b5> Python </span><span class="tech-tag tech-tag--sm" data-astro-cid-ekzsz4b5> Flask </span><span class="tech-tag tech-tag--sm" data-astro-cid-ekzsz4b5> SQLite </span><span class="tech-tag tech-tag--sm" data-astro-cid-ekzsz4b5> JavaScript </span><span class="tech-tag tech-tag--sm" data-astro-cid-ekzsz4b5> REST API </span> </div> </div> <!-- Links column --> <div class="hidden md:flex flex-col items-end justify-between gap-4 py-1"> <span class="font-mono text-xs text-muted">2024</span> <div class="flex flex-col items-end gap-2"> <a href="https://github.com/drame31/hireflow" target="_blank" rel="noopener noreferrer" class="text-xs text-muted hover:text-paper transition-colors duration-150 font-mono" aria-label="HireFlow source code on GitHub">
+GitHub ↗
+</a>  <a href="/projects/hireflow" class="text-xs text-muted hover:text-teal transition-colors duration-150 font-mono mt-2">
+Read more →
+</a> </div> </div> <!-- Mobile links --> <div class="col-span-2 flex gap-4 md:hidden"> <a href="https://github.com/drame31/hireflow" target="_blank" rel="noopener noreferrer" class="text-xs text-muted hover:text-paper transition-colors duration-150 font-mono" aria-label="HireFlow source code on GitHub">
+GitHub ↗
+</a>  <a href="/projects/hireflow" class="text-xs text-muted hover:text-teal transition-colors duration-150 font-mono">
+Read more →
+</a> </div> </article> </astro-slot></div><!--astro:end--></astro-island><astro-island uid="Z1pO5jw" prefix="r29" component-url="/_astro/RevealOnScroll.BvpfNN6Q.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;direction&quot;:[0,&quot;up&quot;],&quot;delay&quot;:[0,0.16]}" ssr client="visible" opts="{&quot;name&quot;:&quot;RevealOnScroll&quot;,&quot;value&quot;:true}" await-children><div style="opacity:0;transform:translateY(32px)"><astro-slot> <article class="featured-card group relative grid grid-cols-[auto_1fr] md:grid-cols-[96px_1fr_auto] gap-6 md:gap-10 py-10 border-b border-border last:border-b-0 hover:bg-surface/40 transition-colors duration-300 rounded-lg px-4 -mx-4"> <!-- Project number --> <div class="flex items-start pt-1"> <span class="project-number" aria-hidden="true">03</span> </div> <!-- Main content --> <div class="flex flex-col gap-4"> <!-- Type badges --> <div class="flex flex-wrap gap-2"> <span class="inline-flex items-center font-mono text-[11px] text-muted bg-surface-2 border border-border rounded-sm px-2 py-0.5"> CLI </span><span class="inline-flex items-center font-mono text-[11px] text-muted bg-surface-2 border border-border rounded-sm px-2 py-0.5"> DevOps </span> </div> <!-- Title --> <h2 class="font-body font-bold text-2xl md:text-3xl text-paper leading-tight tracking-tight transition-colors duration-150"> <a href="/projects/logsentry" class="hover:text-teal transition-colors duration-150"> LogSentry </a> </h2> <!-- Description --> <p class="text-muted leading-relaxed" style="max-width: 58ch;"> CLI tool for parsing and monitoring application logs in real time, with pattern matching, alert thresholds, and a Rich-powered terminal UI. </p> <!-- Tech stack --> <div class="flex flex-wrap gap-2"> <span class="tech-tag tech-tag--sm" data-astro-cid-ekzsz4b5> Python </span><span class="tech-tag tech-tag--sm" data-astro-cid-ekzsz4b5> pytest </span><span class="tech-tag tech-tag--sm" data-astro-cid-ekzsz4b5> Rich </span><span class="tech-tag tech-tag--sm" data-astro-cid-ekzsz4b5> CLI </span> </div> </div> <!-- Links column --> <div class="hidden md:flex flex-col items-end justify-between gap-4 py-1"> <span class="font-mono text-xs text-muted">2024</span> <div class="flex flex-col items-end gap-2"> <a href="https://github.com/drame31/logsentry" target="_blank" rel="noopener noreferrer" class="text-xs text-muted hover:text-paper transition-colors duration-150 font-mono" aria-label="LogSentry source code on GitHub">
+GitHub ↗
+</a>  <a href="/projects/logsentry" class="text-xs text-muted hover:text-teal transition-colors duration-150 font-mono mt-2">
+Read more →
+</a> </div> </div> <!-- Mobile links --> <div class="col-span-2 flex gap-4 md:hidden"> <a href="https://github.com/drame31/logsentry" target="_blank" rel="noopener noreferrer" class="text-xs text-muted hover:text-paper transition-colors duration-150 font-mono" aria-label="LogSentry source code on GitHub">
+GitHub ↗
+</a>  <a href="/projects/logsentry" class="text-xs text-muted hover:text-teal transition-colors duration-150 font-mono">
+Read more →
+</a> </div> </article> </astro-slot></div><!--astro:end--></astro-island> </div> </div> </section> <!-- ══════════════════════════════════════════════════════════
+         MORE PROJECTS GRID
+    ══════════════════════════════════════════════════════════ --> <section id="more-work" class="section-padding border-t border-border" aria-label="More projects"> <div class="container-content"> <astro-island uid="Z4fC9I" prefix="r30" component-url="/_astro/RevealOnScroll.BvpfNN6Q.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;direction&quot;:[0,&quot;none&quot;],&quot;delay&quot;:[0,0]}" ssr client="visible" opts="{&quot;name&quot;:&quot;RevealOnScroll&quot;,&quot;value&quot;:true}" await-children><div style="opacity:0;transform:none"><astro-slot> <div class="flex items-center justify-between mb-12"> <p class="section-label">More Projects</p> </div> </astro-slot></div><!--astro:end--></astro-island> <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"> <astro-island uid="Z1bS5AW" prefix="r20" component-url="/_astro/ProjectCard.COmuvGEq.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;project&quot;:[0,{&quot;slug&quot;:[0,&quot;nexus-analytics&quot;],&quot;title&quot;:[0,&quot;Nexus Analytics&quot;],&quot;description&quot;:[0,&quot;Browser-based analytics dashboard that visualizes CSV data with Chart.js, supports multiple chart types, and exports processed reports.&quot;],&quot;type&quot;:[1,[[0,&quot;Frontend&quot;],[0,&quot;Data Visualization&quot;]]],&quot;status&quot;:[0,&quot;secondary&quot;],&quot;order&quot;:[0,4],&quot;year&quot;:[0,2023],&quot;tech&quot;:[1,[[0,&quot;JavaScript&quot;],[0,&quot;Chart.js&quot;],[0,&quot;CSV export&quot;]]],&quot;liveUrl&quot;:[0],&quot;githubUrl&quot;:[0,&quot;https://github.com/drame31/nexus-analytics&quot;],&quot;cover&quot;:[0]}]}" ssr client="visible" opts="{&quot;name&quot;:&quot;ProjectCard&quot;,&quot;value&quot;:true}" await-children><article class="card relative flex flex-col gap-4 p-6 group overflow-hidden before:absolute before:left-0 before:top-0 before:h-full before:w-[2px] before:bg-teal before:scale-y-0 before:origin-top before:transition-transform before:duration-[400ms] before:ease-[var(--ease-out)] hover:before:scale-y-100" data-cursor="pointer" style="opacity:0;transform:translateY(32px)"><div class="flex items-center justify-between"><span class="font-mono text-xs text-muted" aria-label="Project number 4">04</span><span class="font-mono text-xs text-muted">2023</span></div><h3 class="font-body font-bold text-xl text-paper leading-tight tracking-tight">Nexus Analytics</h3><p class="text-sm text-muted leading-relaxed flex-1 m-0 max-w-none">Browser-based analytics dashboard that visualizes CSV data with Chart.js, supports multiple chart types, and exports processed reports.</p><div class="flex flex-wrap gap-2 mt-auto"><span class="tech-tag">JavaScript</span><span class="tech-tag">Chart.js</span><span class="tech-tag">CSV export</span></div><div class="flex items-center gap-4 pt-2 border-t border-border"><a href="https://github.com/drame31/nexus-analytics" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-muted hover:text-paper transition-colors duration-150" aria-label="Nexus Analytics source code on GitHub" data-cursor="pointer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path></svg>Code</a></div></article><!--astro:end--></astro-island><astro-island uid="4CV06" prefix="r21" component-url="/_astro/ProjectCard.COmuvGEq.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;project&quot;:[0,{&quot;slug&quot;:[0,&quot;volt-store&quot;],&quot;title&quot;:[0,&quot;VOLT Store&quot;],&quot;description&quot;:[0,&quot;Minimal e-commerce front-end with a persistent cart via localStorage, product filtering, and a clean CSS3 design system.&quot;],&quot;type&quot;:[1,[[0,&quot;Frontend&quot;],[0,&quot;E-commerce&quot;]]],&quot;status&quot;:[0,&quot;secondary&quot;],&quot;order&quot;:[0,5],&quot;year&quot;:[0,2023],&quot;tech&quot;:[1,[[0,&quot;JavaScript&quot;],[0,&quot;localStorage&quot;],[0,&quot;CSS3&quot;]]],&quot;liveUrl&quot;:[0],&quot;githubUrl&quot;:[0,&quot;https://github.com/drame31/volt-store&quot;],&quot;cover&quot;:[0]}]}" ssr client="visible" opts="{&quot;name&quot;:&quot;ProjectCard&quot;,&quot;value&quot;:true}" await-children><article class="card relative flex flex-col gap-4 p-6 group overflow-hidden before:absolute before:left-0 before:top-0 before:h-full before:w-[2px] before:bg-teal before:scale-y-0 before:origin-top before:transition-transform before:duration-[400ms] before:ease-[var(--ease-out)] hover:before:scale-y-100" data-cursor="pointer" style="opacity:0;transform:translateY(32px)"><div class="flex items-center justify-between"><span class="font-mono text-xs text-muted" aria-label="Project number 5">05</span><span class="font-mono text-xs text-muted">2023</span></div><h3 class="font-body font-bold text-xl text-paper leading-tight tracking-tight">VOLT Store</h3><p class="text-sm text-muted leading-relaxed flex-1 m-0 max-w-none">Minimal e-commerce front-end with a persistent cart via localStorage, product filtering, and a clean CSS3 design system.</p><div class="flex flex-wrap gap-2 mt-auto"><span class="tech-tag">JavaScript</span><span class="tech-tag">localStorage</span><span class="tech-tag">CSS3</span></div><div class="flex items-center gap-4 pt-2 border-t border-border"><a href="https://github.com/drame31/volt-store" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-muted hover:text-paper transition-colors duration-150" aria-label="VOLT Store source code on GitHub" data-cursor="pointer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path></svg>Code</a></div></article><!--astro:end--></astro-island><astro-island uid="Z1nXTVA" prefix="r22" component-url="/_astro/ProjectCard.COmuvGEq.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;project&quot;:[0,{&quot;slug&quot;:[0,&quot;cyberlock&quot;],&quot;title&quot;:[0,&quot;CyberLock&quot;],&quot;description&quot;:[0,&quot;Password strength analyzer using entropy math to score passwords and explain exactly why weak passwords fail.&quot;],&quot;type&quot;:[1,[[0,&quot;Frontend&quot;],[0,&quot;Security&quot;]]],&quot;status&quot;:[0,&quot;secondary&quot;],&quot;order&quot;:[0,6],&quot;year&quot;:[0,2023],&quot;tech&quot;:[1,[[0,&quot;JavaScript&quot;],[0,&quot;entropy calculation&quot;]]],&quot;liveUrl&quot;:[0],&quot;githubUrl&quot;:[0,&quot;https://github.com/drame31/cyberlock&quot;],&quot;cover&quot;:[0]}]}" ssr client="visible" opts="{&quot;name&quot;:&quot;ProjectCard&quot;,&quot;value&quot;:true}" await-children><article class="card relative flex flex-col gap-4 p-6 group overflow-hidden before:absolute before:left-0 before:top-0 before:h-full before:w-[2px] before:bg-teal before:scale-y-0 before:origin-top before:transition-transform before:duration-[400ms] before:ease-[var(--ease-out)] hover:before:scale-y-100" data-cursor="pointer" style="opacity:0;transform:translateY(32px)"><div class="flex items-center justify-between"><span class="font-mono text-xs text-muted" aria-label="Project number 6">06</span><span class="font-mono text-xs text-muted">2023</span></div><h3 class="font-body font-bold text-xl text-paper leading-tight tracking-tight">CyberLock</h3><p class="text-sm text-muted leading-relaxed flex-1 m-0 max-w-none">Password strength analyzer using entropy math to score passwords and explain exactly why weak passwords fail.</p><div class="flex flex-wrap gap-2 mt-auto"><span class="tech-tag">JavaScript</span><span class="tech-tag">entropy calculation</span></div><div class="flex items-center gap-4 pt-2 border-t border-border"><a href="https://github.com/drame31/cyberlock" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-muted hover:text-paper transition-colors duration-150" aria-label="CyberLock source code on GitHub" data-cursor="pointer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path></svg>Code</a></div></article><!--astro:end--></astro-island><astro-island uid="ZpeeEN" prefix="r23" component-url="/_astro/ProjectCard.COmuvGEq.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;project&quot;:[0,{&quot;slug&quot;:[0,&quot;codepulse&quot;],&quot;title&quot;:[0,&quot;CodePulse&quot;],&quot;description&quot;:[0,&quot;Developer activity tracker built with Flask and Jinja2, visualizing coding sessions, language breakdowns, and daily streaks.&quot;],&quot;type&quot;:[1,[[0,&quot;Full-stack&quot;],[0,&quot;Developer Tools&quot;]]],&quot;status&quot;:[0,&quot;secondary&quot;],&quot;order&quot;:[0,7],&quot;year&quot;:[0,2023],&quot;tech&quot;:[1,[[0,&quot;Python&quot;],[0,&quot;Flask&quot;],[0,&quot;Jinja2&quot;]]],&quot;liveUrl&quot;:[0],&quot;githubUrl&quot;:[0,&quot;https://github.com/drame31/codepulse&quot;],&quot;cover&quot;:[0]}]}" ssr client="visible" opts="{&quot;name&quot;:&quot;ProjectCard&quot;,&quot;value&quot;:true}" await-children><article class="card relative flex flex-col gap-4 p-6 group overflow-hidden before:absolute before:left-0 before:top-0 before:h-full before:w-[2px] before:bg-teal before:scale-y-0 before:origin-top before:transition-transform before:duration-[400ms] before:ease-[var(--ease-out)] hover:before:scale-y-100" data-cursor="pointer" style="opacity:0;transform:translateY(32px)"><div class="flex items-center justify-between"><span class="font-mono text-xs text-muted" aria-label="Project number 7">07</span><span class="font-mono text-xs text-muted">2023</span></div><h3 class="font-body font-bold text-xl text-paper leading-tight tracking-tight">CodePulse</h3><p class="text-sm text-muted leading-relaxed flex-1 m-0 max-w-none">Developer activity tracker built with Flask and Jinja2, visualizing coding sessions, language breakdowns, and daily streaks.</p><div class="flex flex-wrap gap-2 mt-auto"><span class="tech-tag">Python</span><span class="tech-tag">Flask</span><span class="tech-tag">Jinja2</span></div><div class="flex items-center gap-4 pt-2 border-t border-border"><a href="https://github.com/drame31/codepulse" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-muted hover:text-paper transition-colors duration-150" aria-label="CodePulse source code on GitHub" data-cursor="pointer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path></svg>Code</a></div></article><!--astro:end--></astro-island><astro-island uid="1rMBPI" prefix="r24" component-url="/_astro/ProjectCard.COmuvGEq.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;project&quot;:[0,{&quot;slug&quot;:[0,&quot;raiz-restaurante&quot;],&quot;title&quot;:[0,&quot;Raiz Restaurante&quot;],&quot;description&quot;:[0,&quot;Full restaurant website with online menu, reservation system, and SEO optimization — built for a real local business.&quot;],&quot;type&quot;:[1,[[0,&quot;Full-stack&quot;],[0,&quot;SEO&quot;],[0,&quot;Client Work&quot;]]],&quot;status&quot;:[0,&quot;secondary&quot;],&quot;order&quot;:[0,8],&quot;year&quot;:[0,2023],&quot;tech&quot;:[1,[[0,&quot;HTML5&quot;],[0,&quot;CSS3&quot;],[0,&quot;JavaScript&quot;],[0,&quot;FastAPI&quot;],[0,&quot;SEO&quot;]]],&quot;liveUrl&quot;:[0,&quot;https://drame31.github.io/raiz/&quot;],&quot;githubUrl&quot;:[0,&quot;https://github.com/drame31/raiz&quot;],&quot;cover&quot;:[0]}]}" ssr client="visible" opts="{&quot;name&quot;:&quot;ProjectCard&quot;,&quot;value&quot;:true}" await-children><article class="card relative flex flex-col gap-4 p-6 group overflow-hidden before:absolute before:left-0 before:top-0 before:h-full before:w-[2px] before:bg-teal before:scale-y-0 before:origin-top before:transition-transform before:duration-[400ms] before:ease-[var(--ease-out)] hover:before:scale-y-100" data-cursor="pointer" style="opacity:0;transform:translateY(32px)"><div class="flex items-center justify-between"><span class="font-mono text-xs text-muted" aria-label="Project number 8">08</span><span class="font-mono text-xs text-muted">2023</span></div><h3 class="font-body font-bold text-xl text-paper leading-tight tracking-tight">Raiz Restaurante</h3><p class="text-sm text-muted leading-relaxed flex-1 m-0 max-w-none">Full restaurant website with online menu, reservation system, and SEO optimization — built for a real local business.</p><div class="flex flex-wrap gap-2 mt-auto"><span class="tech-tag">HTML5</span><span class="tech-tag">CSS3</span><span class="tech-tag">JavaScript</span><span class="tech-tag">FastAPI</span><span class="tech-tag">SEO</span></div><div class="flex items-center gap-4 pt-2 border-t border-border"><a href="https://github.com/drame31/raiz" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-muted hover:text-paper transition-colors duration-150" aria-label="Raiz Restaurante source code on GitHub" data-cursor="pointer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path></svg>Code</a><a href="https://drame31.github.io/raiz/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-muted hover:text-teal transition-colors duration-150" aria-label="Raiz Restaurante live demo" data-cursor="pointer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live</a></div></article><!--astro:end--></astro-island> </div> </div> </section> <!-- ══════════════════════════════════════════════════════════
+         QUEUE DEMO
+    ══════════════════════════════════════════════════════════ --> <section id="demo" class="section-padding border-t border-border" aria-label="Live demo"> <div class="container-content"> <astro-island uid="2p5s5P" prefix="r31" component-url="/_astro/RevealOnScroll.BvpfNN6Q.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;direction&quot;:[0,&quot;up&quot;],&quot;delay&quot;:[0,0]}" ssr client="visible" opts="{&quot;name&quot;:&quot;RevealOnScroll&quot;,&quot;value&quot;:true}" await-children><div style="opacity:0;transform:translateY(32px)"><astro-slot> <p class="section-label">Live Demo</p> <div class="mt-6 mb-4 flex flex-col gap-2"> <h2 class="text-3xl md:text-4xl text-paper leading-tight" style="font-weight: 700; letter-spacing: -0.025em;">
+QueuePilot in action
+</h2> <p class="text-muted leading-relaxed" style="max-width: 52ch;">
+This simulates the real-time queue interface. New customers arrive every 3 seconds,
+              the first in line is served after ~15 seconds. The actual system runs on WebSockets —
+              no polling.
+</p> </div> </astro-slot></div><!--astro:end--></astro-island> <div class="mt-8 max-w-lg"> <astro-island uid="212fa9" prefix="r25" component-url="/_astro/QueueDemo.BdwltyXW.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{}" ssr client="visible" opts="{&quot;name&quot;:&quot;QueueDemo&quot;,&quot;value&quot;:true}" await-children><div class="bg-surface border border-border rounded-lg overflow-hidden font-mono text-sm" role="region" aria-labelledby="_r25R_0_"><div class="flex items-center justify-between px-4 py-3 bg-surface-2 border-b border-border"><div class="flex items-center gap-2"><div class="flex gap-1.5" aria-hidden="true"><span class="w-3 h-3 rounded-full bg-red-500/60"></span><span class="w-3 h-3 rounded-full bg-yellow-500/60"></span><span class="w-3 h-3 rounded-full bg-green-500/60"></span></div><span id="_r25R_0_" class="text-xs text-muted ml-2">QueuePilot — Live Queue</span></div><div class="flex items-center gap-1.5 text-xs text-teal" aria-live="polite" aria-label="Connected"><span class="inline-block w-1.5 h-1.5 rounded-full bg-teal animate-[badge-pulse_2s_ease-in-out_infinite]" aria-hidden="true"></span>Connected</div></div><div class="grid grid-cols-3 divide-x divide-border border-b border-border"><div class="px-4 py-3 text-center"><p class="text-2xl font-bold text-paper">2</p><p class="text-xs text-muted">In queue</p></div><div class="px-4 py-3 text-center"><p class="text-2xl font-bold text-teal">0</p><p class="text-xs text-muted">Served</p></div><div class="px-4 py-3 text-center"><p class="text-2xl font-bold text-paper">~3m</p><p class="text-xs text-muted">Avg wait</p></div></div><div class="divide-y divide-border min-h-[200px] max-h-[320px] overflow-y-auto" role="list" aria-label="Current queue" aria-live="polite" aria-atomic="false"><div role="listitem" class="flex items-center justify-between px-4 py-3 bg-teal/5 border-l-2 border-l-teal" style="opacity:1;height:auto;transform:none"><div class="flex items-center gap-3"><span class="text-xs w-5 text-right text-teal font-semibold" aria-label="Position 1">01</span><span class="text-xs text-paper font-medium">Jordan K.</span><span class="text-[10px] text-teal bg-teal/10 border border-teal/20 rounded-full px-2 py-0.5">Now serving</span></div><span class="text-xs text-muted">~<!-- -->2<!-- -->m</span></div><div role="listitem" class="flex items-center justify-between px-4 py-3" style="opacity:1;height:auto;transform:none"><div class="flex items-center gap-3"><span class="text-xs w-5 text-right text-muted" aria-label="Position 2">02</span><span class="text-xs text-paper/80">Sam T.</span></div><span class="text-xs text-muted">~<!-- -->3<!-- -->m</span></div></div><div class="px-4 py-2 border-t border-border bg-surface-2"><p class="text-[10px] text-muted/60">Simulation — new customer every 3s · served after ~15s</p></div></div><!--astro:end--></astro-island> </div> <div class="mt-6"> <a href="/projects/queuepilot" class="text-xs text-muted hover:text-teal transition-colors duration-150 font-mono">
+Read the full case study →
+</a> </div> </div> </section> <!-- ══════════════════════════════════════════════════════════
+         ABOUT TEASER
+    ══════════════════════════════════════════════════════════ --> <section id="about" class="section-padding border-t border-border" aria-label="About"> <div class="container-content"> <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center"> <!-- Photo placeholder --> <astro-island uid="ZL47Fw" prefix="r32" component-url="/_astro/RevealOnScroll.BvpfNN6Q.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;direction&quot;:[0,&quot;left&quot;],&quot;delay&quot;:[0,0.1],&quot;className&quot;:[0,&quot;order-2 md:order-1&quot;]}" ssr client="visible" opts="{&quot;name&quot;:&quot;RevealOnScroll&quot;,&quot;value&quot;:true}" await-children><div class="order-2 md:order-1" style="opacity:0;transform:translateX(-32px)"><astro-slot> <div class="relative aspect-[4/5] rounded-lg overflow-hidden bg-surface border border-border" style="max-width: 360px;" aria-hidden="true"> <!-- SVG silhouette placeholder --> <svg viewBox="0 0 360 450" xmlns="http://www.w3.org/2000/svg" class="w-full h-full" aria-hidden="true"> <rect width="360" height="450" fill="var(--color-surface)"></rect> <!-- Gradient overlay --> <defs> <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1"> <stop offset="0%" stop-color="var(--color-teal)" stop-opacity="0.05"></stop> <stop offset="100%" stop-color="var(--color-ink)" stop-opacity="0.3"></stop> </linearGradient> </defs> <rect width="360" height="450" fill="url(#grad)"></rect> <!-- Silhouette --> <circle cx="180" cy="155" r="58" fill="var(--color-border-2)"></circle> <path d="M60 420 Q60 300 180 300 Q300 300 300 420" fill="var(--color-border-2)"></path> <!-- Teal accent line --> <line x1="30" y1="420" x2="100" y2="420" stroke="var(--color-teal)" stroke-width="2" opacity="0.6"></line> </svg> <!-- Name overlay --> <div class="absolute bottom-0 left-0 right-0 p-5" style="background: linear-gradient(to top, var(--color-surface), transparent);"> <p class="font-display italic text-xl text-paper" style="font-family: var(--font-display); font-style: italic;">
+Derek Muñoz
+</p> <p class="text-xs text-muted font-mono">Full-Stack Developer · Costa Rica</p> </div> </div> </astro-slot></div><!--astro:end--></astro-island> <!-- Bio text --> <astro-island uid="1BLANw" prefix="r33" component-url="/_astro/RevealOnScroll.BvpfNN6Q.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;direction&quot;:[0,&quot;right&quot;],&quot;delay&quot;:[0,0.15],&quot;className&quot;:[0,&quot;order-1 md:order-2 flex flex-col gap-6&quot;]}" ssr client="visible" opts="{&quot;name&quot;:&quot;RevealOnScroll&quot;,&quot;value&quot;:true}" await-children><div class="order-1 md:order-2 flex flex-col gap-6" style="opacity:0;transform:translateX(32px)"><astro-slot> <p class="section-label">About</p> <h2 class="text-3xl md:text-4xl text-paper leading-tight" style="font-weight: 700; letter-spacing: -0.025em;">
+Builder, not just coder
+</h2> <div class="prose-block flex flex-col gap-4"> <p class="text-muted leading-relaxed">
+Computer Engineering student at Universidad Hispanoamericana, Costa Rica.
+                I care about the backend — how systems talk to each other, how data moves,
+                why some APIs feel fast and others don't.
+</p> <p class="text-muted leading-relaxed">
+Most of my projects start with a real problem. QueuePilot came from watching
+                people waste time in physical queues. HireFlow came from my own job hunt chaos.
+                The best code solves something that was actually annoying.
+</p> </div> <div class="flex flex-col gap-3 mt-2"> <div class="flex items-center gap-3 text-sm text-muted"> <span class="text-teal font-mono text-xs">loc</span> <span>San José / Heredia, Costa Rica</span> </div> <div class="flex items-center gap-3 text-sm text-muted"> <span class="text-teal font-mono text-xs">edu</span> <span>Computer Engineering — Universidad Hispanoamericana</span> </div> <div class="flex items-center gap-3 text-sm text-muted"> <span class="text-teal font-mono text-xs">lang</span> <span>Spanish (native) · English (B2–C1)</span> </div> </div> <div class="mt-4"> <a href="/about" class="btn-ghost">Full background →</a> </div> </astro-slot></div><!--astro:end--></astro-island> </div> </div> </section> <!-- ══════════════════════════════════════════════════════════
+         CONTACT CTA
+    ══════════════════════════════════════════════════════════ --> <section id="contact" class="section-padding border-t border-border" aria-label="Contact"> <div class="container-content"> <astro-island uid="Zjqd7w" prefix="r34" component-url="/_astro/RevealOnScroll.BvpfNN6Q.js" component-export="default" renderer-url="/_astro/client.DTojXMD-.js" props="{&quot;direction&quot;:[0,&quot;up&quot;],&quot;delay&quot;:[0,0]}" ssr client="visible" opts="{&quot;name&quot;:&quot;RevealOnScroll&quot;,&quot;value&quot;:true}" await-children><div style="opacity:0;transform:translateY(32px)"><astro-slot> <div class="flex flex-col gap-6 max-w-2xl"> <p class="section-label">Contact</p> <h2 class="font-display italic text-4xl md:text-5xl text-paper" style="font-family: var(--font-display); font-style: italic; font-weight: 400; line-height: 1.1;">
+Let's build something.
+</h2> <p class="text-muted leading-relaxed text-lg" style="max-width: 50ch;">
+Open to full-stack and backend roles — remote, contract, or part-time
+              while I finish my degree. If you have something interesting, I'm listening.
+</p> <div class="flex flex-col gap-3"> <a href="mailto:derekmzm@gmail.com" class="font-mono text-teal hover:text-teal-dim transition-colors duration-150 text-lg" aria-label="Send email to derekmzm@gmail.com">
+derekmzm@gmail.com
+</a> <div class="flex gap-5"> <a href="https://github.com/drame31" target="_blank" rel="noopener noreferrer" class="text-sm text-muted hover:text-paper transition-colors duration-150 font-mono" aria-label="GitHub profile">
+GitHub ↗
+</a> <a href="https://linkedin.com/in/derek-m-81b055230" target="_blank" rel="noopener noreferrer" class="text-sm text-muted hover:text-paper transition-colors duration-150 font-mono" aria-label="LinkedIn profile">
+LinkedIn ↗
+</a> </div> </div> <div class="mt-4"> <a href="/contact" class="btn-primary">Send a message</a> </div> </div> </astro-slot></div><!--astro:end--></astro-island> </div> </section> </main>  <footer class="border-t border-border mt-auto"> <div class="container-content"> <div class="flex flex-col sm:flex-row items-center justify-between gap-4 py-8"> <p class="text-xs text-muted m-0 text-center sm:text-left">
+Built with Astro
+<span class="mx-2 opacity-40" aria-hidden="true">·</span> <a href="https://drame31.github.io" class="hover:text-paper transition-colors duration-150">
+drame31.github.io
+</a> <span class="mx-2 opacity-40" aria-hidden="true">·</span>
+2026
+</p> <div class="flex items-center gap-5"> <a href="https://github.com/drame31" target="_blank" rel="noopener noreferrer" class="text-muted hover:text-paper transition-colors duration-150" aria-label="GitHub profile"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"> <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path> </svg> </a> <a href="https://linkedin.com/in/derek-m-81b055230" target="_blank" rel="noopener noreferrer" class="text-muted hover:text-paper transition-colors duration-150" aria-label="LinkedIn profile"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"> <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path> </svg> </a> </div> </div> </div> </footer> </body></html>
