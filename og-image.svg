@@ -1,23 +1,61 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#0c0a08"/>
-  <!-- Subtle teal gradient orb top-right -->
-  <radialGradient id="orb" cx="85%" cy="20%" r="40%">
-    <stop offset="0%" stop-color="#00d4aa" stop-opacity="0.08"/>
-    <stop offset="100%" stop-color="#00d4aa" stop-opacity="0"/>
-  </radialGradient>
-  <rect width="1200" height="630" fill="url(#orb)"/>
-  <!-- Border frame -->
-  <rect x="40" y="40" width="1120" height="550" rx="8" fill="none" stroke="#2a2520" stroke-width="1"/>
-  <!-- Teal accent line -->
-  <line x1="80" y1="200" x2="200" y2="200" stroke="#00d4aa" stroke-width="2" opacity="0.7"/>
-  <!-- Label -->
-  <text x="80" y="180" font-family="'Syne', 'system-ui', sans-serif" font-size="14" font-weight="600" fill="#7a756f" letter-spacing="0.15em" text-transform="uppercase">FULL-STACK DEVELOPER</text>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c0a08"/>
+      <stop offset="100%" stop-color="#171412"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="75%" cy="30%" r="45%">
+      <stop offset="0%" stop-color="#00d4aa" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#00d4aa" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Top border accent line -->
+  <rect x="64" y="56" width="80" height="2" fill="#00d4aa" opacity="0.8"/>
+
   <!-- Name -->
-  <text x="80" y="310" font-family="'Georgia', 'Times New Roman', serif" font-size="80" font-weight="400" fill="#f0ece6" letter-spacing="-0.02em" font-style="italic">Derek Muñoz</text>
-  <!-- Tagline -->
-  <text x="80" y="375" font-family="'Syne', 'system-ui', sans-serif" font-size="22" fill="#7a756f" letter-spacing="0.01em">FastAPI · React · TypeScript · Python · PostgreSQL</text>
+  <text x="64" y="280"
+    font-family="Georgia, serif"
+    font-style="italic"
+    font-size="72"
+    font-weight="400"
+    fill="#f0ece6"
+    letter-spacing="-1">Derek Muñoz</text>
+
+  <!-- Role line -->
+  <text x="64" y="344"
+    font-family="system-ui, sans-serif"
+    font-size="28"
+    font-weight="400"
+    fill="#8c867f"
+    letter-spacing="0">Full-Stack Developer · Costa Rica</text>
+
+  <!-- Divider -->
+  <rect x="64" y="376" width="1072" height="1" fill="#2a2622"/>
+
+  <!-- Tech line -->
+  <text x="64" y="416"
+    font-family="monospace"
+    font-size="18"
+    fill="#8c867f">Python · FastAPI · React · TypeScript · PostgreSQL · WebSockets</text>
+
   <!-- URL -->
-  <text x="80" y="545" font-family="'Courier New', monospace" font-size="16" fill="#00d4aa" opacity="0.8">drame31.github.io</text>
-  <!-- Location -->
-  <text x="1120" y="545" font-family="'Syne', 'system-ui', sans-serif" font-size="16" fill="#7a756f" text-anchor="end">Costa Rica · Remote</text>
+  <text x="64" y="560"
+    font-family="monospace"
+    font-size="16"
+    fill="#00d4aa">drame31.github.io</text>
+
+  <!-- Available badge -->
+  <rect x="64" y="484" width="164" height="30" rx="15" fill="#00d4aa" fill-opacity="0.08" stroke="#00d4aa" stroke-opacity="0.2" stroke-width="1"/>
+  <circle cx="87" cy="499" r="4" fill="#00d4aa"/>
+  <text x="102" y="504"
+    font-family="system-ui, sans-serif"
+    font-size="13"
+    font-weight="500"
+    fill="#00d4aa"
+    letter-spacing="0.04em">Available for work</text>
 </svg>
